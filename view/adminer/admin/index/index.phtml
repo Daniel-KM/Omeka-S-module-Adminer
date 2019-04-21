@@ -1,0 +1,17 @@
+<?php
+
+$this->htmlElement('body');
+echo $this->pageTitle($this->translate("Adminer"));
+
+if($db_config['default_user_name'] === ""  || $db_config['default_user_password'] === "") {
+    echo "Default user is not defined.<br>";
+
+    if($db_config['main_user_name'] !== ""  && $db_config['main_user_password'] !== "") {
+        echo "You can use main user with write access.<br>";
+    } else {
+        echo "Main user is not defined too. Please, define at least one user account in <b><a href='/admin/module/configure?id=Adminer'>Config</a></b>.<br>";
+    }
+
+} else {
+    echo "To open \"Adminer\" chose the account in the admin menu bar.<br>";
+}
