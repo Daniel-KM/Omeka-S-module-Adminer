@@ -13,6 +13,11 @@ return [
             dirname(__DIR__) . '/view',
         ],
     ],
+    'form_elements' => [
+        'invokables' => [
+            Form\ConfigForm::class => Form\ConfigForm::class,
+        ],
+    ],
     'controllers' => [
         'factories' => [
             Controller\Admin\IndexController::class => InvokableFactory::class,

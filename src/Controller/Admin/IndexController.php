@@ -8,12 +8,24 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        $view = new ViewModel();
+        $defaultKeys = array_fill_keys([
+            'db_name',
+            'default_user_name',
+            'default_user_password',
+            'main_user_name',
+            'main_user_password',
+        ], '');
 
-        // load db config to use it to show message
+        // Load db config to use it to show message.
+        $filepath = dirname(dirname(dirname(__DIR__))) . '/config/database-adminer.ini';
         $reader = new \Zend\Config\Reader\Ini();
-        $dbConfig = $reader->fromFile(dirname(dirname(dirname(__DIR__))) . '/config/database.ini');
+        $dbConfig = file_exists($filepath)
+            ? $reader->fromFile($filepath)
+            : $defaultKeys;
 
+        $dbConfig = array_intersect_key($dbConfig, $defaultKeys);
+
+        $view = new ViewModel();
         $view->setVariable('db_config', $dbConfig);
         return $view;
     }
