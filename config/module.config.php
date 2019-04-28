@@ -14,7 +14,7 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            Controller\Admin\IndexController::class => \Zend\ServiceManager\Factory\InvokableFactory::class,
+            Controller\Admin\IndexController::class => Service\Controller\Admin\IndexControllerFactory::class,
         ],
     ],
     'navigation' => [

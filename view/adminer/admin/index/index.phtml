@@ -21,8 +21,8 @@ if ($db_config['default_user_name'] === '' || $db_config['default_user_password'
     echo $translate('Read-only user is not defined.');
 else:
     echo $hyperlink($translate('Read-only access'), $url('admin/adminer-mysql', [], ['query' => [
-        'server' => 'localhost',
-        'db' => $db_config['db_name'],
+        'server' => $db_config['server'],
+        'db' => $db_config['db'],
         'username' => $db_config['default_user_name'],
         'password' => $db_config['default_user_password'],
     ]]), ['target' => '_blank']);
@@ -32,8 +32,8 @@ else:
         echo $translate('Full-access user is not defined.');
     else:
         echo $hyperlink($translate('Full access'), $url('admin/adminer-mysql', [], ['query' => [
-            'server' => 'localhost',
-            'db' => $db_config['db_name'],
+            'server' => $db_config['server'],
+            'db' => $db_config['db'],
             'username' => $db_config['main_user_name'],
             'password' => $db_config['main_user_password'],
         ]]), ['target' => '_blank']);

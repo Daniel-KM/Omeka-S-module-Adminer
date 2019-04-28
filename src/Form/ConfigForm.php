@@ -10,14 +10,6 @@ class ConfigForm extends Form
     {
         $this->add([
             'type' => Element\Text::class,
-            'name' => 'db_name',
-            'options' => [
-                'label' => 'DB name', // @translate
-            ],
-        ]);
-
-        $this->add([
-            'type' => Element\Text::class,
             'name' => 'default_user_name',
             'options' => [
                 'label' => 'Read only user name', // @translate

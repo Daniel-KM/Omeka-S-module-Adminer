@@ -6,10 +6,19 @@ use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
+    /**
+     * @var array
+     */
+    protected $dbConfig;
+
+    public function __construct(array $dbConfig)
+    {
+        $this->dbConfig = $dbConfig;
+    }
+
     public function indexAction()
     {
         $defaultKeys = array_fill_keys([
-            'db_name',
             'default_user_name',
             'default_user_password',
             'main_user_name',
@@ -23,7 +32,7 @@ class IndexController extends AbstractActionController
             ? $reader->fromFile($filepath)
             : $defaultKeys;
 
-        $dbConfig = array_intersect_key($dbConfig, $defaultKeys);
+        $dbConfig = array_intersect_key($dbConfig, $defaultKeys) + $this->dbConfig;
 
         $view = new ViewModel();
         $view->setVariable('db_config', $dbConfig);

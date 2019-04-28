@@ -58,7 +58,6 @@ class Module extends AbstractModule
         }
 
         $params = array_intersect_key($params, array_flip([
-            'db_name',
             'default_user_name',
             'default_user_password',
             'main_user_name',
