@@ -12,9 +12,9 @@ class IndexController extends AbstractActionController
 
         // load db config to use it to show message
         $reader = new \Zend\Config\Reader\Ini();
-        $db_config = $reader->fromFile(OMEKA_PATH . "/modules/Adminer/config/database.ini");
+        $dbConfig = $reader->fromFile(dirname(dirname(dirname(__DIR__))) . '/config/database.ini');
 
-        $view->setVariable('db_config', $db_config);
+        $view->setVariable('db_config', $dbConfig);
         return $view;
     }
 

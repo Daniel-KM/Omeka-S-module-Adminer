@@ -1,8 +1,7 @@
 <?php
-
 namespace Adminer\Form;
 
-use Zend\Form\Element\Text;
+use Zend\Form\Element;
 use Zend\Form\Form;
 
 class ConfigForm extends Form
@@ -10,39 +9,41 @@ class ConfigForm extends Form
     public function init()
     {
         $this->add([
-            'type' => Text::class,
+            'type' => Element\Text::class,
             'name' => 'db_name',
             'options' => [
-                'label' => 'DB name',
-            ]
+                'label' => 'DB name', // @translate
+            ],
         ]);
+
         $this->add([
             'type' => Element\Text::class,
             'name' => 'default_user_name',
             'options' => [
-               'label' => 'Default user name',
-            ]
+                'label' => 'Read only user name', // @translate
+            ],
         ]);
         $this->add([
-            'type' => Text::class,
+            'type' => Element\Text::class,
             'name' => 'default_user_password',
             'options' => [
-                'label' => 'Default user password',
-            ]
+                'label' => 'Read only user password', // @translate
+            ],
         ]);
+
         $this->add([
-            'type' => Text::class,
+            'type' => Element\Text::class,
             'name' => 'main_user_name',
             'options' => [
-                'label' => 'Main user name',
-            ]
+                'label' => 'Full access user name', // @translate
+            ],
         ]);
         $this->add([
-            'type' => Text::class,
+            'type' => Element\Text::class,
             'name' => 'main_user_password',
             'options'   => [
-                'label' => 'Main user password',
-            ]
+                'label' => 'Full access user password', // @translate
+            ],
         ]);
     }
 }

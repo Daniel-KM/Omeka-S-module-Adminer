@@ -1,5 +1,4 @@
 <?php
-
 namespace Adminer;
 
 use Omeka\Module\AbstractModule;
@@ -16,7 +15,7 @@ class Module extends AbstractModule
     public function getConfigForm(PhpRenderer $renderer)
     {
         $reader = new \Zend\Config\Reader\Ini();
-        $db_config = $reader->fromFile(OMEKA_PATH . '/modules/Adminer/config/database.ini');
+        $db_config = $reader->fromFile(__DIR__ . '/config/database.ini');
 
         $configForm = new Form\ConfigForm();
         $configForm->init();
@@ -31,7 +30,7 @@ class Module extends AbstractModule
 
         $settings = $controller->params()->fromPost();
 
-        $writer->toFile(OMEKA_PATH . "/modules/Adminer/config/database.ini", $settings);
+        $writer->toFile(__DIR__ . '/config/database.ini', $settings);
         return true;
     }
 }

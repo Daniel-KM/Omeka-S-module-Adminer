@@ -1,17 +1,23 @@
 <?php
+/**
+ * @var \Zend\View\Renderer\PhpRenderer $this
+ * @var array $db_config
+ */
 
+$translate = $this->plugin('translate');
 $this->htmlElement('body');
-echo $this->pageTitle($this->translate("Adminer"));
+echo $this->pageTitle($this->translate('Adminer'));
 
-if($db_config['default_user_name'] === ""  || $db_config['default_user_password'] === "") {
-    echo "Default user is not defined.<br>";
+if ($db_config['default_user_name'] === '' || $db_config['default_user_password'] === '') {
+    echo $translate('Default user is not defined.');
+    echo '<br/>';
 
-    if($db_config['main_user_name'] !== ""  && $db_config['main_user_password'] !== "") {
-        echo "You can use main user with write access.<br>";
+    if ($db_config['main_user_name'] !== '' && $db_config['main_user_password'] !== '') {
+        echo $translate('You can use main user with write access.');
     } else {
-        echo "Main user is not defined too. Please, define at least one user account in <b><a href='/admin/module/configure?id=Adminer'>Config</a></b>.<br>";
+        echo sprintf($translate('Main user is not defined too. Please, define at least one user account in %sConfig%s.'), '<a href="/admin/module/configure?id=Adminer">', '</a>');
     }
-
 } else {
-    echo "To open \"Adminer\" chose the account in the admin menu bar.<br>";
+    echo $translate('To open "Adminer" chose the account in the admin menu bar.');
 }
+echo '<br/>';
