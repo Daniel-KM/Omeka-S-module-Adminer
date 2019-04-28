@@ -1,5 +1,4 @@
 <?php
-
 namespace Adminer\Controller\Admin;
 
 use Zend\Mvc\Controller\AbstractActionController;
