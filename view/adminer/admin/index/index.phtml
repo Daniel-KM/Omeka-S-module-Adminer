@@ -5,19 +5,39 @@
  */
 
 $translate = $this->plugin('translate');
-$this->htmlElement('body');
-echo $this->pageTitle($this->translate('Adminer'));
+$hyperlink = $this->plugin('hyperlink');
+$url = $this->plugin('url');
 
-if ($db_config['default_user_name'] === '' || $db_config['default_user_password'] === '') {
-    echo $translate('Default user is not defined.');
+$this->htmlElement('body');
+echo $this->pageTitle($this->translate('Adminer Sql manager'));
+?>
+<b><?= $translate('WARNING') ?></b>
+<p><?= $translate('Use it at your own risk.') ?></p>
+<p><?= $translate('It is highly recommended to use a read-only user to access database, because it’s very easy to break a database, even for people who know the Omeka code and all the modules perfectly.') ?></p>
+<p><?= $translate('In all cases, it’s always recommended to backup your files and your databases automatically and before risky and non-risky commands, and to check your archives regularly, so you can roll back if needed.') ?></p>
+<p>
+<?php
+if ($db_config['default_user_name'] === '' || $db_config['default_user_password'] === ''):
+    echo $translate('Read-only user is not defined.');
+else:
+    echo $hyperlink($translate('Read-only access'), $url('admin/adminer-mysql', [], ['query' => [
+        'server' => 'localhost',
+        'db' => $db_config['db_name'],
+        'username' => $db_config['default_user_name'],
+        'password' => $db_config['default_user_password'],
+    ]]), ['target' => '_blank']);
     echo '<br/>';
 
-    if ($db_config['main_user_name'] !== '' && $db_config['main_user_password'] !== '') {
-        echo $translate('You can use main user with write access.');
-    } else {
-        echo sprintf($translate('Main user is not defined too. Please, define at least one user account in %sConfig%s.'), '<a href="/admin/module/configure?id=Adminer">', '</a>');
-    }
-} else {
-    echo $translate('To open "Adminer" chose the account in the admin menu bar.');
-}
-echo '<br/>';
+    if ($db_config['main_user_name'] === '' || $db_config['main_user_password'] === ''):
+        echo $translate('Full-access user is not defined.');
+    else:
+        echo $hyperlink($translate('Full access'), $url('admin/adminer-mysql', [], ['query' => [
+            'server' => 'localhost',
+            'db' => $db_config['db_name'],
+            'username' => $db_config['main_user_name'],
+            'password' => $db_config['main_user_password'],
+        ]]), ['target' => '_blank']);
+    endif;
+endif;
+?>
+</p>
