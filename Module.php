@@ -4,8 +4,8 @@ namespace Adminer;
 use Adminer\Form\ConfigForm;
 use Omeka\Module\AbstractModule;
 use Omeka\Mvc\Controller\Plugin\Messenger;
-use Zend\Mvc\Controller\AbstractController;
-use Zend\View\Renderer\PhpRenderer;
+use Laminas\Mvc\Controller\AbstractController;
+use Laminas\View\Renderer\PhpRenderer;
 
 class Module extends AbstractModule
 {
@@ -23,7 +23,7 @@ class Module extends AbstractModule
             return '';
         }
 
-        $reader = new \Zend\Config\Reader\Ini();
+        $reader = new \Laminas\Config\Reader\Ini();
         $dbConfig = file_exists($filepath)
             ? $reader->fromFile($filepath)
             : [];
@@ -64,7 +64,7 @@ class Module extends AbstractModule
             'main_user_password',
         ]));
 
-        $writer = new \Zend\Config\Writer\Ini();
+        $writer = new \Laminas\Config\Writer\Ini();
         $writer->toFile($filepath, $params);
         return true;
     }

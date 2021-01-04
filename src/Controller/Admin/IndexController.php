@@ -1,8 +1,8 @@
 <?php
 namespace Adminer\Controller\Admin;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
@@ -27,7 +27,7 @@ class IndexController extends AbstractActionController
 
         // Load db config to use it to show message.
         $filepath = dirname(dirname(dirname(__DIR__))) . '/config/database-adminer.ini';
-        $reader = new \Zend\Config\Reader\Ini();
+        $reader = new \Laminas\Config\Reader\Ini();
         $dbConfig = file_exists($filepath)
             ? $reader->fromFile($filepath)
             : $defaultKeys;

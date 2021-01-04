@@ -34,7 +34,7 @@ return [
             'admin' => [
                 'child_routes' => [
                     'adminer' => [
-                        'type' => \Zend\Router\Http\Literal::class,
+                        'type' => \Laminas\Router\Http\Literal::class,
                         'options' => [
                             'route' => '/adminer/manager',
                             'defaults' => [
@@ -45,7 +45,7 @@ return [
                         ],
                     ],
                     'adminer-mysql' => [
-                        'type' => \Zend\Router\Http\Literal::class,
+                        'type' => \Laminas\Router\Http\Literal::class,
                         'options' => [
                             'route' => '/adminer',
                             'defaults' => [
