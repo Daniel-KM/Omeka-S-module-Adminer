@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 namespace Adminer;
 
 use Adminer\Form\ConfigForm;
-use Omeka\Module\AbstractModule;
-use Omeka\Mvc\Controller\Plugin\Messenger;
 use Laminas\Mvc\Controller\AbstractController;
 use Laminas\View\Renderer\PhpRenderer;
+use Omeka\Module\AbstractModule;
+use Omeka\Mvc\Controller\Plugin\Messenger;
 
 class Module extends AbstractModule
 {

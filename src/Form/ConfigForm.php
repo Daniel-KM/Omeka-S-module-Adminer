@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Adminer\Form;
 
 use Laminas\Form\Element;
@@ -6,7 +6,7 @@ use Laminas\Form\Form;
 
 class ConfigForm extends Form
 {
-    public function init()
+    public function init(): void
     {
         $this->add([
             'type' => Element\Text::class,
@@ -33,7 +33,7 @@ class ConfigForm extends Form
         $this->add([
             'type' => Element\Text::class,
             'name' => 'main_user_password',
-            'options'   => [
+            'options' => [
                 'label' => 'Full access user password', // @translate
             ],
         ]);

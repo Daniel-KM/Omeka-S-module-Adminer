@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace Adminer\Controller\Admin;
 
 use Laminas\Mvc\Controller\AbstractActionController;
@@ -26,7 +27,7 @@ class IndexController extends AbstractActionController
         ], '');
 
         // Load db config to use it to show message.
-        $filepath = dirname(dirname(dirname(__DIR__))) . '/config/database-adminer.ini';
+        $filepath = dirname(__DIR__, 3) . '/config/database-adminer.ini';
         $reader = new \Laminas\Config\Reader\Ini();
         $dbConfig = file_exists($filepath)
             ? $reader->fromFile($filepath)
