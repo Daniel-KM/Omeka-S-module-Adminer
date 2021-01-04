@@ -27,7 +27,7 @@ class IndexController extends AbstractActionController
         ], '');
 
         // Load db config to use it to show message.
-        $filepath = dirname(__DIR__, 3) . '/config/database-adminer.ini';
+        $filepath = OMEKA_PATH . '/config/database-adminer.ini';
         $reader = new \Laminas\Config\Reader\Ini();
         $dbConfig = file_exists($filepath)
             ? $reader->fromFile($filepath)

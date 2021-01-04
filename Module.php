@@ -16,10 +16,10 @@ class Module extends AbstractModule
 
     public function getConfigForm(PhpRenderer $renderer)
     {
-        $filepath = __DIR__ . '/config/database-adminer.ini';
+        $filepath = OMEKA_PATH . '/config/database-adminer.ini';
         if (!$this->isWriteableFile($filepath)) {
             $messenger = new Messenger();
-            $messenger->addWarning('The file Adminer/config/database-adminer.ini is not writeable, so credentials cannot be updated.'); // @translate
+            $messenger->addWarning('The file config/database-adminer.ini is not writeable, so credentials cannot be updated.'); // @translate
             return '';
         }
 
@@ -51,9 +51,9 @@ class Module extends AbstractModule
         }
 
         $params = $form->getData();
-        $filepath = __DIR__ . '/config/database-adminer.ini';
+        $filepath = OMEKA_PATH . '/config/database-adminer.ini';
         if (!$this->isWriteableFile($filepath)) {
-            $controller->messenger()->addErrors('The file Adminer/config/database-adminer.ini is not writeable, so credentials cannot be updated.'); // @translate
+            $controller->messenger()->addErrors('The file config/database-adminer.ini is not writeable, so credentials cannot be updated.'); // @translate
             return false;
         }
 
