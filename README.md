@@ -1,6 +1,10 @@
 Adminer Sql (module for Omeka S)
 ================================
 
+> __New versions of this module and support for Omeka S version 3.0 and above
+> are available on [GitLab], which seems to respect users and privacy better
+> than the previous repository.__
+
 [Adminer Sql] is a module for [Omeka S] that allows to view and manage a MySQL
 database. It uses [Adminer], formerly phpMinAdmin, a one file full-featured
 database management tool written in PHP.
@@ -68,7 +72,7 @@ License
 
 * Module
 
-This module is published under the [CeCILL v2.1] licence, compatible with
+This module is published under the [CeCILL v2.1] license, compatible with
 [GNU/GPL] and approved by [FSF] and [OSI].
 
 This software is governed by the CeCILL license under French law and abiding by
@@ -124,4 +128,5 @@ Adminer:
 [Apache]: https://www.apache.org/licenses/LICENSE-2.0.html
 [GPL v2]: https://www.gnu.org/licenses/gpl-2.0.txt
 [`mvt`]: https://github.com/alekseymvt/Adminer.theme
+[GitLab]: https://gitlab.com/Daniel-KM
 [Daniel-KM]: https://github.com/Daniel-KM "Daniel Berthereau"
