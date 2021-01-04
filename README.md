@@ -64,7 +64,7 @@ your archives regularly so you can roll back if needed.
 Troubleshooting
 ---------------
 
-See online issues on the [module issues] page on GitHub.
+See online issues on the [module issues] page on GitLab.
 
 
 License
@@ -107,20 +107,20 @@ Adminer theme [`mvt`] by Aleksey M.
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2019 (see [Daniel-KM] on GitHub)
+* Copyright Daniel Berthereau, 2019 (see [Daniel-KM] on GitLab)
 
 Adminer:
 * Copyright 2007, Jakub Vrana
 * Copyright 2016, Aleksey M. (theme)
 
 
-[Adminer Sql]: https://github.com/Daniel-KM/Omeka-S-module-Adminer
+[Adminer Sql]: https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer
 [Adminer]: https://www.adminer.org
 [Omeka S]: https://omeka.org/s
 [warning]: #Warning
-[`Adminer.zip`]: https://github.com/Daniel-KM/Omeka-S-module-Adminer/releases
+[`Adminer.zip`]: https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/releases
 [installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
-[module issues]: https://github.com/Daniel-KM/Omeka-S-module-Adminer/issues
+[module issues]: https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
 [GNU/GPL]: https://www.gnu.org/licenses/gpl-3.0.html
 [FSF]: https://www.fsf.org
@@ -129,4 +129,4 @@ Adminer:
 [GPL v2]: https://www.gnu.org/licenses/gpl-2.0.txt
 [`mvt`]: https://github.com/alekseymvt/Adminer.theme
 [GitLab]: https://gitlab.com/Daniel-KM
-[Daniel-KM]: https://github.com/Daniel-KM "Daniel Berthereau"
+[Daniel-KM]: https://gitlab.com/Daniel-KM "Daniel Berthereau"
