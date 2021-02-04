@@ -30,26 +30,48 @@ does not contain the dependency), and uncompress it in the `modules` directory.
 
 * From the source and for development
 
-Currently, adminer is provided directly with the module with a specific theme.
+If the module was installed from the source, rename the name of the folder of
+the module to `Adminer`, go to the root of the module, and run:
 
-Development branch allows to install adminer via composer, but without the theme
-currently.
+```sh
+composer install --no-dev
+```
 
-Dependencies cannot be updated via composer: the version number of Adminer
-should be updated manually in `composer.json`.
+To change the default theme, you can set it in `composer.json` and run `composer update`
+or copy it inside directory asset/vendor/adminer/.
+
 
 * Notes
 
-The settings of the module (config access of the database) is not saved in the
-database with other settings, but in the file `config/database-adminer.ini`. It
-is highly recommended to check access rights to this file (no `other` access).
-It is possible to set this file as read only too.
+The settings of the module (config access of the database) are not saved in the
+database with other settings, but in the file `config/database-adminer.ini` at
+the root of Omeka. It is highly recommended to check access rights to this file
+(no `other` access). This is automatically done when possible.
+
+* Create a read only user
+
+If the omeka database user has the rights to create a user and to specify
+privileges, the read only user will be automatically created.
+
+Else, you can run this query in the database, modifying the user name ("readonly"
+here), the host (generally "localhost" or "127.0.0.1"), the password, and the
+database name ("omeka" here).
+
+```sql
+CREATE USER 'readonly'@'localhost' IDENTIFIED BY 'a very long password';
+GRANT SELECT ON `omeka`.* TO 'readonly'@'localhost';
+FLUSH PRIVILEGES;
+```
 
 
 TODO
 ----
 
-* Allow to use any adminer.css theme simply by putting it in a directory.
+* [x] Remove the login page (login directly).
+* [x] Use composer package vrana/adminer (to minify and remove from vendor for security).
+* [x] Allow to use any adminer.css theme simply by putting it in a directory.
+* [ ] Remove access to column `password` of users.
+* [x] Give the choice to use the simplified version "adminer editor" (finalize theme).
 
 
 Warning
@@ -101,13 +123,13 @@ of the CeCILL license and that you accept its terms.
 * Library Adminer
 
 The library Adminer is released under [Apache] or [GPL v2].
-Adminer theme [`mvt`] by Aleksey M.
+Adminer themes are released the same.
 
 
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2019 (see [Daniel-KM] on GitLab)
+* Copyright Daniel Berthereau, 2019-2021 (see [Daniel-KM] on GitLab)
 
 Adminer:
 * Copyright 2007, Jakub Vrana
@@ -127,6 +149,5 @@ Adminer:
 [OSI]: http://opensource.org
 [Apache]: https://www.apache.org/licenses/LICENSE-2.0.html
 [GPL v2]: https://www.gnu.org/licenses/gpl-2.0.txt
-[`mvt`]: https://github.com/alekseymvt/Adminer.theme
 [GitLab]: https://gitlab.com/Daniel-KM
 [Daniel-KM]: https://gitlab.com/Daniel-KM "Daniel Berthereau"
