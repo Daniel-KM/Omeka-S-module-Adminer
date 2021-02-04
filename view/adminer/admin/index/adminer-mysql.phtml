@@ -6,13 +6,28 @@
  * This is an adaptation of /vendor/vrana/adminer/plugins/plugin.php.
  */
 
+// Support the plugin "Designs".
+function listDesigns()
+{
+    static $designs;
+    if (is_null($designs)) {
+        $designs = [];
+        foreach (glob(dirname(__DIR__, 4) . '/vendor/vrana/adminer/designs/**/*.css') as $filename) {
+            $name = basename(dirname($filename));
+            // Relative to the Omeka admin route.
+            $designs['../modules/Adminer/vendor/vrana/adminer/designs/' . $name . '/' . basename($filename)] = $name;
+        }
+    }
+    return $designs;
+}
+
 function adminer_object() {
     include_once dirname(__DIR__, 4) . '/vendor/vrana/adminer/plugins/plugin.php';
     foreach (glob(dirname(__DIR__, 4) . '/asset/vendor/adminer/plugins/*.php') as $filename) {
         include_once $filename;
     }
 
-    $plugins = array(
+    $plugins = [
         // Specify enabled plugins here.
         new AdminerDatabaseHide(['information_schema']),
         new AdminerDumpJson,
@@ -32,12 +47,27 @@ function adminer_object() {
         new AdminerEnumOption,
         new AdminerTablesFilter,
         new AdminerEditForeign,
-    );
+        // Not default plugins.
+        new AdminerDesigns(listDesigns()),
+        // new AdminerDisableTables,
+        // new AdminerEditTextarea,
+        // new AdminerFolderImport,
+        // new AdminerJsonColumn,
+        // new AdminerPrettyJsonColumn,
+        // new AdminerSearchAutocomplete,
+        // new AdminerStickyColumns,
+        new AdminerVersionNoverify
+    ];
 
     class AdminerCustomization extends AdminerPlugin {
          function css()
          {
              $return = [];
+             if (array_key_exists($_SESSION['design'], listDesigns())) {
+                 $return[] = $_SESSION['design'];
+                 return $return;
+             }
+
              $filename = dirname(__DIR__, 4) . '/asset/vendor/adminer/adminer.css';
              if (file_exists($filename)) {
                  // Relative to the Omeka admin route.
