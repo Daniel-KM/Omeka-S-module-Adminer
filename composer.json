@@ -15,13 +15,19 @@
    "scripts": {
         "post-install-cmd": [
             "@composer install --working-dir=vendor/vrana/adminer",
+            "sed --in-place 's~$filename = \"adminer.css\";~$filename = \"modules/Adminer/asset/vendor/adminer/adminer.css\";~' vendor/vrana/adminer/adminer/include/adminer.inc.php",
+            "sed --in-place 's~$return\\[\\] = \"$filename?v=\" . crc32(file_get_contents($filename));~$return\\[\\] = \"../$filename?v=\" . crc32(file_get_contents(\"../$filename\"));~' vendor/vrana/adminer/adminer/include/adminer.inc.php",
             "@php -f 'vendor/vrana/adminer/compile.php' -- mysql",
-            "mv $(ls adminer-*-mysql.php) view/adminer/admin/index/adminer-mysql.phtml"
+            "mv $(ls adminer-*-mysql.php) view/adminer/admin/index/adminer-mysql.phtml",
+            "cp vendor/vrana/adminer/designs/lucas-sandery/adminer.css asset/vendor/adminer/adminer.css"
         ],
         "post-update-cmd": [
-            "@composer update --working-dir=vendor/vrana/adminer",
+            "@composer install --working-dir=vendor/vrana/adminer",
+            "sed --in-place 's~$filename = \"adminer.css\";~$filename = \"modules/Adminer/asset/vendor/adminer/adminer.css\";~' vendor/vrana/adminer/adminer/include/adminer.inc.php",
+            "sed --in-place 's~$return\\[\\] = \"$filename?v=\" . crc32(file_get_contents($filename));~$return\\[\\] = \"../$filename?v=\" . crc32(file_get_contents(\"../$filename\"));~' vendor/vrana/adminer/adminer/include/adminer.inc.php",
             "@php -f 'vendor/vrana/adminer/compile.php' -- mysql",
-            "mv $(ls adminer-*-mysql.php) view/adminer/admin/index/adminer-mysql.phtml"
+            "mv $(ls adminer-*-mysql.php) view/adminer/admin/index/adminer-mysql.phtml",
+            "cp vendor/vrana/adminer/designs/lucas-sandery/adminer.css asset/vendor/adminer/adminer.css"
         ]
     }
 }
