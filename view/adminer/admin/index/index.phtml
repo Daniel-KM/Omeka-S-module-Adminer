@@ -1,7 +1,8 @@
 <?php
 /**
  * @var \Laminas\View\Renderer\PhpRenderer $this
- * @var array $dbConfig
+ * @var array $hasReadOnly
+ * @var array $hasFullAccess
  */
 
 $translate = $this->plugin('translate');
@@ -18,33 +19,21 @@ echo $this->pageTitle($this->translate('Adminer database manager'));
 <p><?= $translate('In all cases, it’s always recommended to backup your files and your databases automatically and before risky and non-risky commands, and to check your archives regularly, so you can roll back if needed.') ?></p>
 <p>
 <?php
-if ($dbConfig['default_user_name'] === '' || $dbConfig['default_user_password'] === ''):
-    echo $translate('Read-only user is not defined.');
-else:
-    $query = [
-        'server' => $dbConfig['server'],
-        'db' => $dbConfig['db'],
-        'username' => $dbConfig['default_user_name'],
-        'password' => $dbConfig['default_user_password'],
-    ];
-    // echo $hyperlink($translate('Read-only access (simple interface)'), $url('admin/adminer-editor-mysql', [], ['query' => $query]), ['target' => '_blank']);
+if ($hasReadOnly):
+// echo $hyperlink($translate('Read-only access (simple interface)'), $url('admin/adminer-editor-mysql', [], ['query' => ['login' => 'readonly']]), ['target' => '_blank']);
     // echo '<br/>';
-    echo $hyperlink($translate('Read-only access'), $url('admin/adminer-mysql', [], ['query' => $query]), ['target' => '_blank']);
+echo $hyperlink($translate('Read-only access'), $url('admin/adminer-mysql', [], ['query' => ['login' => 'readonly']]), ['target' => '_blank']);
     echo '<br/>';
 
-    if ($dbConfig['main_user_name'] === '' || $dbConfig['main_user_password'] === ''):
-        echo $translate('Full-access user is not defined.');
-    else:
-        $query = [
-            'server' => $dbConfig['server'],
-            'db' => $dbConfig['db'],
-            'username' => $dbConfig['main_user_name'],
-            'password' => $dbConfig['main_user_password'],
-        ];
-        // echo $hyperlink($translate('Full access (simple interface)'), $url('admin/adminer-editor-mysql', [], ['query' => $query]), ['target' => '_blank']);
+    if ($hasFullAccess):
+        // echo $hyperlink($translate('Full access (simple interface)'), $url('admin/adminer-editor-mysql', [], ['query' => ['login' => 'full']]), ['target' => '_blank']);
         // echo '<br/>';
-        echo $hyperlink($translate('Full access'), $url('admin/adminer-mysql', [], ['query' => $query]), ['target' => '_blank']);
+        echo $hyperlink($translate('Full access'), $url('admin/adminer-mysql', [], ['query' => ['login' => 'full']]), ['target' => '_blank']);
+    else:
+        echo $translate('Full-access user is not defined.');
     endif;
+else:
+    echo $translate('Read-only user is not defined.');
 endif;
 ?>
 </p>

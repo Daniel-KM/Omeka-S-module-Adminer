@@ -13,7 +13,8 @@ class IndexControllerFactory implements FactoryInterface
         $iniConfig = $services->get('Omeka\Connection')->getParams();
         return new IndexController(
             [
-                'server' => $iniConfig['host'],
+                'server' => $iniConfig['host']
+                    . (empty($iniConfig['port']) ? '' : (':' . $iniConfig['port'])),
                 'db' => $iniConfig['dbname'],
             ]
         );
