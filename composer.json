@@ -42,19 +42,15 @@
         "post-install-cmd": "@build",
         "post-update-cmd": "@build",
         "build": [
+            "mkdir -p asset/vendor/adminer",
+
             "@composer install --working-dir=vendor/vrana/adminer",
 
-            "# Hack to use the css with Adminer via the Omeka route.",
-            "sed --in-place 's~$filename = \"adminer.css\";~$filename = \"modules/Adminer/asset/vendor/adminer/adminer.css\";~' vendor/vrana/adminer/adminer/include/adminer.inc.php",
-            "sed --in-place 's~$return\\[\\] = \"$filename?v=\" . crc32(file_get_contents($filename));~$return\\[\\] = \"../$filename?v=\" . crc32(file_get_contents(\"../$filename\"));~' vendor/vrana/adminer/adminer/include/adminer.inc.php",
             "@php -f 'vendor/vrana/adminer/compile.php' -- mysql",
-            "mv $(ls adminer-*-mysql.php) view/adminer/admin/index/adminer-mysql.phtml",
+            "mv $(ls adminer-*mysql.php) asset/vendor/adminer/adminer-mysql.phtml",
 
-            "# Hack to use the css with Adminer editor via the Omeka route.",
-            "sed --in-place 's~$filename = \"adminer.css\";~$filename = \"modules/Adminer/asset/vendor/adminer/adminer.css\";~' vendor/vrana/adminer/editor/include/adminer.inc.php",
-            "sed --in-place 's~$return\\[\\] = $filename;~$return\\[\\] = \"../$filename?v=\" . crc32(file_get_contents(\"../$filename\"));~' vendor/vrana/adminer/editor/include/adminer.inc.php",
             "@php -f 'vendor/vrana/adminer/compile.php' -- editor mysql",
-            "mv $(ls editor-*-mysql.php) view/adminer/admin/index/adminer-editor-mysql.phtml",
+            "mv $(ls editor-*mysql.php) asset/vendor/adminer/editor-mysql.phtml",
 
             "cp vendor/vrana/adminer/designs/lucas-sandery/adminer.css asset/vendor/adminer/adminer.css"
         ]
