@@ -27,9 +27,9 @@ else:
         'username' => $dbConfig['default_user_name'],
         'password' => $dbConfig['default_user_password'],
     ];
-    echo $hyperlink($translate('Read-only access (simple interface)'), $url('admin/adminer-editor-mysql', [], ['query' => $query]), ['target' => '_blank']);
-    echo '<br/>';
-    echo $hyperlink($translate('Read-only access (full interface)'), $url('admin/adminer-mysql', [], ['query' => $query]), ['target' => '_blank']);
+    // echo $hyperlink($translate('Read-only access (simple interface)'), $url('admin/adminer-editor-mysql', [], ['query' => $query]), ['target' => '_blank']);
+    // echo '<br/>';
+    echo $hyperlink($translate('Read-only access'), $url('admin/adminer-mysql', [], ['query' => $query]), ['target' => '_blank']);
     echo '<br/>';
 
     if ($dbConfig['main_user_name'] === '' || $dbConfig['main_user_password'] === ''):
@@ -41,9 +41,9 @@ else:
             'username' => $dbConfig['main_user_name'],
             'password' => $dbConfig['main_user_password'],
         ];
-        echo $hyperlink($translate('Full access (simple interface)'), $url('admin/adminer-editor-mysql', [], ['query' => $query]), ['target' => '_blank']);
-        echo '<br/>';
-        echo $hyperlink($translate('Full access (full interface)'), $url('admin/adminer-mysql', [], ['query' => $query]), ['target' => '_blank']);
+        // echo $hyperlink($translate('Full access (simple interface)'), $url('admin/adminer-editor-mysql', [], ['query' => $query]), ['target' => '_blank']);
+        // echo '<br/>';
+        echo $hyperlink($translate('Full access'), $url('admin/adminer-mysql', [], ['query' => $query]), ['target' => '_blank']);
     endif;
 endif;
 ?>
