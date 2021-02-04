@@ -30,12 +30,20 @@ class Module extends AbstractModule
             ? $reader->fromFile($filepath)
             : [];
 
+        // For security, don't resend original password.
+        $dbConfig['readonly_user_password'] = '';
+        $dbConfig['full_user_password'] = '';
+
         $services = $this->getServiceLocator();
         $form = $services->get('FormElementManager')->get(ConfigForm::class);
         $form->init();
         $form->setData($dbConfig);
 
-        return $renderer->formCollection($form);
+        return '<p>'
+            . $renderer->translate('A read only user is required to use the module.') // @translate
+            . ' ' . $renderer->translate('This user can be created automatically if the Omeka database user has such a right.') // @translate
+            . '</p>'
+            . $renderer->formCollection($form);
     }
 
     public function handleConfigForm(AbstractController $controller)
@@ -59,32 +67,57 @@ class Module extends AbstractModule
             return false;
         }
 
-        $reader = new \Laminas\Config\Reader\Ini();
-        $existingParams = $reader->fromFile($filepath);
+        $defaultParams = [
+            'readonly_user_name' => '',
+            'readonly_user_password' => '',
+            'full_user_name' => '',
+            'full_user_password' => '',
+        ];
+        $params = array_intersect_key($params, $defaultParams);
 
-        $params = array_intersect_key($params, array_flip([
-            'default_user_name',
-            'default_user_password',
-            'main_user_name',
-            'main_user_password',
-        ]));
+        $reader = new \Laminas\Config\Reader\Ini();
+        $existingParams = $reader->fromFile($filepath) + $defaultParams;
+
+        // Keep original password if empty.
+        if ($params['readonly_user_name']
+            && empty($params['readonly_user_password'])
+            && $existingParams['readonly_user_name'] === $params['readonly_user_name']
+        ) {
+            $params['readonly_user_password'] = $existingParams['readonly_user_password'];
+        }
+        if ($params['full_user_name']
+            && empty($params['full_user_password'])
+            && $existingParams['full_user_name'] === $params['full_user_name']
+        ) {
+            $params['full_user_password'] = $existingParams['full_user_password'];
+        }
 
         $writer = new \Laminas\Config\Writer\Ini();
         $writer->toFile($filepath, $params);
 
         // Try to create the read-only user only if new.
-        if ((!$params['default_user_name'] || !$params['default_user_password'])
-            || (!empty($existingParams['default_user_name']) && $existingParams['default_user_name'] === $params['default_user_name'])
+        if (!$params['readonly_user_name']
+            || !$params['readonly_user_password']
+            || (!empty($existingParams['readonly_user_name']) && $existingParams['readonly_user_name'] === $params['readonly_user_name'])
         ) {
             return true;
         }
 
         /** @var \Doctrine\DBAL\Connection $connection */
         $connection = $services->get('Omeka\Connection');
-        $username = $connection->quote($params['default_user_name']);
-        $password = $connection->quote($params['default_user_password']);
+        $username = $connection->quote($params['readonly_user_name']);
+        $password = $connection->quote($params['readonly_user_password']);
         $host = $connection->getHost();
         $database = $connection->getDatabase();
+
+        // Check if the user exists.
+        $sql = <<<SQL
+SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = $username);
+SQL;
+        $result = $connection->fetchColumn($sql);
+        if ($result) {
+            return;
+        }
 
         $sqls = <<<SQL
 CREATE USER $username@'$host' IDENTIFIED BY $password;

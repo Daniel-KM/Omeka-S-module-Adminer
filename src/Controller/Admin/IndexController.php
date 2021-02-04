@@ -20,9 +20,9 @@ class IndexController extends AbstractActionController
     public function indexAction()
     {
         $databaseConfig = $this->getDatabaseConfig();
-        $hasReadOnly = $databaseConfig['default_user_name'] !== '' && $databaseConfig['default_user_password'] !== '';
+        $hasReadOnly = $databaseConfig['readonly_user_name'] !== '' && $databaseConfig['readonly_user_password'] !== '';
         $hasFullAccess = $hasReadOnly
-            && $databaseConfig['main_user_name'] !== '' && $databaseConfig['main_user_password'] !== '';
+            && $databaseConfig['full_user_name'] !== '' && $databaseConfig['full_user_password'] !== '';
         return new ViewModel([
             'hasReadOnly' => $hasReadOnly,
             'hasFullAccess' => $hasFullAccess,
@@ -42,10 +42,10 @@ class IndexController extends AbstractActionController
     protected function getDatabaseConfig()
     {
         $defaultKeys = [
-            'default_user_name' => '',
-            'default_user_password' => '',
-            'main_user_name' => '',
-            'main_user_password' => '',
+            'readonly_user_name' => '',
+            'readonly_user_password' => '',
+            'full_user_name' => '',
+            'full_user_password' => '',
         ];
 
         // Load db config to use it to show message.
@@ -63,9 +63,9 @@ class IndexController extends AbstractActionController
         static $isPosted;
 
         $databaseConfig = $this->getDatabaseConfig();
-        $hasReadOnly = $databaseConfig['default_user_name'] !== '' && $databaseConfig['default_user_password'] !== '';
+        $hasReadOnly = $databaseConfig['readonly_user_name'] !== '' && $databaseConfig['readonly_user_password'] !== '';
         $hasFullAccess = $hasReadOnly
-            && $databaseConfig['main_user_name'] !== '' && $databaseConfig['main_user_password'] !== '';
+            && $databaseConfig['full_user_name'] !== '' && $databaseConfig['full_user_password'] !== '';
         $params = $this->params()->fromQuery();
         $login = $params['login'] ?? null;
 
@@ -83,7 +83,7 @@ class IndexController extends AbstractActionController
                     return $this->redirect()->toRoute(null, ['action' => 'index'], true);
                 }
 
-                $username = $login === 'full' ? $databaseConfig['main_user_name'] : $databaseConfig['default_user_name'];
+                $username = $login === 'full' ? $databaseConfig['full_user_name'] : $databaseConfig['readonly_user_name'];
                 $_POST = [
                     'auth' => [
                         // Warning: The driver for "mysql" is called "server"!
@@ -91,7 +91,7 @@ class IndexController extends AbstractActionController
                         'server' => $databaseConfig['server'],
                         'db' => $databaseConfig['db'],
                         'username' => $username,
-                        'password' => $login === 'full' ? $databaseConfig['main_user_password'] : $databaseConfig['default_user_password'],
+                        'password' => $login === 'full' ? $databaseConfig['full_user_password'] : $databaseConfig['readonly_user_password'],
                         'permanent' => '1',
                     ],
                 ];
