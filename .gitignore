@@ -13,3 +13,4 @@
 composer.phar
 debug.log
 view/adminer/admin/index/adminer-mysql.phtml
+view/adminer/admin/index/adminer-editor-mysql.phtml

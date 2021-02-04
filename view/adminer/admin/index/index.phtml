@@ -9,7 +9,7 @@ $hyperlink = $this->plugin('hyperlink');
 $url = $this->plugin('url');
 
 $this->htmlElement('body');
-echo $this->pageTitle($this->translate('Adminer Sql manager'));
+echo $this->pageTitle($this->translate('Adminer database manager'));
 ?>
 
 <strong><?= $translate('WARNING') ?></strong>
@@ -21,23 +21,29 @@ echo $this->pageTitle($this->translate('Adminer Sql manager'));
 if ($dbConfig['default_user_name'] === '' || $dbConfig['default_user_password'] === ''):
     echo $translate('Read-only user is not defined.');
 else:
-    echo $hyperlink($translate('Read-only access'), $url('admin/adminer-mysql', [], ['query' => [
+    $query = [
         'server' => $dbConfig['server'],
         'db' => $dbConfig['db'],
         'username' => $dbConfig['default_user_name'],
         'password' => $dbConfig['default_user_password'],
-    ]]), ['target' => '_blank']);
+    ];
+    echo $hyperlink($translate('Read-only access (simple interface)'), $url('admin/adminer-editor-mysql', [], ['query' => $query]), ['target' => '_blank']);
+    echo '<br/>';
+    echo $hyperlink($translate('Read-only access (full interface)'), $url('admin/adminer-mysql', [], ['query' => $query]), ['target' => '_blank']);
     echo '<br/>';
 
     if ($dbConfig['main_user_name'] === '' || $dbConfig['main_user_password'] === ''):
         echo $translate('Full-access user is not defined.');
     else:
-        echo $hyperlink($translate('Full access'), $url('admin/adminer-mysql', [], ['query' => [
+        $query = [
             'server' => $dbConfig['server'],
             'db' => $dbConfig['db'],
             'username' => $dbConfig['main_user_name'],
             'password' => $dbConfig['main_user_password'],
-        ]]), ['target' => '_blank']);
+        ];
+        echo $hyperlink($translate('Full access (simple interface)'), $url('admin/adminer-editor-mysql', [], ['query' => $query]), ['target' => '_blank']);
+        echo '<br/>';
+        echo $hyperlink($translate('Full access (full interface)'), $url('admin/adminer-mysql', [], ['query' => $query]), ['target' => '_blank']);
     endif;
 endif;
 ?>

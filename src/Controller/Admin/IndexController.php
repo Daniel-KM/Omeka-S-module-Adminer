@@ -47,4 +47,10 @@ class IndexController extends AbstractActionController
         $this->layout()->setTemplate('adminer/admin/index/layout');
         return new ViewModel();
     }
+
+    public function adminerEditorMysqlAction()
+    {
+        $this->layout()->setTemplate('adminer/admin/index/layout');
+        return new ViewModel();
+    }
 }

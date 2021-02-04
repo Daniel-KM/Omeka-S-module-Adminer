@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Adminer;
 
 return [
@@ -52,6 +53,17 @@ return [
                                 '__NAMESPACE__' => 'Adminer\Controller\Admin',
                                 'controller' => 'IndexController',
                                 'action' => 'adminerMysql',
+                            ],
+                        ],
+                    ],
+                    'adminer-editor-mysql' => [
+                        'type' => \Laminas\Router\Http\Literal::class,
+                        'options' => [
+                            'route' => '/adminer-editor',
+                            'defaults' => [
+                                '__NAMESPACE__' => 'Adminer\Controller\Admin',
+                                'controller' => 'IndexController',
+                                'action' => 'adminerEditorMysql',
                             ],
                         ],
                     ],
