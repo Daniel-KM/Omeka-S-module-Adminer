@@ -1,0 +1,162 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-02-01 00:00+0000\n"
+"PO-Revision-Date: 2021-02-01 00:00+0000\n"
+"Last-Translator: Daniel Berthereau <Daniel.fr@Berthereau.net>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.2\n"
+
+#: Module.php:65
+msgid "A read only user is required to use the module."
+msgstr ""
+"Un utilisateur ayant des droits de lecture seule est nécessaire pour "
+"utiliser ce module."
+
+#: Module.php:66
+msgid ""
+"This user can be created automatically if the Omeka database user has such a "
+"right."
+msgstr ""
+"L’utilisateur peut être créé automatiquement si l’utilisateur de la base "
+"Omeka en a le droit."
+
+#: view/adminer/admin/index/index.phtml:13
+msgid "Adminer database manager"
+msgstr "Adminer - Gestionnaire de base de données"
+
+#: view/adminer/admin/index/index.phtml:16
+msgid "WARNING"
+msgstr "ATTENTION"
+
+#: view/adminer/admin/index/index.phtml:17
+msgid "Use it at your own risk."
+msgstr "Utilisez à vos propres risques."
+
+#: view/adminer/admin/index/index.phtml:18
+msgid ""
+"It is highly recommended to use a read-only user to access database, because "
+"it’s very easy to break a database, even for people who know the Omeka code "
+"and all the modules perfectly."
+msgstr ""
+"Il est fortement recommandé d’utiliser l’utilisateur en lecture seule pour "
+"accéder à la base de données, car il est facile de la casser, même pour ceux "
+"qui connaissent parfaitement Omeka et tous les modules."
+
+#: view/adminer/admin/index/index.phtml:19
+msgid ""
+"In all cases, it’s always recommended to backup your files and your "
+"databases automatically and before risky and non-risky commands, and to "
+"check your archives regularly, so you can roll back if needed."
+msgstr ""
+"Dans tous les cas, il est toujours recommandé de sauvegarder vos fichiers et "
+"vos bases de données automatiquement et avant toutes les commandes, risquées "
+"ou non, et de vérifier vos archives régulièrement afin de revenir en arrière "
+"si besoin."
+
+#: view/adminer/admin/index/index.phtml:20
+msgid ""
+"Besides, some designs are not adapted for the simple interface. They can be "
+"selected with the button in the bottom right."
+msgstr ""
+"Par ailleurs, certains designs ne sont pas adaptés pour l’interface simple. "
+"Ils peuvent être changés avec le bouton en bas à droite."
+
+#: view/adminer/admin/index/index.phtml:24
+msgid "Read-only access (simple interface)"
+msgstr "Accès en lecture seule (interface simple)"
+
+#: view/adminer/admin/index/index.phtml:26
+msgid "Read-only access"
+msgstr "Accès en lecture seule"
+
+#: view/adminer/admin/index/index.phtml:30
+msgid "Full access (simple interface)"
+msgstr "Accès complet (interface simple)"
+
+#: view/adminer/admin/index/index.phtml:32
+msgid "Full access"
+msgstr "Accès complet"
+
+#: view/adminer/admin/index/index.phtml:34
+msgid "Full-access user is not defined."
+msgstr "L’utilisateur en accès complet n’est pas défini."
+
+#: view/adminer/admin/index/index.phtml:37
+msgid "Read-only user is not defined."
+msgstr "L’utilisateur en lecture seule n’est pas défini."
+
+#: Module.php:31
+msgid ""
+"The file \"config/database-adminer.ini\" should be writeable to install the "
+"module."
+msgstr ""
+"Le fichier \"config/database-adminer.ini\" doit pouvoir être écrit pour "
+"installer le module."
+
+#: Module.php:46 Module.php:91 Module.php:95
+msgid ""
+"The file config/database-adminer.ini is not writeable, so credentials cannot "
+"be updated."
+msgstr ""
+"Le fichier config/database-adminer.ini ne peut pas être écrit et les "
+"identifiants ne peuvent pas être enregistrés."
+
+#: Module.php:150
+msgid ""
+"The Omeka database user has no rights to check or create a user. Add it "
+"manually yourself if needed."
+msgstr ""
+"L’utilisateur de la base Omeka n’a pas le droit de vérifier ou de créer un "
+"utilisateur. Ajoutez le manuellement si besoin."
+
+#: Module.php:168
+#, php-format
+msgid "The read-only user \"%s\" has been created."
+msgstr "L’utilisateur en lecture seule \"%s\" a été créé."
+
+#: Module.php:173
+#, php-format
+msgid "An error occurred during the creation of the read-only user \"%s\"."
+msgstr ""
+"Une erreur est survenue durant la création de l’utilisateur en lecture seule "
+"\"%s\"."
+
+#: src/Form/ConfigForm.php:17
+msgid "Read only user name"
+msgstr "Nom de l’utilisateur en lecture seule"
+
+#: src/Form/ConfigForm.php:24
+msgid "Read only user password"
+msgstr "Mot de passe de l’utilisateur en lecture seule"
+
+#: src/Form/ConfigForm.php:32
+msgid "Full access user name"
+msgstr "Nom de l’utilisateur avec accès complet"
+
+#: src/Form/ConfigForm.php:39
+msgid "Full access user password"
+msgstr "Mot de passe de l’utilisateur avec accès complet"
+
+#: src/Controller/Admin/IndexController.php:78
+msgid "Read only user is not configured."
+msgstr "L’utilisateur en lecture seule n’est pas configuré."
+
+#: src/Controller/Admin/IndexController.php:82
+msgid "Full access user or read only user are not configured."
+msgstr ""
+"Les utilisateurs en accès complet ou en lecture seule ne sont pas configurés."
+
+#: config/module.config.php:24
+msgid "Adminer"
+msgstr "Adminer"
