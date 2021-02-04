@@ -55,9 +55,12 @@ class Module extends AbstractModule
         $params = $form->getData();
         $filepath = OMEKA_PATH . '/config/database-adminer.ini';
         if (!$this->isWriteableFile($filepath)) {
-            $controller->messenger()->addErrors('The file config/database-adminer.ini is not writeable, so credentials cannot be updated.'); // @translate
+            $controller->messenger()->addError('The file config/database-adminer.ini is not writeable, so credentials cannot be updated.'); // @translate
             return false;
         }
+
+        $reader = new \Laminas\Config\Reader\Ini();
+        $existingParams = $reader->fromFile($filepath);
 
         $params = array_intersect_key($params, array_flip([
             'default_user_name',
@@ -68,6 +71,41 @@ class Module extends AbstractModule
 
         $writer = new \Laminas\Config\Writer\Ini();
         $writer->toFile($filepath, $params);
+
+        // Try to create the read-only user only if new.
+        if ((!$params['default_user_name'] || !$params['default_user_password'])
+            || (!empty($existingParams['default_user_name']) && $existingParams['default_user_name'] === $params['default_user_name'])
+        ) {
+            return true;
+        }
+
+        /** @var \Doctrine\DBAL\Connection $connection */
+        $connection = $services->get('Omeka\Connection');
+        $username = $connection->quote($params['default_user_name']);
+        $password = $connection->quote($params['default_user_password']);
+        $host = $connection->getHost();
+        $database = $connection->getDatabase();
+
+        $sqls = <<<SQL
+CREATE USER $username@'$host' IDENTIFIED BY $password;
+GRANT SELECT ON `$database`.* TO $username@'$host';
+FLUSH PRIVILEGES;
+SQL;
+        try {
+            foreach (explode("\n", $sqls) as $sql) {
+                $connection->exec($sql);
+            }
+            $controller->messenger()->addSuccess(sprintf(
+                'The read-only user "%s" has been created.', // @translate
+                $username
+            ));
+        } catch (\Exception $e) {
+            $controller->messenger()->addError(sprintf(
+                'An error occurred during the creation of the read-only user "%s".', // @translate
+                $username
+            ));
+        }
+
         return true;
     }
 
