@@ -19,30 +19,32 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
-        $defaultKeys = array_fill_keys([
-            'default_user_name',
-            'default_user_password',
-            'main_user_name',
-            'main_user_password',
-        ], '');
+        $defaultKeys = [
+            'default_user_name' => '',
+            'default_user_password' => '',
+            'main_user_name' => '',
+            'main_user_password' => '',
+        ];
 
         // Load db config to use it to show message.
         $filepath = OMEKA_PATH . '/config/database-adminer.ini';
         $reader = new \Laminas\Config\Reader\Ini();
-        $dbConfig = file_exists($filepath)
+        $dbFileConfig = file_exists($filepath)
             ? $reader->fromFile($filepath)
             : $defaultKeys;
 
-        $dbConfig = array_intersect_key($dbConfig, $defaultKeys) + $this->dbConfig;
+        $dbFileConfig = array_intersect_key($dbFileConfig, $defaultKeys) + $this->dbConfig;
 
-        $view = new ViewModel();
-        $view->setVariable('db_config', $dbConfig);
-        return $view;
+        return new ViewModel([
+            'dbConfig' => $dbFileConfig,
+        ]);
     }
 
     public function adminerMysqlAction()
     {
-        $this->layout()->setTemplate('layout/adminer/layout');
+        // Either this simple layout, either view with terminal template, that
+        // requires an include.
+        $this->layout()->setTemplate('adminer/admin/index/layout');
         return new ViewModel();
     }
 }

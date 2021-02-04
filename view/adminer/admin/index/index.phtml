@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \Laminas\View\Renderer\PhpRenderer $this
- * @var array $db_config
+ * @var array $dbConfig
  */
 
 $translate = $this->plugin('translate');
@@ -11,31 +11,32 @@ $url = $this->plugin('url');
 $this->htmlElement('body');
 echo $this->pageTitle($this->translate('Adminer Sql manager'));
 ?>
-<b><?= $translate('WARNING') ?></b>
+
+<strong><?= $translate('WARNING') ?></strong>
 <p><?= $translate('Use it at your own risk.') ?></p>
 <p><?= $translate('It is highly recommended to use a read-only user to access database, because it’s very easy to break a database, even for people who know the Omeka code and all the modules perfectly.') ?></p>
 <p><?= $translate('In all cases, it’s always recommended to backup your files and your databases automatically and before risky and non-risky commands, and to check your archives regularly, so you can roll back if needed.') ?></p>
 <p>
 <?php
-if ($db_config['default_user_name'] === '' || $db_config['default_user_password'] === ''):
+if ($dbConfig['default_user_name'] === '' || $dbConfig['default_user_password'] === ''):
     echo $translate('Read-only user is not defined.');
 else:
     echo $hyperlink($translate('Read-only access'), $url('admin/adminer-mysql', [], ['query' => [
-        'server' => $db_config['server'],
-        'db' => $db_config['db'],
-        'username' => $db_config['default_user_name'],
-        'password' => $db_config['default_user_password'],
+        'server' => $dbConfig['server'],
+        'db' => $dbConfig['db'],
+        'username' => $dbConfig['default_user_name'],
+        'password' => $dbConfig['default_user_password'],
     ]]), ['target' => '_blank']);
     echo '<br/>';
 
-    if ($db_config['main_user_name'] === '' || $db_config['main_user_password'] === ''):
+    if ($dbConfig['main_user_name'] === '' || $dbConfig['main_user_password'] === ''):
         echo $translate('Full-access user is not defined.');
     else:
         echo $hyperlink($translate('Full access'), $url('admin/adminer-mysql', [], ['query' => [
-            'server' => $db_config['server'],
-            'db' => $db_config['db'],
-            'username' => $db_config['main_user_name'],
-            'password' => $db_config['main_user_password'],
+            'server' => $dbConfig['server'],
+            'db' => $dbConfig['db'],
+            'username' => $dbConfig['main_user_name'],
+            'password' => $dbConfig['main_user_password'],
         ]]), ['target' => '_blank']);
     endif;
 endif;

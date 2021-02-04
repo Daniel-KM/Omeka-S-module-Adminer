@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Adminer\Service\Controller\Admin;
 
 use Adminer\Controller\Admin\IndexController;
@@ -11,7 +12,10 @@ class IndexControllerFactory implements FactoryInterface
     {
         $iniConfig = $services->get('Omeka\Connection')->getParams();
         return new IndexController(
-            ['server' => $iniConfig['host'], 'db' => $iniConfig['dbname']]
+            [
+                'server' => $iniConfig['host'],
+                'db' => $iniConfig['dbname'],
+            ]
         );
     }
 }

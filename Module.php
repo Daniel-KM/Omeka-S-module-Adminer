@@ -14,6 +14,8 @@ class Module extends AbstractModule
         return include __DIR__ . '/config/module.config.php';
     }
 
+    // Acl are not updated, so only admins can use the module.
+
     public function getConfigForm(PhpRenderer $renderer)
     {
         $filepath = OMEKA_PATH . '/config/database-adminer.ini';
