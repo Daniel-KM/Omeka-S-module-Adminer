@@ -4,21 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dd5e553f5c1e43e8d09a1f22ccd8acd2",
+    "content-hash": "1a3787c66eea5feb2228e052a40b2eba",
     "packages": [
         {
             "name": "vrana/adminer",
-            "version": "v4.7.8",
+            "version": "dev-fix/merged_pr",
             "source": {
                 "type": "git",
-                "url": "https://github.com/vrana/adminer.git",
-                "reference": "190146672f6ce9b8f08af2d7e7a5e8f768d32ee6"
+                "url": "https://github.com/Daniel-KM/adminer.git",
+                "reference": "fca0f24229ec3c841f0448ec954e4f155a2a9a30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vrana/adminer/zipball/190146672f6ce9b8f08af2d7e7a5e8f768d32ee6",
-                "reference": "190146672f6ce9b8f08af2d7e7a5e8f768d32ee6",
+                "url": "https://api.github.com/repos/Daniel-KM/adminer/zipball/fca0f24229ec3c841f0448ec954e4f155a2a9a30",
+                "reference": "fca0f24229ec3c841f0448ec954e4f155a2a9a30",
                 "shasum": ""
+            },
+            "require": {
+                "vrana/jsshrink": "dev-master",
+                "vrana/jush": "^2.0"
             },
             "type": "library",
             "autoload": {
@@ -26,7 +30,21 @@
                     "plugins/"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "compile": [
+                    "php compile.php"
+                ],
+                "post-install-cmd": [
+                    "@build"
+                ],
+                "post-update-cmd": [
+                    "@build"
+                ],
+                "build": [
+                    "cp -r vendor/vrana/jush externals",
+                    "cp -R vendor/vrana/jsshrink/* externals/JsShrink/"
+                ]
+            },
             "license": [
                 "Apache-2.0",
                 "GPL-2.0-only"
@@ -43,27 +61,82 @@
                 "database"
             ],
             "support": {
-                "forum": "https://sourceforge.net/p/adminer/discussion/",
                 "issues": "https://sourceforge.net/p/adminer/bugs-and-features/",
+                "forum": "https://sourceforge.net/p/adminer/discussion/",
                 "source": "https://github.com/vrana/adminer/"
             },
             "funding": [
                 {
-                    "url": "https://sourceforge.net/p/adminer/donate/",
-                    "type": "custom"
+                    "type": "patreon",
+                    "url": "https://www.patreon.com/jakubvrana"
                 },
                 {
-                    "url": "https://www.patreon.com/jakubvrana",
-                    "type": "patreon"
+                    "type": "custom",
+                    "url": "https://sourceforge.net/p/adminer/donate/"
                 }
             ],
-            "time": "2020-12-06T12:58:20+00:00"
+            "time": "2021-02-01T00:00:00+00:00"
+        },
+        {
+            "name": "vrana/jsshrink",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vrana/JsShrink",
+                "reference": "master"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://codeload.github.com/vrana/JsShrink/zip/master",
+                "reference": "master"
+            },
+            "type": "library"
+        },
+        {
+            "name": "vrana/jush",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vrana/jush.git",
+                "reference": "6f4e94d7660f1d610347e3b7871b0617d1cf5557"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vrana/jush/zipball/6f4e94d7660f1d610347e3b7871b0617d1cf5557",
+                "reference": "6f4e94d7660f1d610347e3b7871b0617d1cf5557",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0",
+                "GPL-2.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Jakub Vrána",
+                    "homepage": "https://www.vrana.cz/"
+                }
+            ],
+            "description": "JUSH - JavaScript Syntax Highlighter",
+            "homepage": "http://jush.sourceforge.net/",
+            "keywords": [
+                "Syntax highlighter",
+                "javascript"
+            ],
+            "support": {
+                "source": "https://github.com/vrana/jush/"
+            },
+            "time": "2018-03-02T08:41:11+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "vrana/adminer": 20,
+        "vrana/jsshrink": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

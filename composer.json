@@ -2,8 +2,34 @@
     "name": "daniel-km/omeka-s-module-adminer",
     "description": "Access to Omeka database through Adminer, a one-file full-featured database management tool.",
     "type": "library",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Daniel-KM/adminer"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "vrana/jsshrink",
+                "version": "master",
+                "source": {
+                    "url": "https://github.com/vrana/JsShrink",
+                    "type": "git",
+                    "reference":"master"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://codeload.github.com/vrana/JsShrink/zip/master",
+                    "reference": "master"
+                }
+            }
+        }
+    ],
     "require": {
-        "vrana/adminer": "^4.7"
+        "vrana/adminer": "dev-fix/merged_pr"
+    },
+    "require-dev": {
+        "vrana/jsshrink": "dev-master"
     },
     "license": "CECILL-2.1",
     "authors": [
