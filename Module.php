@@ -34,6 +34,7 @@ class Module extends AbstractModule
             $messenger->addWarning($message); // @translate
             throw new ModuleCannotInstallException((string) $message);
         }
+        @chmod($filepath, 0770);
     }
 
     // Acl are not updated, so only admins can use the module.
@@ -123,6 +124,7 @@ class Module extends AbstractModule
 
         $writer = new \Laminas\Config\Writer\Ini();
         $writer->toFile($filepath, $params);
+        @chmod($filepath, 0770);
 
         // Try to create the read-only user only if new.
         if (!$params['readonly_user_name']
