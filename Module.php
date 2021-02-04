@@ -1,17 +1,39 @@
 <?php declare(strict_types=1);
+
 namespace Adminer;
 
 use Adminer\Form\ConfigForm;
 use Laminas\Mvc\Controller\AbstractController;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\View\Renderer\PhpRenderer;
 use Omeka\Module\AbstractModule;
+use Omeka\Module\Exception\ModuleCannotInstallException;
 use Omeka\Mvc\Controller\Plugin\Messenger;
+use Omeka\Stdlib\Message;
 
 class Module extends AbstractModule
 {
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
+    }
+
+    public function install(ServiceLocatorInterface $serviceLocator): void
+    {
+        $filepath = OMEKA_PATH . '/config/database-adminer.ini';
+        if (file_exists($filepath)) {
+            $result = is_writeable($filepath);
+        } else {
+            $result = @file_put_contents($filepath, '');
+        }
+        if ($result === false) {
+            $message = new Message(
+                'The file "config/database-adminer.ini" should be writeable to install the module.' // @translate
+            );
+            $messenger = new Messenger();
+            $messenger->addWarning($message); // @translate
+            throw new ModuleCannotInstallException((string) $message);
+        }
     }
 
     // Acl are not updated, so only admins can use the module.
@@ -62,7 +84,14 @@ class Module extends AbstractModule
 
         $params = $form->getData();
         $filepath = OMEKA_PATH . '/config/database-adminer.ini';
-        if (!$this->isWriteableFile($filepath)) {
+
+        if (!file_exists($filepath)) {
+            $result = @file_put_contents($filepath, '');
+            if ($result === false) {
+                $controller->messenger()->addError('The file config/database-adminer.ini is not writeable, so credentials cannot be updated.'); // @translate
+                return false;
+            }
+        } elseif (!$this->isWriteableFile($filepath)) {
             $controller->messenger()->addError('The file config/database-adminer.ini is not writeable, so credentials cannot be updated.'); // @translate
             return false;
         }
@@ -114,9 +143,16 @@ class Module extends AbstractModule
         $sql = <<<SQL
 SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = $username);
 SQL;
-        $result = $connection->fetchColumn($sql);
+        try {
+            $result = $connection->fetchColumn($sql);
+        } catch (\Exception $e) {
+            $controller->messenger()->addError(
+                'The Omeka database user has no rights to check or create a user. Add it manually yourself if needed.' // @translate
+            );
+            return true;
+        }
         if ($result) {
-            return;
+            return true;
         }
 
         $sqls = <<<SQL
@@ -137,6 +173,7 @@ SQL;
                 'An error occurred during the creation of the read-only user "%s".', // @translate
                 $username
             ));
+            return true;
         }
 
         return true;
