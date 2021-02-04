@@ -18,14 +18,14 @@ return [
         ],
     ],
     'navigation' => [
-        'AdminGlobal' => [
+        'AdminModule' => [
             [
                 'label' => 'Adminer', // @translate
                 'route' => 'admin/adminer',
                 'controller' => Controller\Admin\IndexController::class,
                 'action' => 'index',
                 // 'privilege' => 'browse',
-                'class' => '.o-icon-settings',
+                'class' => 'far fa-database',
             ],
         ],
     ],
