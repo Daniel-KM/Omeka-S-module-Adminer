@@ -1,0 +1,27 @@
+{
+    "name": "daniel-km/omeka-s-module-adminer",
+    "description": "Access to Omeka database through Adminer, a one-file full-featured database management tool.",
+    "type": "library",
+    "require": {
+        "vrana/adminer": "^4.7"
+    },
+    "license": "CECILL-2.1",
+    "authors": [
+        {
+            "name": "Daniel Berthereau",
+            "email": "Daniel.git@Berthereau.net"
+        }
+    ],
+   "scripts": {
+        "post-install-cmd": [
+            "@composer install --working-dir=vendor/vrana/adminer",
+            "@php -f 'vendor/vrana/adminer/compile.php' -- mysql",
+            "mv $(ls adminer-*-mysql.php) view/adminer/admin/index/adminer-mysql.phtml"
+        ],
+        "post-update-cmd": [
+            "@composer update --working-dir=vendor/vrana/adminer",
+            "@php -f 'vendor/vrana/adminer/compile.php' -- mysql",
+            "mv $(ls adminer-*-mysql.php) view/adminer/admin/index/adminer-mysql.phtml"
+        ]
+    }
+}

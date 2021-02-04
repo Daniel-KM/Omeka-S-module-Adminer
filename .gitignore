@@ -12,3 +12,4 @@
 .php_cs.cache
 composer.phar
 debug.log
+view/adminer/admin/index/adminer-mysql.phtml
