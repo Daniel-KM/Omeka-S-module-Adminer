@@ -22,8 +22,8 @@ function listDesigns()
 }
 
 function adminer_object() {
-    include_once dirname(__DIR__, 4) . '/vendor/vrana/adminer/plugins/plugin.php';
-    foreach (glob(dirname(__DIR__, 4) . '/asset/vendor/adminer/plugins/*.php') as $filename) {
+    // include_once dirname(__DIR__, 4) . '/vendor/vrana/adminer/plugins/plugin.php';
+    foreach (glob(dirname(__DIR__, 4) . '/vendor/vrana/adminer/plugins/*.php') as $filename) {
         include_once $filename;
     }
 

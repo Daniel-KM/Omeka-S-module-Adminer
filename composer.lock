@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Daniel-KM/adminer.git",
-                "reference": "0a555d1663765fe3c51104e3c4fe8d7da2bf04ff"
+                "reference": "dbcf44374fa6d81733bb0d9e60333c4239addd71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Daniel-KM/adminer/zipball/0a555d1663765fe3c51104e3c4fe8d7da2bf04ff",
-                "reference": "0a555d1663765fe3c51104e3c4fe8d7da2bf04ff",
+                "url": "https://api.github.com/repos/Daniel-KM/adminer/zipball/dbcf44374fa6d81733bb0d9e60333c4239addd71",
+                "reference": "dbcf44374fa6d81733bb0d9e60333c4239addd71",
                 "shasum": ""
             },
             "require": {
