@@ -17,7 +17,7 @@ echo $this->pageTitle($this->translate('Adminer database manager'));
 <p><?= $translate('Use it at your own risk.') ?></p>
 <p><?= $translate('It is highly recommended to use a read-only user to access database, because it’s very easy to break a database, even for people who know the Omeka code and all the modules perfectly.') ?></p>
 <p><?= $translate('In all cases, it’s always recommended to backup your files and your databases automatically and before risky and non-risky commands, and to check your archives regularly, so you can roll back if needed.') ?></p>
-<p><?= $translate('Besides, some designs are not adapted for the simple interface. They can be selected with the button in the bottom right.') ?></p>
+<p><?php echo $translate('Besides, some designs are not adapted for the simple interface. They can be selected with the button in the bottom right.'); echo ' ' . $translate('Currently, the design cannot be changed on the first page.') ?><p>
 <p>
 <?php
 if ($hasReadOnly):

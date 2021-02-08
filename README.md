@@ -72,6 +72,7 @@ TODO
 * [x] Allow to use any adminer.css theme simply by putting it in a directory.
 * [ ] Remove access to column `password` of users.
 * [x] Give the choice to use the simplified version "adminer editor" (finalize theme).
+- [ ] Fix the warning when changing theme on the first page.
 
 
 Warning
