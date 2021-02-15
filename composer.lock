@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a3787c66eea5feb2228e052a40b2eba",
+    "content-hash": "edcb2b2c89b8e4b643ac2aeeab2c1522",
     "packages": [
         {
             "name": "vrana/adminer",
             "version": "dev-fix/merged_pr",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Daniel-KM/adminer.git",
-                "reference": "dbcf44374fa6d81733bb0d9e60333c4239addd71"
+                "url": "https://gitlab.com/Daniel-KM/adminer.git",
+                "reference": "499ebda21a227f151d35129028ab12b88c7c4d6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Daniel-KM/adminer/zipball/dbcf44374fa6d81733bb0d9e60333c4239addd71",
-                "reference": "dbcf44374fa6d81733bb0d9e60333c4239addd71",
+                "url": "https://gitlab.com/api/v4/projects/Daniel-KM%2Fadminer/repository/archive.zip?sha=499ebda21a227f151d35129028ab12b88c7c4d6a",
+                "reference": "499ebda21a227f151d35129028ab12b88c7c4d6a",
                 "shasum": ""
             },
             "require": {
@@ -65,17 +65,7 @@
                 "forum": "https://sourceforge.net/p/adminer/discussion/",
                 "source": "https://github.com/vrana/adminer/"
             },
-            "funding": [
-                {
-                    "type": "patreon",
-                    "url": "https://www.patreon.com/jakubvrana"
-                },
-                {
-                    "type": "custom",
-                    "url": "https://sourceforge.net/p/adminer/donate/"
-                }
-            ],
-            "time": "2021-02-08T00:00:00+00:00"
+            "time": "2021-02-15T00:00:00+00:00"
         },
         {
             "name": "vrana/jsshrink",
