@@ -136,7 +136,9 @@ class Module extends AbstractModule
 
         /** @var \Doctrine\DBAL\Connection $connection */
         $connection = $services->get('Omeka\Connection');
-        $username = $connection->quote($params['readonly_user_name']);
+        // Username and password are quoted for all queries below.
+        $usernameUnquoted = $params['readonly_user_name'];
+        $username = $connection->quote($usernameUnquoted);
         $password = $connection->quote($params['readonly_user_password']);
         $host = $connection->getHost();
         $database = $connection->getDatabase();
@@ -153,27 +155,71 @@ SQL;
             );
             return true;
         }
-        if ($result) {
-            return true;
+
+        // Check grants of the user.
+        $hasUser = !empty($result);
+        if ($hasUser) {
+            $sql = <<<SQL
+SHOW GRANTS FOR $username@'$host';
+SQL;
+            try {
+                $result = $connection->fetchAll($sql);
+            } catch (\Exception $e) {
+                $controller->messenger()->addError(
+                    'The Omeka database user has no rights to check grants of a user. Add it manually yourself if needed.' // @translate
+                );
+                return true;
+            }
+
+            foreach ($result as $value) {
+                $value = reset($value);
+                if (strpos($value, 'GRANT ALL PRIVILEGES ON *.*') !== false
+                    || strpos($value, 'GRANT SELECT ON *.*') !== false
+                    || strpos($value, "GRANT ALL PRIVILEGES ON `$database`.*") !== false
+                    || strpos($value, "GRANT SELECT ON `$database`.*") !== false
+                ) {
+                    return true;
+                }
+            }
+        } else {
+            $sql = <<<SQL
+CREATE USER $username@'$host' IDENTIFIED BY $password;
+SQL;
+            try {
+                $connection->exec($sql);
+            } catch (\Exception $e) {
+                $controller->messenger()->addError(sprintf(
+                    'An error occurred during the creation of the read-only user "%s".', // @translate
+                    $usernameUnquoted
+                ));
+                return true;
+            }
         }
 
-        $sqls = <<<SQL
-CREATE USER $username@'$host' IDENTIFIED BY $password;
+        // Grant Select privilege to user.
+        $sql = <<<SQL
 GRANT SELECT ON `$database`.* TO $username@'$host';
-FLUSH PRIVILEGES;
 SQL;
         try {
-            foreach (explode("\n", $sqls) as $sql) {
-                $connection->exec($sql);
-            }
+            $connection->exec($sql);
             $controller->messenger()->addSuccess(sprintf(
                 'The read-only user "%s" has been created.', // @translate
-                $username
+                $usernameUnquoted
             ));
         } catch (\Exception $e) {
             $controller->messenger()->addError(sprintf(
                 'An error occurred during the creation of the read-only user "%s".', // @translate
-                $username
+                $usernameUnquoted
+            ));
+            return true;
+        }
+
+        try {
+            $connection->exec('FLUSH PRIVILEGES;');
+        } catch (\Exception $e) {
+            $controller->messenger()->addError(sprintf(
+                'An error occurred when flushing privileges for user "%s".', // @translate
+                $usernameUnquoted
             ));
             return true;
         }
