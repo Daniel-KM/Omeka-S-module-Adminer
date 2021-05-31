@@ -26,7 +26,7 @@
         }
     ],
     "require": {
-        "vrana/adminer": "dev-fix/merged_pr"
+        "vrana/adminer": "dev-master"
     },
     "require-dev": {
         "vrana/jsshrink": "dev-master"

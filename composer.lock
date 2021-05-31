@@ -4,26 +4,27 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "edcb2b2c89b8e4b643ac2aeeab2c1522",
+    "content-hash": "0e46d18466ca5dfc551e30fe4a410152",
     "packages": [
         {
             "name": "vrana/adminer",
-            "version": "dev-fix/merged_pr",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://gitlab.com/Daniel-KM/adminer.git",
-                "reference": "499ebda21a227f151d35129028ab12b88c7c4d6a"
+                "reference": "211aa5a3ee728fcf005e6fd4305fbd59e07eb081"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/Daniel-KM%2Fadminer/repository/archive.zip?sha=499ebda21a227f151d35129028ab12b88c7c4d6a",
-                "reference": "499ebda21a227f151d35129028ab12b88c7c4d6a",
+                "url": "https://gitlab.com/api/v4/projects/Daniel-KM%2Fadminer/repository/archive.zip?sha=211aa5a3ee728fcf005e6fd4305fbd59e07eb081",
+                "reference": "211aa5a3ee728fcf005e6fd4305fbd59e07eb081",
                 "shasum": ""
             },
             "require": {
                 "vrana/jsshrink": "dev-master",
                 "vrana/jush": "^2.0"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "classmap": [
@@ -65,7 +66,7 @@
                 "forum": "https://sourceforge.net/p/adminer/discussion/",
                 "source": "https://github.com/vrana/adminer/"
             },
-            "time": "2021-02-15T00:00:00+00:00"
+            "time": "2021-05-17T00:00:00+00:00"
         },
         {
             "name": "vrana/jsshrink",
