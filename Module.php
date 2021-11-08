@@ -148,7 +148,7 @@ class Module extends AbstractModule
 SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = $username);
 SQL;
         try {
-            $result = $connection->fetchColumn($sql);
+            $result = $connection->fetchOne($sql);
         } catch (\Exception $e) {
             $controller->messenger()->addError(
                 'The Omeka database user has no rights to check or create a user. Add it manually yourself if needed.' // @translate
@@ -186,7 +186,7 @@ SQL;
 CREATE USER $username@'$host' IDENTIFIED BY $password;
 SQL;
             try {
-                $connection->exec($sql);
+                $connection->executeQuery($sql);
             } catch (\Exception $e) {
                 $controller->messenger()->addError(sprintf(
                     'An error occurred during the creation of the read-only user "%s".', // @translate
@@ -201,7 +201,7 @@ SQL;
 GRANT SELECT ON `$database`.* TO $username@'$host';
 SQL;
         try {
-            $connection->exec($sql);
+            $connection->executeQuery($sql);
             $controller->messenger()->addSuccess(sprintf(
                 'The read-only user "%s" has been created.', // @translate
                 $usernameUnquoted
@@ -215,7 +215,7 @@ SQL;
         }
 
         try {
-            $connection->exec('FLUSH PRIVILEGES;');
+            $connection->executeQuery('FLUSH PRIVILEGES;');
         } catch (\Exception $e) {
             $controller->messenger()->addError(sprintf(
                 'An error occurred when flushing privileges for user "%s".', // @translate
