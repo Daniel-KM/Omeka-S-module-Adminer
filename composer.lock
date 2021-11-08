@@ -4,25 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0e46d18466ca5dfc551e30fe4a410152",
+    "content-hash": "6ba2add7345e141672f1e3c1fd0b35c4",
     "packages": [
         {
             "name": "vrana/adminer",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://gitlab.com/Daniel-KM/adminer.git",
-                "reference": "211aa5a3ee728fcf005e6fd4305fbd59e07eb081"
+                "url": "https://github.com/vrana/adminer.git",
+                "reference": "88647b93e467210f270340e758af6771e2c5638a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/Daniel-KM%2Fadminer/repository/archive.zip?sha=211aa5a3ee728fcf005e6fd4305fbd59e07eb081",
-                "reference": "211aa5a3ee728fcf005e6fd4305fbd59e07eb081",
+                "url": "https://api.github.com/repos/vrana/adminer/zipball/88647b93e467210f270340e758af6771e2c5638a",
+                "reference": "88647b93e467210f270340e758af6771e2c5638a",
                 "shasum": ""
-            },
-            "require": {
-                "vrana/jsshrink": "dev-master",
-                "vrana/jush": "^2.0"
             },
             "default-branch": true,
             "type": "library",
@@ -31,21 +27,7 @@
                     "plugins/"
                 ]
             },
-            "scripts": {
-                "compile": [
-                    "php compile.php"
-                ],
-                "post-install-cmd": [
-                    "@build"
-                ],
-                "post-update-cmd": [
-                    "@build"
-                ],
-                "build": [
-                    "cp -r vendor/vrana/jush externals",
-                    "cp -R vendor/vrana/jsshrink/* externals/JsShrink/"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0",
                 "GPL-2.0-only"
@@ -62,12 +44,24 @@
                 "database"
             ],
             "support": {
-                "issues": "https://sourceforge.net/p/adminer/bugs-and-features/",
                 "forum": "https://sourceforge.net/p/adminer/discussion/",
+                "issues": "https://sourceforge.net/p/adminer/bugs-and-features/",
                 "source": "https://github.com/vrana/adminer/"
             },
-            "time": "2021-05-17T00:00:00+00:00"
-        },
+            "funding": [
+                {
+                    "url": "https://sourceforge.net/p/adminer/donate/",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/jakubvrana",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2021-05-23T11:40:36+00:00"
+        }
+    ],
+    "packages-dev": [
         {
             "name": "vrana/jsshrink",
             "version": "master",
@@ -82,46 +76,8 @@
                 "reference": "master"
             },
             "type": "library"
-        },
-        {
-            "name": "vrana/jush",
-            "version": "v2.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/vrana/jush.git",
-                "reference": "6f4e94d7660f1d610347e3b7871b0617d1cf5557"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/vrana/jush/zipball/6f4e94d7660f1d610347e3b7871b0617d1cf5557",
-                "reference": "6f4e94d7660f1d610347e3b7871b0617d1cf5557",
-                "shasum": ""
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0",
-                "GPL-2.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Jakub Vrána",
-                    "homepage": "https://www.vrana.cz/"
-                }
-            ],
-            "description": "JUSH - JavaScript Syntax Highlighter",
-            "homepage": "http://jush.sourceforge.net/",
-            "keywords": [
-                "Syntax highlighter",
-                "javascript"
-            ],
-            "support": {
-                "source": "https://github.com/vrana/jush/"
-            },
-            "time": "2018-03-02T08:41:11+00:00"
         }
     ],
-    "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {

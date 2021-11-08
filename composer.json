@@ -4,10 +4,6 @@
     "type": "library",
     "repositories": [
         {
-            "type": "vcs",
-            "url": "https://gitlab.com/Daniel-KM/adminer"
-        },
-        {
             "type": "package",
             "package": {
                 "name": "vrana/jsshrink",
@@ -15,7 +11,7 @@
                 "source": {
                     "url": "https://github.com/vrana/JsShrink",
                     "type": "git",
-                    "reference":"master"
+                    "reference": "master"
                 },
                 "dist": {
                     "type": "zip",
