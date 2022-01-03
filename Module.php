@@ -186,7 +186,7 @@ SQL;
 CREATE USER $username@'$host' IDENTIFIED BY $password;
 SQL;
             try {
-                $connection->executeQuery($sql);
+                $connection->executeStatement($sql);
             } catch (\Exception $e) {
                 $controller->messenger()->addError(sprintf(
                     'An error occurred during the creation of the read-only user "%s".', // @translate
@@ -201,7 +201,7 @@ SQL;
 GRANT SELECT ON `$database`.* TO $username@'$host';
 SQL;
         try {
-            $connection->executeQuery($sql);
+            $connection->executeStatement($sql);
             $controller->messenger()->addSuccess(sprintf(
                 'The read-only user "%s" has been created.', // @translate
                 $usernameUnquoted
@@ -215,7 +215,7 @@ SQL;
         }
 
         try {
-            $connection->executeQuery('FLUSH PRIVILEGES;');
+            $connection->executeStatement('FLUSH PRIVILEGES;');
         } catch (\Exception $e) {
             $controller->messenger()->addError(sprintf(
                 'An error occurred when flushing privileges for user "%s".', // @translate
