@@ -7,23 +7,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-01 00:00+0000\n"
-"PO-Revision-Date: 2021-02-01 00:00+0000\n"
+"POT-Creation-Date: 2022-01-03 00:00+0000\n"
+"PO-Revision-Date: 2022-01-03 00:00+0000\n"
 "Last-Translator: Daniel Berthereau <Daniel.fr@Berthereau.net>\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.0.1\n"
 
-#: Module.php:65
+#: Module.php:66
 msgid "A read only user is required to use the module."
 msgstr ""
 "Un utilisateur ayant des droits de lecture seule est nécessaire pour "
 "utiliser ce module."
 
-#: Module.php:66
+#: Module.php:67
 msgid ""
 "This user can be created automatically if the Omeka database user has such a "
 "right."
@@ -72,6 +72,10 @@ msgstr ""
 "Par ailleurs, certains designs ne sont pas adaptés pour l’interface simple. "
 "Ils peuvent être changés avec le bouton en bas à droite."
 
+#: view/adminer/admin/index/index.phtml:20
+msgid "Currently, the design cannot be changed on the first page."
+msgstr "Actuellement, le thème ne peut pas être changé sur la première page."
+
 #: view/adminer/admin/index/index.phtml:24
 msgid "Read-only access (simple interface)"
 msgstr "Accès en lecture seule (interface simple)"
@@ -104,7 +108,7 @@ msgstr ""
 "Le fichier \"config/database-adminer.ini\" doit pouvoir être écrit pour "
 "installer le module."
 
-#: Module.php:46 Module.php:91 Module.php:95
+#: Module.php:47 Module.php:92 Module.php:96
 msgid ""
 "The file config/database-adminer.ini is not writeable, so credentials cannot "
 "be updated."
@@ -112,7 +116,7 @@ msgstr ""
 "Le fichier config/database-adminer.ini ne peut pas être écrit et les "
 "identifiants ne peuvent pas être enregistrés."
 
-#: Module.php:150
+#: Module.php:154
 msgid ""
 "The Omeka database user has no rights to check or create a user. Add it "
 "manually yourself if needed."
@@ -120,17 +124,32 @@ msgstr ""
 "L’utilisateur de la base Omeka n’a pas le droit de vérifier ou de créer un "
 "utilisateur. Ajoutez le manuellement si besoin."
 
-#: Module.php:168
-#, php-format
-msgid "The read-only user \"%s\" has been created."
-msgstr "L’utilisateur en lecture seule \"%s\" a été créé."
+#: Module.php:169
+msgid ""
+"The Omeka database user has no rights to check grants of a user. Add it "
+"manually yourself if needed."
+msgstr ""
+"L’utilisateur de la base Omeka n’a pas le droit de gérer les privilèges d’un "
+"utilisateur. Ajoutez le manuellement si besoin."
 
-#: Module.php:173
+#: Module.php:192 Module.php:211
 #, php-format
 msgid "An error occurred during the creation of the read-only user \"%s\"."
 msgstr ""
 "Une erreur est survenue durant la création de l’utilisateur en lecture seule "
 "\"%s\"."
+
+#: Module.php:206
+#, php-format
+msgid "The read-only user \"%s\" has been created."
+msgstr "L’utilisateur en lecture seule \"%s\" a été créé."
+
+#: Module.php:221
+#, php-format
+msgid "An error occurred when flushing privileges for user \"%s\"."
+msgstr ""
+"Une erreur est survenue lors de l’enregistrement des privilèges de "
+"l’utilisateur \"%s\"."
 
 #: src/Form/ConfigForm.php:17
 msgid "Read only user name"

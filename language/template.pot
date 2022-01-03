@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-01 00:00+0000\n"
+"POT-Creation-Date: 2022-01-03 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: Module.php:65
+#: Module.php:66
 msgid "A read only user is required to use the module."
 msgstr ""
 
-#: Module.php:66
+#: Module.php:67
 msgid ""
 "This user can be created automatically if the Omeka database user has such a "
 "right."
@@ -59,6 +59,10 @@ msgid ""
 "selected with the button in the bottom right."
 msgstr ""
 
+#: view/adminer/admin/index/index.phtml:20
+msgid "Currently, the design cannot be changed on the first page."
+msgstr ""
+
 #: view/adminer/admin/index/index.phtml:24
 msgid "Read-only access (simple interface)"
 msgstr ""
@@ -89,26 +93,37 @@ msgid ""
 "module."
 msgstr ""
 
-#: Module.php:46 Module.php:91 Module.php:95
+#: Module.php:47 Module.php:92 Module.php:96
 msgid ""
 "The file config/database-adminer.ini is not writeable, so credentials cannot "
 "be updated."
 msgstr ""
 
-#: Module.php:150
+#: Module.php:154
 msgid ""
 "The Omeka database user has no rights to check or create a user. Add it "
 "manually yourself if needed."
 msgstr ""
 
-#: Module.php:168
+#: Module.php:169
+msgid ""
+"The Omeka database user has no rights to check grants of a user. Add it "
+"manually yourself if needed."
+msgstr ""
+
+#: Module.php:192 Module.php:211
+#, php-format
+msgid "An error occurred during the creation of the read-only user \"%s\"."
+msgstr ""
+
+#: Module.php:206
 #, php-format
 msgid "The read-only user \"%s\" has been created."
 msgstr ""
 
-#: Module.php:173
+#: Module.php:221
 #, php-format
-msgid "An error occurred during the creation of the read-only user \"%s\"."
+msgid "An error occurred when flushing privileges for user \"%s\"."
 msgstr ""
 
 #: src/Form/ConfigForm.php:17
