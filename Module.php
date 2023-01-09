@@ -8,7 +8,6 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\View\Renderer\PhpRenderer;
 use Omeka\Module\AbstractModule;
 use Omeka\Module\Exception\ModuleCannotInstallException;
-use Omeka\Mvc\Controller\Plugin\Messenger;
 use Omeka\Stdlib\Message;
 
 class Module extends AbstractModule
@@ -18,7 +17,7 @@ class Module extends AbstractModule
         return include __DIR__ . '/config/module.config.php';
     }
 
-    public function install(ServiceLocatorInterface $serviceLocator): void
+    public function install(ServiceLocatorInterface $services): void
     {
         $filepath = OMEKA_PATH . '/config/database-adminer.ini';
         if (file_exists($filepath)) {
@@ -30,7 +29,7 @@ class Module extends AbstractModule
             $message = new Message(
                 'The file "config/database-adminer.ini" should be writeable to install the module.' // @translate
             );
-            $messenger = new Messenger();
+            $messenger = $services->get('ControllerPluginManager')->get('messenger');
             $messenger->addWarning($message); // @translate
             throw new ModuleCannotInstallException((string) $message);
         }
@@ -41,9 +40,11 @@ class Module extends AbstractModule
 
     public function getConfigForm(PhpRenderer $renderer)
     {
+        $services = $this->getServiceLocator();
+
         $filepath = OMEKA_PATH . '/config/database-adminer.ini';
         if (!$this->isWriteableFile($filepath)) {
-            $messenger = new Messenger();
+            $messenger = $services->get('ControllerPluginManager')->get('messenger');
             $messenger->addWarning('The file config/database-adminer.ini is not writeable, so credentials cannot be updated.'); // @translate
             return '';
         }
@@ -57,7 +58,6 @@ class Module extends AbstractModule
         $dbConfig['readonly_user_password'] = '';
         $dbConfig['full_user_password'] = '';
 
-        $services = $this->getServiceLocator();
         $form = $services->get('FormElementManager')->get(ConfigForm::class);
         $form->init();
         $form->setData($dbConfig);
