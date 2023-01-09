@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-03 00:00+0000\n"
-"PO-Revision-Date: 2022-01-03 00:00+0000\n"
+"POT-Creation-Date: 2023-01-09 00:00+0000\n"
+"PO-Revision-Date: 2023-01-09 00:00+0000\n"
 "Last-Translator: Daniel Berthereau <Daniel.fr@Berthereau.net>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -30,6 +30,14 @@ msgid ""
 msgstr ""
 "L’utilisateur peut être créé automatiquement si l’utilisateur de la base "
 "Omeka en a le droit."
+
+#: Module.php:68
+msgid ""
+"It is possible but not recommended to use the full-access user as the read-"
+"only user."
+msgstr ""
+"Il est possible mais non recommandé d'utiliser l'utilisateur avec accès "
+"complet comme utilisateur à accès en lecture seule."
 
 #: view/adminer/admin/index/index.phtml:13
 msgid "Adminer database manager"
@@ -167,11 +175,15 @@ msgstr "Nom de l’utilisateur avec accès complet"
 msgid "Full access user password"
 msgstr "Mot de passe de l’utilisateur avec accès complet"
 
-#: src/Controller/Admin/IndexController.php:78
+#: src/Controller/Admin/IndexController.php:31
+msgid "Warning: the read-only user is the same than the full-access user."
+msgstr "Attention : l'utilisateur en lecture seule est le même que celui en accès complet."
+
+#: src/Controller/Admin/IndexController.php:87
 msgid "Read only user is not configured."
 msgstr "L’utilisateur en lecture seule n’est pas configuré."
 
-#: src/Controller/Admin/IndexController.php:82
+#: src/Controller/Admin/IndexController.php:91
 msgid "Full access user or read only user are not configured."
 msgstr ""
 "Les utilisateurs en accès complet ou en lecture seule ne sont pas configurés."

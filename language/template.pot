@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-03 00:00+0000\n"
+"POT-Creation-Date: 2023-01-09 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,6 +25,12 @@ msgstr ""
 msgid ""
 "This user can be created automatically if the Omeka database user has such a "
 "right."
+msgstr ""
+
+#: Module.php:68
+msgid ""
+"It is possible but not recommended to use the full-access user as the "
+"read-only user."
 msgstr ""
 
 #: view/adminer/admin/index/index.phtml:13
@@ -142,11 +148,15 @@ msgstr ""
 msgid "Full access user password"
 msgstr ""
 
-#: src/Controller/Admin/IndexController.php:78
+#: src/Controller/Admin/IndexController.php:31
+msgid "Warning: the read-only user is the same than the full-access user."
+msgstr ""
+
+#: src/Controller/Admin/IndexController.php:87
 msgid "Read only user is not configured."
 msgstr ""
 
-#: src/Controller/Admin/IndexController.php:82
+#: src/Controller/Admin/IndexController.php:91
 msgid "Full access user or read only user are not configured."
 msgstr ""
 
