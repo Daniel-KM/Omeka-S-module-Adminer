@@ -4,6 +4,7 @@ namespace Adminer\Controller\Admin;
 
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
+use Omeka\Stdlib\Message;
 
 class IndexController extends AbstractActionController
 {
@@ -23,9 +24,17 @@ class IndexController extends AbstractActionController
         $hasReadOnly = $databaseConfig['readonly_user_name'] !== '' && $databaseConfig['readonly_user_password'] !== '';
         $hasFullAccess = $hasReadOnly
             && $databaseConfig['full_user_name'] !== '' && $databaseConfig['full_user_password'] !== '';
+        $hasFakeReadOnly = $hasReadOnly && $hasFullAccess
+            && $databaseConfig['readonly_user_name'] === $databaseConfig['full_user_name'];
+        if ($hasFakeReadOnly) {
+            $this->messenger()->addWarning(new Message(
+                'Warning: the read-only user is the same than the full-access user.' // @translate
+            ));
+        }
         return new ViewModel([
             'hasReadOnly' => $hasReadOnly,
             'hasFullAccess' => $hasFullAccess,
+            'hasFakeReadOnly' => $hasFakeReadOnly,
         ]);
     }
 

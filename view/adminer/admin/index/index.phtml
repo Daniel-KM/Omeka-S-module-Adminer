@@ -3,6 +3,7 @@
  * @var \Laminas\View\Renderer\PhpRenderer $this
  * @var array $hasReadOnly
  * @var array $hasFullAccess
+ * @var array $hasFakeReadOnly
  */
 
 $translate = $this->plugin('translate');
@@ -23,7 +24,7 @@ echo $this->pageTitle($this->translate('Adminer database manager'));
 if ($hasReadOnly):
     echo $hyperlink($translate('Read-only access (simple interface)'), $url('admin/adminer-editor-mysql', [], ['query' => ['login' => 'readonly']]), ['target' => '_blank']);
     echo '<br/>';
-echo $hyperlink($translate('Read-only access'), $url('admin/adminer-mysql', [], ['query' => ['login' => 'readonly']]), ['target' => '_blank']);
+    echo $hyperlink($translate('Read-only access'), $url('admin/adminer-mysql', [], ['query' => ['login' => 'readonly']]), ['target' => '_blank']);
     echo '<br/>';
 
     if ($hasFullAccess):

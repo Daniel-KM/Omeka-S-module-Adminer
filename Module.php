@@ -65,6 +65,7 @@ class Module extends AbstractModule
         return '<p>'
             . $renderer->translate('A read only user is required to use the module.') // @translate
             . ' ' . $renderer->translate('This user can be created automatically if the Omeka database user has such a right.') // @translate
+            . ' ' . $renderer->translate('It is possible but not recommended to use the full-access user as the read-only user.') // @translate
             . '</p>'
             . $renderer->formCollection($form);
     }
