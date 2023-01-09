@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6ba2add7345e141672f1e3c1fd0b35c4",
+    "content-hash": "e4c2a3ed4aa62e383819a143f22f7104",
     "packages": [
         {
             "name": "vrana/adminer",
@@ -59,9 +59,7 @@
                 }
             ],
             "time": "2021-05-23T11:40:36+00:00"
-        }
-    ],
-    "packages-dev": [
+        },
         {
             "name": "vrana/jsshrink",
             "version": "master",
@@ -76,17 +74,57 @@
                 "reference": "master"
             },
             "type": "library"
+        },
+        {
+            "name": "vrana/jush",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vrana/jush.git",
+                "reference": "ae33623c66189375a3654954cddc1c73f65c36fa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vrana/jush/zipball/ae33623c66189375a3654954cddc1c73f65c36fa",
+                "reference": "ae33623c66189375a3654954cddc1c73f65c36fa",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0",
+                "GPL-2.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Jakub Vrána",
+                    "homepage": "https://www.vrana.cz/"
+                }
+            ],
+            "description": "JUSH - JavaScript Syntax Highlighter",
+            "homepage": "http://jush.sourceforge.net/",
+            "keywords": [
+                "Syntax highlighter",
+                "javascript"
+            ],
+            "support": {
+                "source": "https://github.com/vrana/jush/"
+            },
+            "time": "2021-02-06T15:06:41+00:00"
         }
     ],
+    "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "vrana/adminer": 20,
-        "vrana/jsshrink": 20
+        "vrana/jsshrink": 20,
+        "vrana/jush": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.3.0"
 }

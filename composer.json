@@ -22,10 +22,9 @@
         }
     ],
     "require": {
-        "vrana/adminer": "dev-master"
-    },
-    "require-dev": {
-        "vrana/jsshrink": "dev-master"
+        "vrana/adminer": "dev-master",
+        "vrana/jsshrink": "dev-master",
+        "vrana/jush": "dev-master"
     },
     "license": "CECILL-2.1",
     "authors": [
@@ -39,6 +38,13 @@
         "post-update-cmd": "@build",
         "build": [
             "mkdir -p asset/vendor/adminer",
+
+            "rm -rf vendor/vrana/adminer/externals/JsShrink",
+            "cp -r vendor/vrana/jsshrink vendor/vrana/adminer/externals",
+            "mv vendor/vrana/adminer/externals/jsshrink vendor/vrana/adminer/externals/JsShrink",
+
+            "rm -rf vendor/vrana/adminer/externals/jush",
+            "cp -r vendor/vrana/jush vendor/vrana/adminer/externals",
 
             "@composer install --working-dir=vendor/vrana/adminer",
 
