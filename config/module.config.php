@@ -21,7 +21,7 @@ return [
     'navigation' => [
         'AdminModule' => [
             [
-                'label' => 'Adminer', // @translate
+                'label' => 'Database', // @translate
                 'route' => 'admin/adminer',
                 'controller' => Controller\Admin\IndexController::class,
                 'action' => 'index',

@@ -130,7 +130,7 @@ Adminer themes are released the same.
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2019-2021 (see [Daniel-KM] on GitLab)
+* Copyright Daniel Berthereau, 2019-2023 (see [Daniel-KM] on GitLab)
 
 Adminer:
 * Copyright 2007, Jakub Vrana
@@ -142,7 +142,7 @@ Adminer:
 [Omeka S]: https://omeka.org/s
 [warning]: #Warning
 [`Adminer.zip`]: https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/releases
-[installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
+[Installing a module]: https://omeka.org/s/docs/user-manual/modules/#installing-modules
 [module issues]: https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
 [GNU/GPL]: https://www.gnu.org/licenses/gpl-3.0.html
