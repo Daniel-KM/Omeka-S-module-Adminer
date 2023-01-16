@@ -26,7 +26,7 @@ return [
                 'controller' => Controller\Admin\IndexController::class,
                 'action' => 'index',
                 // 'privilege' => 'browse',
-                'class' => 'far fa-database',
+                'class' => 'o-icon- fa-database',
             ],
         ],
     ],
