@@ -4,6 +4,7 @@ namespace Adminer;
 
 use Adminer\Form\ConfigForm;
 use Laminas\Mvc\Controller\AbstractController;
+use Laminas\Mvc\MvcEvent;
 use Laminas\View\Renderer\PhpRenderer;
 use Omeka\Module\AbstractModule;
 use Omeka\Stdlib\Message;
@@ -15,7 +16,28 @@ class Module extends AbstractModule
         return include __DIR__ . '/config/module.config.php';
     }
 
-    // Acl are not updated, so only admins can use the module.
+    public function onBootstrap(MvcEvent $event): void
+    {
+        parent::onBootstrap($event);
+
+        /** @var \Omeka\Permissions\Acl $acl */
+        $services = $this->getServiceLocator();
+        $acl = $services->get('Omeka\Acl');
+
+        $acl
+            ->deny(
+                null,
+                [
+                    \Adminer\Controller\Admin\IndexController::class,
+                ]
+            )
+            ->allow(
+                \Omeka\Permissions\Acl::ROLE_GLOBAL_ADMIN,
+                [
+                    \Adminer\Controller\Admin\IndexController::class,
+                ]
+            );
+    }
 
     public function getConfigForm(PhpRenderer $renderer)
     {
