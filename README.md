@@ -41,14 +41,10 @@ To change the default theme, you can set it in `composer.json` and run `composer
 or copy it inside directory asset/vendor/adminer/.
 
 
-* Notes
+Usage
+-----
 
-The settings of the module (config access of the database) are not saved in the
-database with other settings, but in the file `config/database-adminer.ini` at
-the root of Omeka. It is highly recommended to check access rights to this file
-(no `other` access). This is automatically done when possible.
-
-* Create a read only user
+Just fill the confirm and create a read only user.
 
 If the omeka database user has the rights to create a user and to specify
 privileges, the read only user will be automatically created.
@@ -70,7 +66,7 @@ TODO
 * [x] Remove the login page (login directly).
 * [x] Use composer package vrana/adminer (to minify and remove from vendor for security).
 * [x] Allow to use any adminer.css theme simply by putting it in a directory.
-* [ ] Remove access to column `password` of users.
+* [ ] Remove access to column `password` of users and api credentials.
 * [x] Give the choice to use the simplified version "adminer editor" (finalize theme).
 - [ ] Fix the warning when changing theme on the first page.
 
