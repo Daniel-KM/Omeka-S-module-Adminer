@@ -4,10 +4,8 @@ namespace Adminer;
 
 use Adminer\Form\ConfigForm;
 use Laminas\Mvc\Controller\AbstractController;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\View\Renderer\PhpRenderer;
 use Omeka\Module\AbstractModule;
-use Omeka\Module\Exception\ModuleCannotInstallException;
 use Omeka\Stdlib\Message;
 
 class Module extends AbstractModule
@@ -17,53 +15,26 @@ class Module extends AbstractModule
         return include __DIR__ . '/config/module.config.php';
     }
 
-    public function install(ServiceLocatorInterface $services): void
-    {
-        $filepath = OMEKA_PATH . '/config/database-adminer.ini';
-        if (file_exists($filepath)) {
-            $result = is_writeable($filepath);
-        } else {
-            $result = @file_put_contents($filepath, '');
-        }
-        if ($result === false) {
-            $message = new Message(
-                'The file "config/database-adminer.ini" should be writeable to install the module.' // @translate
-            );
-            $messenger = $services->get('ControllerPluginManager')->get('messenger');
-            $messenger->addWarning($message); // @translate
-            throw new ModuleCannotInstallException((string) $message);
-        }
-        @chmod($filepath, 0770);
-    }
-
     // Acl are not updated, so only admins can use the module.
 
     public function getConfigForm(PhpRenderer $renderer)
     {
         $services = $this->getServiceLocator();
 
-        $filepath = OMEKA_PATH . '/config/database-adminer.ini';
-        if (!$this->isWriteableFile($filepath)) {
-            $messenger = $services->get('ControllerPluginManager')->get('messenger');
-            $messenger->addWarning('The file config/database-adminer.ini is not writeable, so credentials cannot be updated.'); // @translate
-            return '';
-        }
-
-        $reader = new \Laminas\Config\Reader\Ini();
-        $dbConfig = file_exists($filepath)
-            ? $reader->fromFile($filepath)
-            : [];
-
         // For security, don't resend original password.
-        $dbConfig['readonly_user_password'] = '';
-        $dbConfig['full_user_password'] = '';
+        $data = [
+            'adminer_readonly_user' => $renderer->setting('adminer_readonly_user'),
+            'adminer_readonly_password' => null,
+            'adminer_full_access' => $renderer->setting('adminer_full_access', false),
+        ];
 
         $form = $services->get('FormElementManager')->get(ConfigForm::class);
         $form->init();
-        $form->setData($dbConfig);
+        $form->setData($data);
 
         return '<p>'
             . $renderer->translate('A read only user is required to use the module.') // @translate
+            . ' ' . $renderer->translate('The password is not resent for security reasons.') // @translate
             . ' ' . $renderer->translate('This user can be created automatically if the Omeka database user has such a right.') // @translate
             . ' ' . $renderer->translate('It is possible but not recommended to use the full-access user as the read-only user.') // @translate
             . '</p>'
@@ -84,65 +55,73 @@ class Module extends AbstractModule
             return false;
         }
 
+        /** @var \Omeka\Settings\Settings $settings */
+        $settings = $services->get('Omeka\Settings');
+
         $params = $form->getData();
-        $filepath = OMEKA_PATH . '/config/database-adminer.ini';
-
-        if (!file_exists($filepath)) {
-            $result = @file_put_contents($filepath, '');
-            if ($result === false) {
-                $controller->messenger()->addError('The file config/database-adminer.ini is not writeable, so credentials cannot be updated.'); // @translate
-                return false;
-            }
-        } elseif (!$this->isWriteableFile($filepath)) {
-            $controller->messenger()->addError('The file config/database-adminer.ini is not writeable, so credentials cannot be updated.'); // @translate
-            return false;
-        }
-
-        $defaultParams = [
-            'readonly_user_name' => '',
-            'readonly_user_password' => '',
-            'full_user_name' => '',
-            'full_user_password' => '',
+        $params = [
+            'adminer_readonly_user' => (string) ($params['adminer_readonly_user'] ?? ''),
+            'adminer_readonly_password' => (string) ($params['adminer_readonly_password'] ?? ''),
+            'adminer_full_access' => !empty($params['adminer_readonly_user']),
         ];
-        $params = array_intersect_key($params, $defaultParams);
 
-        $reader = new \Laminas\Config\Reader\Ini();
-        $existingParams = $reader->fromFile($filepath) + $defaultParams;
+        $existingParams = [
+            'adminer_readonly_user' => (string) $settings->get('adminer_readonly_user'),
+            'adminer_readonly_password' => (string) $settings->get('adminer_readonly_password'),
+            'adminer_full_access' => (bool) $settings->get('adminer_readonly_password'),
+        ];
 
         // Keep original password if empty.
-        if ($params['readonly_user_name']
-            && empty($params['readonly_user_password'])
-            && $existingParams['readonly_user_name'] === $params['readonly_user_name']
+        if ($params['adminer_readonly_user']
+            && empty($params['adminer_readonly_password'])
+            && $existingParams['adminer_readonly_user'] === $params['adminer_readonly_user']
         ) {
-            $params['readonly_user_password'] = $existingParams['readonly_user_password'];
-        }
-        if ($params['full_user_name']
-            && empty($params['full_user_password'])
-            && $existingParams['full_user_name'] === $params['full_user_name']
-        ) {
-            $params['full_user_password'] = $existingParams['full_user_password'];
+            $params['adminer_readonly_password'] = $existingParams['adminer_readonly_password'];
         }
 
-        $writer = new \Laminas\Config\Writer\Ini();
-        $writer->toFile($filepath, $params);
-        @chmod($filepath, 0770);
+        $settings->set('adminer_readonly_user', $params['adminer_readonly_user']);
+        $settings->set('adminer_readonly_password', $params['adminer_readonly_password']);
+        $settings->set('adminer_full_access', $params['adminer_full_access']);
 
         // Try to create the read-only user only if new.
-        if (!$params['readonly_user_name']
-            || !$params['readonly_user_password']
-            || (!empty($existingParams['readonly_user_name']) && $existingParams['readonly_user_name'] === $params['readonly_user_name'])
+        if (!$params['adminer_readonly_user']
+            || !$params['adminer_readonly_password']
+            || (
+                !empty($existingParams['adminer_readonly_user'])
+                && $existingParams['adminer_readonly_user'] === $params['adminer_readonly_user']
+            )
         ) {
             return true;
         }
 
-        /** @var \Doctrine\DBAL\Connection $connection */
+        $this->createReadOnlyUser();
+        return true;
+    }
+
+    /**
+     * Creation of the read-only user if needed and if possible.
+     */
+    protected function createReadOnlyUser(): bool
+    {
+        /**
+         * @var \Laminas\ServiceManager\ServiceLocatorInterface $services
+         * @var \Omeka\Settings\Settings $settings
+         * @var \Doctrine\DBAL\Connection $connection
+         * @var \Omeka\Mvc\Controller\Plugin\Messenger $messenger
+         */
+        $services = $this->getServiceLocator();
+        $plugins = $services->get('ControllerPluginManager');
+        $settings = $services->get('Omeka\Settings');
         $connection = $services->get('Omeka\Connection');
-        // Username and password are quoted for all queries below.
-        $usernameUnquoted = $params['readonly_user_name'];
-        $username = $connection->quote($usernameUnquoted);
-        $password = $connection->quote($params['readonly_user_password']);
-        $host = $connection->getHost();
+        $messenger = $plugins->get('messenger');
+
+        $host = $connection->getParams()['host'] ?? 'localhost';
         $database = $connection->getDatabase();
+
+        // Username and password are quoted for all queries below.
+        $usernameUnquoted = $settings->get('adminer_readonly_user');
+        $username = $connection->quote($usernameUnquoted);
+        $password = $connection->quote($settings->get('adminer_readonly_password'));
 
         // Check if the user exists.
         $sql = <<<SQL
@@ -151,7 +130,7 @@ SQL;
         try {
             $result = $connection->fetchOne($sql);
         } catch (\Exception $e) {
-            $controller->messenger()->addError(
+            $messenger->addError(
                 'The Omeka database user has no rights to check or create a user. Add it manually yourself if needed.' // @translate
             );
             return true;
@@ -164,12 +143,12 @@ SQL;
 SHOW GRANTS FOR $username@'$host';
 SQL;
             try {
-                $result = $connection->fetchAll($sql);
+                $result = $connection->fetchAllAssociative($sql);
             } catch (\Exception $e) {
-                $controller->messenger()->addError(
+                $messenger->addError(
                     'The Omeka database user has no rights to check grants of a user. Add it manually yourself if needed.' // @translate
                 );
-                return true;
+                return false;
             }
 
             foreach ($result as $value) {
@@ -189,11 +168,11 @@ SQL;
             try {
                 $connection->executeStatement($sql);
             } catch (\Exception $e) {
-                $controller->messenger()->addError(sprintf(
+                $messenger->addError(new Message(
                     'An error occurred during the creation of the read-only user "%s".', // @translate
                     $usernameUnquoted
                 ));
-                return true;
+                return false;
             }
         }
 
@@ -203,35 +182,28 @@ GRANT SELECT ON `$database`.* TO $username@'$host';
 SQL;
         try {
             $connection->executeStatement($sql);
-            $controller->messenger()->addSuccess(sprintf(
+            $messenger->addSuccess(new Message(
                 'The read-only user "%s" has been created.', // @translate
                 $usernameUnquoted
             ));
         } catch (\Exception $e) {
-            $controller->messenger()->addError(sprintf(
+            $messenger->addError(new Message(
                 'An error occurred during the creation of the read-only user "%s".', // @translate
                 $usernameUnquoted
             ));
-            return true;
+            return false;
         }
 
         try {
             $connection->executeStatement('FLUSH PRIVILEGES;');
         } catch (\Exception $e) {
-            $controller->messenger()->addError(sprintf(
+            $messenger->addError(new Message(
                 'An error occurred when flushing privileges for user "%s".', // @translate
                 $usernameUnquoted
             ));
-            return true;
+            return false;
         }
 
         return true;
-    }
-
-    protected function isWriteableFile($filepath)
-    {
-        return file_exists($filepath)
-            ? is_writeable($filepath)
-            : is_writeable(dirname($filepath));
     }
 }

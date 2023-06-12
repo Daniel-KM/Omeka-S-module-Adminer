@@ -50,21 +50,12 @@ class IndexController extends AbstractActionController
 
     protected function getDatabaseConfig()
     {
-        $defaultKeys = [
-            'readonly_user_name' => '',
-            'readonly_user_password' => '',
-            'full_user_name' => '',
-            'full_user_password' => '',
+        $settings = $this->settings();
+        $config = [
+            'readonly_user_name' => (string) $settings->get('adminer_readonly_user', ''),
+            'readonly_user_password' => (string) $settings->get('adminer_readonly_user', ''),
         ];
-
-        // Load db config to use it to show message.
-        $filepath = OMEKA_PATH . '/config/database-adminer.ini';
-        $reader = new \Laminas\Config\Reader\Ini();
-        $dbFileConfig = file_exists($filepath)
-            ? $reader->fromFile($filepath)
-            : $defaultKeys;
-
-        return array_intersect_key($dbFileConfig, $defaultKeys) + $this->dbConfig;
+        return $config + $this->dbConfig;
     }
 
     protected function adminer($type)

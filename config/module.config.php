@@ -81,4 +81,11 @@ return [
             ],
         ],
     ],
+    'adminer' => [
+        'config' => [
+            'adminer_readonly_user' => null,
+            'adminer_readonly_password' => null,
+            'adminer_full_access' => false,
+        ],
+    ],
 ];

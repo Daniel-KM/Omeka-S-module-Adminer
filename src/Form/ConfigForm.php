@@ -12,31 +12,23 @@ class ConfigForm extends Form
         $this
             ->add([
                 'type' => Element\Text::class,
-                'name' => 'readonly_user_name',
+                'name' => 'adminer_readonly_user',
                 'options' => [
                     'label' => 'Read only user name', // @translate
                 ],
             ])
             ->add([
                 'type' => Element\Password::class,
-                'name' => 'readonly_user_password',
+                'name' => 'adminer_readonly_password',
                 'options' => [
                     'label' => 'Read only user password', // @translate
                 ],
             ])
-
             ->add([
-                'type' => Element\Text::class,
-                'name' => 'full_user_name',
+                'type' => Element\Checkbox::class,
+                'name' => 'adminer_full_access',
                 'options' => [
-                    'label' => 'Full access user name', // @translate
-                ],
-            ])
-            ->add([
-                'type' => Element\Password::class,
-                'name' => 'full_user_password',
-                'options' => [
-                    'label' => 'Full access user password', // @translate
+                    'label' => 'Allow full access via omeka credentials (not recommended)', // @translate
                 ],
             ]);
     }
