@@ -5,6 +5,7 @@ namespace Adminer;
 use Adminer\Form\ConfigForm;
 use Laminas\Mvc\Controller\AbstractController;
 use Laminas\Mvc\MvcEvent;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\View\Renderer\PhpRenderer;
 use Omeka\Module\AbstractModule;
 use Omeka\Stdlib\Message;
@@ -37,6 +38,13 @@ class Module extends AbstractModule
                     \Adminer\Controller\Admin\IndexController::class,
                 ]
             );
+    }
+
+    public function upgrade($oldVersion, $newVersion, ServiceLocatorInterface $services): void
+    {
+        $filepath = __DIR__ . '/data/scripts/upgrade.php';
+        $this->setServiceLocator($services);
+        require_once $filepath;
     }
 
     public function getConfigForm(PhpRenderer $renderer)
