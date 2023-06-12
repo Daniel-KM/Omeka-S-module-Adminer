@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-09 00:00+0000\n"
+"POT-Creation-Date: 2023-06-12 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,112 +22,110 @@ msgid "A read only user is required to use the module."
 msgstr ""
 
 #: Module.php:67
+msgid "The password is not resent for security reasons."
+msgstr ""
+
+#: Module.php:68
 msgid ""
 "This user can be created automatically if the Omeka database user has such a "
 "right."
 msgstr ""
 
-#: Module.php:68
+#: Module.php:69
 msgid ""
-"It is possible but not recommended to use the full-access user as the "
-"read-only user."
+"It is possible but not recommended to use the full-access user as the read-"
+"only user."
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:13
+#: view/adminer/admin/index/index.phtml:14
 msgid "Adminer database manager"
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:16
+#: view/adminer/admin/index/index.phtml:17
 msgid "WARNING"
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:17
+#: view/adminer/admin/index/index.phtml:18
 msgid "Use it at your own risk."
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:18
+#: view/adminer/admin/index/index.phtml:19
 msgid ""
 "It is highly recommended to use a read-only user to access database, because "
 "it’s very easy to break a database, even for people who know the Omeka code "
 "and all the modules perfectly."
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:19
+#: view/adminer/admin/index/index.phtml:20
 msgid ""
 "In all cases, it’s always recommended to backup your files and your "
 "databases automatically and before risky and non-risky commands, and to "
 "check your archives regularly, so you can roll back if needed."
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:20
+#: view/adminer/admin/index/index.phtml:21
 msgid ""
 "Besides, some designs are not adapted for the simple interface. They can be "
 "selected with the button in the bottom right."
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:20
+#: view/adminer/admin/index/index.phtml:21
 msgid "Currently, the design cannot be changed on the first page."
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:24
+#: view/adminer/admin/index/index.phtml:25
 msgid "Read-only access (simple interface)"
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:26
+#: view/adminer/admin/index/index.phtml:27
 msgid "Read-only access"
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:30
+#: view/adminer/admin/index/index.phtml:31
 msgid "Full access (simple interface)"
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:32
+#: view/adminer/admin/index/index.phtml:33
 msgid "Full access"
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:34
+#: view/adminer/admin/index/index.phtml:35
 msgid "Full-access user is not defined."
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:37
+#: view/adminer/admin/index/index.phtml:38
 msgid "Read-only user is not defined."
 msgstr ""
 
-#: Module.php:31
+#: data/scripts/upgrade.php:37
 msgid ""
-"The file \"config/database-adminer.ini\" should be writeable to install the "
-"module."
+"The file database-adminer.ini has been removed. Read-only user credentials "
+"are now stored in database. Full access user parameters have been removed."
 msgstr ""
 
-#: Module.php:47 Module.php:92 Module.php:96
-msgid ""
-"The file config/database-adminer.ini is not writeable, so credentials cannot "
-"be updated."
-msgstr ""
-
-#: Module.php:154
+#: Module.php:164
 msgid ""
 "The Omeka database user has no rights to check or create a user. Add it "
 "manually yourself if needed."
 msgstr ""
 
-#: Module.php:169
+#: Module.php:179
 msgid ""
 "The Omeka database user has no rights to check grants of a user. Add it "
 "manually yourself if needed."
 msgstr ""
 
-#: Module.php:192 Module.php:211
+#: Module.php:202 Module.php:221
 #, php-format
 msgid "An error occurred during the creation of the read-only user \"%s\"."
 msgstr ""
 
-#: Module.php:206
+#: Module.php:216
 #, php-format
 msgid "The read-only user \"%s\" has been created."
 msgstr ""
 
-#: Module.php:221
+#: Module.php:231
 #, php-format
 msgid "An error occurred when flushing privileges for user \"%s\"."
 msgstr ""
@@ -140,26 +138,22 @@ msgstr ""
 msgid "Read only user password"
 msgstr ""
 
-#: src/Form/ConfigForm.php:32
-msgid "Full access user name"
-msgstr ""
-
-#: src/Form/ConfigForm.php:39
-msgid "Full access user password"
+#: src/Form/ConfigForm.php:31
+msgid "Allow full access via omeka credentials (not recommended)"
 msgstr ""
 
 #: src/Controller/Admin/IndexController.php:31
 msgid "Warning: the read-only user is the same than the full-access user."
 msgstr ""
 
-#: src/Controller/Admin/IndexController.php:87
+#: src/Controller/Admin/IndexController.php:78
 msgid "Read only user is not configured."
 msgstr ""
 
-#: src/Controller/Admin/IndexController.php:91
+#: src/Controller/Admin/IndexController.php:82
 msgid "Full access user or read only user are not configured."
 msgstr ""
 
 #: config/module.config.php:24
-msgid "Adminer"
+msgid "Database"
 msgstr ""
