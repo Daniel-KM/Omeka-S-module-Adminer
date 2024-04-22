@@ -54,7 +54,8 @@
             "@php -f 'vendor/adminerevo/adminerevo/compile.php' -- editor mysql",
             "mv $(ls editor-*mysql.php) asset/vendor/adminer/editor-mysql.phtml",
 
-            "cp vendor/adminerevo/adminerevo/designs/ng9/adminer.css asset/vendor/adminer/adminer.css"
+            "cp vendor/adminerevo/adminerevo/designs/ng9/adminer.css asset/vendor/adminer/adminer.css",
+            "echo 'Order allow,deny\n<FilesMatch \"\\.(css|js|gif|jpeg|jpg|png|webp)$\">\n    Order deny,allow\n</FilesMatch>' > asset/vendor/.htaccess"
         ]
     }
 }
