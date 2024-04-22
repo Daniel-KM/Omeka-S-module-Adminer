@@ -2,6 +2,26 @@
     "name": "daniel-km/omeka-s-module-adminer",
     "description": "Access to Omeka database through Adminer, a one-file full-featured database management tool.",
     "type": "library",
+    "license": "CECILL-2.1",
+    "authors": [
+        {
+            "name": "Daniel Berthereau",
+            "email": "Daniel.git@Berthereau.net"
+        }
+    ],
+    "homepage": "https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer",
+    "support": {
+        "issues": "https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/issues",
+        "forum": "https://forum.omeka.org/"
+    },
+    "keywords": [
+        "Omeka-S",
+        "module",
+        "admin",
+        "curation",
+        "adminer",
+        "mysql"
+    ],
     "repositories": [
         {
             "type": "package",
@@ -31,14 +51,7 @@
         "adminerevo/adminerevo": "^4.8",
         "adminerevo/adminerevo-externals": "^4.8"
     },
-    "license": "CECILL-2.1",
-    "authors": [
-        {
-            "name": "Daniel Berthereau",
-            "email": "Daniel.git@Berthereau.net"
-        }
-    ],
-   "scripts": {
+    "scripts": {
         "post-install-cmd": "@build",
         "post-update-cmd": "@build",
         "build": [
