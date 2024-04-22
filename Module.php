@@ -47,6 +47,14 @@ class Module extends AbstractModule
         require_once $filepath;
     }
 
+    public function uninstall(ServiceLocatorInterface $services): void
+    {
+        $settings = $services->get('Omeka\Settings');
+        $settings->delete('adminer_readonly_user');
+        $settings->delete('adminer_readonly_password');
+        $settings->delete('adminer_full_access');
+    }
+
     public function getConfigForm(PhpRenderer $renderer)
     {
         $services = $this->getServiceLocator();
