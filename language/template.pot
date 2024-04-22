@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-22 09:24+0200\n"
+"POT-Creation-Date: 2024-04-22 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,63 +51,69 @@ msgstr ""
 msgid "The module requires the dependencies to be installed. See readme."
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:15
+#: view/adminer/admin/index/index.phtml:17
 msgid "Adminer database manager"
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:18
+#: view/adminer/admin/index/index.phtml:20
 msgid "WARNING"
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:19
+#: view/adminer/admin/index/index.phtml:21
 msgid "Use it at your own risk."
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:20
+#: view/adminer/admin/index/index.phtml:22
 msgid ""
 "It is highly recommended to use a read-only user to access database, because "
 "it’s very easy to break a database, even for people who know the Omeka code "
 "and all the modules perfectly."
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:21
+#: view/adminer/admin/index/index.phtml:23
 msgid ""
 "In all cases, it’s always recommended to backup your files and your "
 "databases automatically and before risky and non-risky commands, and to "
 "check your archives regularly, so you can roll back if needed."
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:22
+#: view/adminer/admin/index/index.phtml:24
+msgid "To edit an element, use the key <control> + click."
+msgstr ""
+
+#: view/adminer/admin/index/index.phtml:25
 msgid ""
 "Besides, some designs are not adapted for the interface for editor. They can "
 "be selected with the button in the bottom right."
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:22
-msgid "Currently, the design cannot be changed on the first page."
-msgstr ""
-
 #: view/adminer/admin/index/index.phtml:26
-msgid "Read-only access (interface for edition)"
+msgid ""
+"Warning: currently, the language and the design cannot be changed on the "
+"first page of Adminer."
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:28
+#: view/adminer/admin/index/index.phtml:31
+msgid "Read-only access (interface for editor)"
+msgstr ""
+
+#: view/adminer/admin/index/index.phtml:33
 msgid "Read-only access"
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:32
-msgid "Full access (interface for edition)"
-msgstr ""
-
-#: view/adminer/admin/index/index.phtml:34
-msgid "Full access"
-msgstr ""
-
-#: view/adminer/admin/index/index.phtml:36
-msgid "Full-access user is not defined."
+#: view/adminer/admin/index/index.phtml:37
+msgid "Full access (interface for editor)"
 msgstr ""
 
 #: view/adminer/admin/index/index.phtml:39
+msgid "Full access"
+msgstr ""
+
+#: view/adminer/admin/index/index.phtml:41
+msgid "Full-access user is not defined."
+msgstr ""
+
+#: view/adminer/admin/index/index.phtml:44
 msgid "Read-only user is not defined."
 msgstr ""
 
@@ -160,11 +166,11 @@ msgstr ""
 msgid "Warning: the read-only user is the same than the full-access user."
 msgstr ""
 
-#: src/Controller/Admin/IndexController.php:108
+#: src/Controller/Admin/IndexController.php:116
 msgid "Read only user is not configured."
 msgstr ""
 
-#: src/Controller/Admin/IndexController.php:112
+#: src/Controller/Admin/IndexController.php:120
 msgid "Full access user or read only user are not configured."
 msgstr ""
 
