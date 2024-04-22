@@ -3,7 +3,7 @@
  * @var \Laminas\View\Renderer\PhpRenderer $this
  *
  * @link https://www.adminer.org/plugins/#use
- * This is an adaptation of /vendor/vrana/adminer/plugins/plugin.php.
+ * This is an adaptation of /vendor/adminerevo/adminerevo/plugins/plugin.php.
  */
 
 // Support the plugin "Designs".
@@ -12,10 +12,10 @@ function listDesigns()
     static $designs;
     if (is_null($designs)) {
         $designs = [];
-        foreach (glob(dirname(__DIR__, 4) . '/vendor/vrana/adminer/designs/**/*.css') as $filename) {
+        foreach (glob(dirname(__DIR__, 4) . '/vendor/adminerevo/adminerevo/designs/**/*.css') as $filename) {
             $name = basename(dirname($filename));
             // Relative to the Omeka admin route.
-            $designs['../modules/Adminer/vendor/vrana/adminer/designs/' . $name . '/' . basename($filename)] = $name;
+            $designs['../modules/Adminer/vendor/adminerevo/adminerevo/designs/' . $name . '/' . basename($filename)] = $name;
         }
     }
     return $designs;
@@ -23,8 +23,8 @@ function listDesigns()
 
 
 function adminer_object() {
-    // include_once dirname(__DIR__, 4) . '/vendor/vrana/adminer/plugins/plugin.php';
-    foreach (glob(dirname(__DIR__, 4) . '/vendor/vrana/adminer/plugins/*.php') as $filename) {
+    // include_once dirname(__DIR__, 4) . '/vendor/adminerevo/adminerevo/plugins/plugin.php';
+    foreach (glob(dirname(__DIR__, 4) . '/vendor/adminerevo/adminerevo/plugins/*.php') as $filename) {
         include_once $filename;
     }
 

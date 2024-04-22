@@ -4,124 +4,32 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e4c2a3ed4aa62e383819a143f22f7104",
+    "content-hash": "b2dcc51034bdffb443e8829e81a89b74",
     "packages": [
         {
-            "name": "vrana/adminer",
-            "version": "dev-master",
+            "name": "adminerevo/adminerevo",
+            "version": "4.8.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/vrana/adminer.git",
-                "reference": "88647b93e467210f270340e758af6771e2c5638a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/vrana/adminer/zipball/88647b93e467210f270340e758af6771e2c5638a",
-                "reference": "88647b93e467210f270340e758af6771e2c5638a",
-                "shasum": ""
-            },
-            "default-branch": true,
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "plugins/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0",
-                "GPL-2.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Jakub Vrána",
-                    "homepage": "https://www.vrana.cz/"
-                }
-            ],
-            "description": "Database management in a single PHP file.",
-            "homepage": "https://www.adminer.org/",
-            "keywords": [
-                "database"
-            ],
-            "support": {
-                "forum": "https://sourceforge.net/p/adminer/discussion/",
-                "issues": "https://sourceforge.net/p/adminer/bugs-and-features/",
-                "source": "https://github.com/vrana/adminer/"
-            },
-            "funding": [
-                {
-                    "url": "https://sourceforge.net/p/adminer/donate/",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://www.patreon.com/jakubvrana",
-                    "type": "patreon"
-                }
-            ],
-            "time": "2021-05-23T11:40:36+00:00"
-        },
-        {
-            "name": "vrana/jsshrink",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/vrana/JsShrink",
-                "reference": "master"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://codeload.github.com/vrana/JsShrink/zip/master",
-                "reference": "master"
+                "url": "https://github.com/adminerevo/adminerevo",
+                "reference": "v4.8.4"
             },
             "type": "library"
         },
         {
-            "name": "vrana/jush",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/vrana/jush.git",
-                "reference": "ae33623c66189375a3654954cddc1c73f65c36fa"
-            },
+            "name": "adminerevo/adminerevo-externals",
+            "version": "4.8.4",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/vrana/jush/zipball/ae33623c66189375a3654954cddc1c73f65c36fa",
-                "reference": "ae33623c66189375a3654954cddc1c73f65c36fa",
-                "shasum": ""
+                "type": "tar",
+                "url": "https://github.com/Daniel-KM/Omeka-S-module-Adminer/releases/download/3.4.4-4.8.4/adminerevo-externals.tar.gz"
             },
-            "default-branch": true,
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0",
-                "GPL-2.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Jakub Vrána",
-                    "homepage": "https://www.vrana.cz/"
-                }
-            ],
-            "description": "JUSH - JavaScript Syntax Highlighter",
-            "homepage": "http://jush.sourceforge.net/",
-            "keywords": [
-                "Syntax highlighter",
-                "javascript"
-            ],
-            "support": {
-                "source": "https://github.com/vrana/jush/"
-            },
-            "time": "2021-02-06T15:06:41+00:00"
+            "type": "library"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "vrana/adminer": 20,
-        "vrana/jsshrink": 20,
-        "vrana/jush": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
