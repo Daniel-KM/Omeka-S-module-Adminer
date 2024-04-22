@@ -209,6 +209,7 @@ SQL;
         // Grant Select privilege to user.
         $sql = <<<SQL
 GRANT SELECT ON `$database`.* TO $username@'$host';
+GRANT SHOW VIEW `$database`.* TO $username@'$host';
 SQL;
         try {
             $connection->executeStatement($sql);
