@@ -31,7 +31,21 @@ class IndexController extends AbstractActionController
                 'Warning: the read-only user is the same than the full-access user.' // @translate
             ));
         }
+
+        // Check for the presence of adminer to fix bad install/upgrade.
+        $filename = dirname(__DIR__, 3) . '/asset/vendor/adminer/adminer-mysql.phtml';
+        $hasDependencies = file_exists($filename);
+        if (!$hasDependencies) {
+            $message = new \Omeka\Stdlib\Message(
+                $this->translate('The module requires the dependencies to be installed. See %1$sreadme%2$s.'), // @translate
+                '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer#installation" rel="noopener">', '</a>'
+            );
+            $message->setEscapeHtml(false);
+            $this->messenger()->addError($message);
+        }
+
         return new ViewModel([
+            'hasDependencies' => $hasDependencies,
             'hasReadOnly' => $hasReadOnly,
             'hasFullAccess' => $hasFullAccess,
             'hasFakeReadOnly' => $hasFakeReadOnly,
@@ -48,19 +62,18 @@ class IndexController extends AbstractActionController
         return $this->adminer('editor');
     }
 
-    protected function getDatabaseConfig()
+    protected function adminer(string $type)
     {
-        $settings = $this->settings();
-        $config = [
-            'readonly_user_name' => (string) $settings->get('adminer_readonly_user', ''),
-            'readonly_user_password' => (string) $settings->get('adminer_readonly_user', ''),
-        ];
-        return $config + $this->dbConfig;
-    }
-
-    protected function adminer($type)
-    {
+        // Avoid an infinite loop.
         static $isPosted;
+
+        // Check for the presence of adminer to fix bad install/upgrade.
+        $filename = dirname(__DIR__, 3) . '/asset/vendor/adminer/adminer-mysql.phtml';
+        if (!file_exists($filename)) {
+            throw new \RuntimeException(
+                $this->translate('The module requires the dependencies to be installed. See readme.') // @translate
+            );
+        }
 
         $databaseConfig = $this->getDatabaseConfig();
         $hasReadOnly = $databaseConfig['readonly_user_name'] !== '' && $databaseConfig['readonly_user_password'] !== '';
@@ -106,6 +119,18 @@ class IndexController extends AbstractActionController
         // Either this simple layout, either view with terminal template, that
         // requires an include.
         $this->layout()->setTemplate('adminer/admin/index/layout');
+
+        // The view template is the called one.
         return new ViewModel();
+    }
+
+    protected function getDatabaseConfig(): array
+    {
+        $settings = $this->settings();
+        $config = [
+            'readonly_user_name' => (string) $settings->get('adminer_readonly_user', ''),
+            'readonly_user_password' => (string) $settings->get('adminer_readonly_user', ''),
+        ];
+        return $config + $this->dbConfig;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 /**
  * @var \Laminas\View\Renderer\PhpRenderer $this
+ * @var bool $hasDependencies
  * @var array $hasReadOnly
  * @var array $hasFullAccess
  * @var array $hasFakeReadOnly
@@ -21,7 +22,7 @@ echo $this->pageTitle($this->translate('Adminer database manager'));
 <p><?= $translate('Besides, some designs are not adapted for the simple interface. They can be selected with the button in the bottom right.') , ' ', $translate('Currently, the design cannot be changed on the first page.') ?><p>
 <p>
 <?php
-if ($hasReadOnly):
+if ($hasDependencies && $hasReadOnly):
     echo $hyperlink($translate('Read-only access (simple interface)'), $url('admin/adminer-editor-mysql', [], ['query' => ['login' => 'readonly']]), ['target' => '_blank']);
     echo '<br/>';
     echo $hyperlink($translate('Read-only access'), $url('admin/adminer-mysql', [], ['query' => ['login' => 'readonly']]), ['target' => '_blank']);

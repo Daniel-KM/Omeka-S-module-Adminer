@@ -40,6 +40,24 @@ class Module extends AbstractModule
             );
     }
 
+    public function install(ServiceLocatorInterface $services): void
+    {
+        $plugins = $services->get('ControllerPluginManager');
+        $translate = $plugins->get('translate');
+        $messenger = $plugins->get('messenger');
+
+        $filename = __DIR__ . '/asset/vendor/adminer/adminer-mysql.phtml';
+        if (!file_exists($filename)) {
+            $message = new \Omeka\Stdlib\Message(
+                $translate('The module requires the dependencies to be installed. See %1$sreadme%2$s.'), // @translate
+                '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer#installation" rel="noopener">', '</a>'
+            );
+            $message->setEscapeHtml(false);
+            $messenger->addError($message);
+            throw new \Omeka\Module\Exception\ModuleCannotInstallException($translate('The module cannot be installed.')); // @ŧranslate
+        }
+    }
+
     public function upgrade($oldVersion, $newVersion, ServiceLocatorInterface $services): void
     {
         $filepath = __DIR__ . '/data/scripts/upgrade.php';
