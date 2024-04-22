@@ -7,7 +7,8 @@ Adminer Sql (module for Omeka S)
 
 [Adminer Sql] is a module for [Omeka S] that allows to view and manage a MySQL
 database. It uses [Adminer], formerly phpMinAdmin, a one file full-featured
-database management tool written in PHP.
+database management tool written in PHP. In fact, the fork [AdminerEvo] is used,
+because [Adminer] was not updated to last version of php.
 
 It is highly recommended to create a read-only user to use it, because it’s very
 easy to break a database, even for people who know the Omeka code perfectly.
@@ -56,6 +57,7 @@ database name ("omeka" here).
 ```sql
 CREATE USER 'readonly'@'localhost' IDENTIFIED BY 'a very long password';
 GRANT SELECT ON `omeka`.* TO 'readonly'@'localhost';
+GRANT SHOW VIEW ON `omeka`.* TO 'readonly'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
@@ -68,7 +70,8 @@ TODO
 * [x] Allow to use any adminer.css theme simply by putting it in a directory.
 * [ ] Remove access to column `password` of users and api credentials.
 * [x] Give the choice to use the simplified version "adminer editor" (finalize theme).
-- [ ] Fix the warning when changing theme on the first page.
+- [ ] Fix the warning when changing theme on the first page. The issue is related to the load of the minified js.
+      It is related to the auth process (with or without login form, that may reset token. See adminer/include/auth.inc.php).
 
 
 Warning
@@ -117,7 +120,7 @@ conditions as regards security.
 The fact that you are presently reading this means that you have had knowledge
 of the CeCILL license and that you accept its terms.
 
-* Library Adminer
+* Library Adminer/AdminerEvo
 
 The library Adminer is released under [Apache] or [GPL v2].
 Adminer themes are released the same.
@@ -126,7 +129,7 @@ Adminer themes are released the same.
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2019-2023 (see [Daniel-KM] on GitLab)
+* Copyright Daniel Berthereau, 2019-2024 (see [Daniel-KM] on GitLab)
 
 Adminer:
 * Copyright 2007, Jakub Vrana
@@ -135,10 +138,11 @@ Adminer:
 
 [Adminer Sql]: https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer
 [Adminer]: https://www.adminer.org
+[AdminerEvo]: https://adminerevo.org
 [Omeka S]: https://omeka.org/s
 [warning]: #Warning
 [`Adminer.zip`]: https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/releases
-[Installing a module]: https://omeka.org/s/docs/user-manual/modules/#installing-modules
+[installing a module]: https://omeka.org/s/docs/user-manual/modules/#installing-modules
 [module issues]: https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
 [GNU/GPL]: https://www.gnu.org/licenses/gpl-3.0.html
