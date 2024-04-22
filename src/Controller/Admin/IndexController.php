@@ -64,7 +64,10 @@ class IndexController extends AbstractActionController
 
     protected function adminer(string $type)
     {
-        // Avoid an infinite loop.
+        global $adminerAuthData;
+
+        // Avoid an infinite loop. It is still needed when there is an issue
+        // with the permanent key.
         static $isPosted;
 
         // Check for the presence of adminer to fix bad install/upgrade.
@@ -75,46 +78,67 @@ class IndexController extends AbstractActionController
             );
         }
 
+        $adminerAuthData = [];
+
         $databaseConfig = $this->getDatabaseConfig();
         $hasReadOnly = $databaseConfig['readonly_user_name'] !== '' && $databaseConfig['readonly_user_password'] !== '';
         $hasFullAccess = $hasReadOnly
             && $databaseConfig['full_user_name'] !== '' && $databaseConfig['full_user_password'] !== '';
         $params = $this->params()->fromQuery();
         $login = $params['login'] ?? null;
+        // By default, on first load, use full login to avoid issue.
+        $loginIsFull = $login !== 'readonly';
+
+        $username = $loginIsFull ? $databaseConfig['full_user_name'] : $databaseConfig['readonly_user_name'];
+        $authData = [
+            // Warning: The driver for "mysql" is called "server"!
+            'driver' => 'server',
+            'server' => $databaseConfig['server'],
+            'db' => $databaseConfig['db'],
+            'username' => $username,
+            'password' => $loginIsFull ? $databaseConfig['full_user_password'] : $databaseConfig['readonly_user_password'],
+            'permanent' => '1',
+        ];
 
         if ($login) {
             if ($isPosted || count($params) > 1) {
                 $_POST = [];
             } else {
-                $login = $login === 'full' ? 'full' : 'readonly';
-                if ($login === 'readonly' && !$hasReadOnly) {
+                if (!$loginIsFull && !$hasReadOnly) {
                     $this->messenger()->addError('Read only user is not configured.'); // @translate
                     return $this->redirect()->toRoute(null, ['action' => 'index'], true);
                 }
-                if ($login === 'full' && !$hasFullAccess) {
+                if ($loginIsFull && !$hasFullAccess) {
                     $this->messenger()->addError('Full access user or read only user are not configured.'); // @translate
                     return $this->redirect()->toRoute(null, ['action' => 'index'], true);
                 }
-
-                $username = $login === 'full' ? $databaseConfig['full_user_name'] : $databaseConfig['readonly_user_name'];
                 $_POST = [
-                    'auth' => [
-                        // Warning: The driver for "mysql" is called "server"!
-                        'driver' => 'server',
-                        'server' => $databaseConfig['server'],
-                        'db' => $databaseConfig['db'],
-                        'username' => $username,
-                        'password' => $login === 'full' ? $databaseConfig['full_user_password'] : $databaseConfig['readonly_user_password'],
-                        'permanent' => '1',
-                    ],
+                    'auth' => $authData,
                 ];
                 $_GET = [
                     // Only the username is checked against post in adminer.
-                    'username' => $username,
+                    'username' => $authData['username'],
                 ];
             }
             $isPosted = true;
         }
+
+        $adminerKey = $this->initAdminerKey();
+
+        $adminerAuthData = $authData;
+        $adminerAuthData['adminer_key'] = $adminerKey;
+
+        // Include the AdminerPlugin directly instead of autoload.
+        include_once dirname(__DIR__, 2) . '/AdminerOmeka.php';
+
+        // Don't display warnings for adminer, that are managed outside of Omeka.
+        ini_set('display_errors', '0');
+
+        // Once is required, because adminer load some files with the same url (favicon.ico, jush.js, functions.js, default.css).
+        require_once dirname(__DIR__, 3) . '/view/adminer/admin/index/adminer-functions.phtml';
+        require_once $type === 'editor'
+            ? dirname(__DIR__, 3) . '/asset/vendor/adminer/editor-mysql.phtml'
+            : dirname(__DIR__, 3) . '/asset/vendor/adminer/adminer-mysql.phtml';
 
         // Either this simple layout, either view with terminal template, that
         // requires an include.
@@ -132,5 +156,65 @@ class IndexController extends AbstractActionController
             'readonly_user_password' => (string) $settings->get('adminer_readonly_user', ''),
         ];
         return $config + $this->dbConfig;
+    }
+
+    /**
+     * Init the permanent adminer key.
+     *
+     * Adapted from Adminer functions password_file() and rand_string().
+     * @see vendor/adminerevo/adminerevo/adminer/include/functions.inc.php
+     */
+    protected function initAdminerKey(): ?string
+    {
+        $filename = $this->getTempDir() . "/adminer.key";
+
+        $code = null;
+
+        if (file_exists($filename)) {
+            $code = file_get_contents($filename);
+            if (!$code) {
+                @unlink($filename);
+            }
+        }
+
+        if (!file_exists($filename)) {
+            // Can have insufficient rights. Is not atomic.
+            $fp = @fopen($filename, 'w');
+            if ($fp) {
+                chmod($filename, 0660);
+                // 32 hexadecimal characters string.
+                $code = md5(uniqid((string) mt_rand(), true));
+                fwrite($fp, $code);
+                fclose($fp);
+            }
+        }
+
+        return $code ?: null;
+    }
+
+    /**
+     * Get path of the temporary directory.
+     *
+     * Adapted from adminer function get_temp_dir()
+     * @see vendor/adminerevo/adminerevo/adminer/include/functions.inc.php
+     */
+    protected function getTempDir(): string
+    {
+        // session_save_path() may contain other storage path.
+        $return = ini_get('upload_tmp_dir');
+        if (!$return) {
+            if (function_exists('sys_get_temp_dir')) {
+                $return = sys_get_temp_dir();
+            } else {
+                // Temp directory can be disabled by open_basedir.
+                $filename = @tempnam('', '');
+                if (!$filename) {
+                    return false;
+                }
+                $return = dirname($filename);
+                unlink($filename);
+            }
+        }
+        return $return;
     }
 }

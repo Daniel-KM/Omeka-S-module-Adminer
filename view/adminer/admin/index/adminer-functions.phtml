@@ -21,9 +21,8 @@ function listDesigns()
     return $designs;
 }
 
-
 function adminer_object() {
-    // include_once dirname(__DIR__, 4) . '/vendor/adminerevo/adminerevo/plugins/plugin.php';
+    require_once dirname(__DIR__, 4) . '/vendor/adminerevo/adminerevo/plugins/plugin.php';
     foreach (glob(dirname(__DIR__, 4) . '/vendor/adminerevo/adminerevo/plugins/*.php') as $filename) {
         include_once $filename;
     }
@@ -34,7 +33,7 @@ function adminer_object() {
         // new AdminerDumpBz2,
         // new AdminerDumpZip,
         // new AdminerDumpJson,
-        new AdminerDumpXml,
+        // new AdminerDumpXml,
         // new AdminerDumpAlter,
         //~ new AdminerSqlLog("past-" . rtrim(`git describe --tags --abbrev=0`) . ".sql"),
         //~ new AdminerEditCalendar(script_src("../externals/jquery-ui/jquery-1.4.4.js") . script_src("../externals/jquery-ui/ui/jquery.ui.core.js") . script_src("../externals/jquery-ui/ui/jquery.ui.widget.js") . script_src("../externals/jquery-ui/ui/jquery.ui.datepicker.js") . script_src("../externals/jquery-ui/ui/jquery.ui.mouse.js") . script_src("../externals/jquery-ui/ui/jquery.ui.slider.js") . script_src("../externals/jquery-timepicker/jquery-ui-timepicker-addon.js") . "<link rel='stylesheet' href='../externals/jquery-ui/themes/base/jquery.ui.all.css'>\n<style>\n.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }\n.ui-timepicker-div dl { text-align: left; }\n.ui-timepicker-div dl dt { height: 25px; }\n.ui-timepicker-div dl dd { margin: -25px 0 10px 65px; }\n.ui-timepicker-div td { font-size: 90%; }\n</style>\n", "../externals/jquery-ui/ui/i18n/jquery.ui.datepicker-%s.js"),
@@ -54,29 +53,13 @@ function adminer_object() {
         // new AdminerDisableTables,
         // new AdminerEditTextarea,
         // new AdminerFolderImport,
-        // new AdminerJsonColumn,
-        // new AdminerPrettyJsonColumn,
+        // How to set real Adminer inside itself?
+        // new AdminerPrettyJsonColumn(new Adminer),
         // new AdminerSearchAutocomplete,
         // new AdminerStickyColumns,
-        new AdminerVersionNoverify
+        new AdminerVersionNoverify,
+        new AdminerOmeka
     ];
 
-    class AdminerCustomization extends AdminerPlugin {
-         function css()
-         {
-             $return = [];
-             if (array_key_exists($_SESSION['design'], listDesigns())) {
-                 $return[] = $_SESSION['design'];
-                 return $return;
-             }
-
-             $filename = dirname(__DIR__, 4) . '/asset/vendor/adminer/adminer.css';
-             if (file_exists($filename)) {
-                 // Relative to the Omeka admin route.
-                 $return[] = "../modules/Adminer/asset/vendor/adminer/adminer.css?v=" . crc32(file_get_contents($filename));
-             }
-             return $return;
-         }
-     }
-     return new AdminerCustomization($plugins);
+    return new AdminerPlugin($plugins);
 }

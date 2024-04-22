@@ -1,14 +1,4 @@
 <?php
 /**
  * @var \Laminas\View\Renderer\PhpRenderer $this
- *
- * @link https://www.adminer.org/plugins/#use
- * This is an adaptation of /vendor/adminerevo/adminerevo/plugins/plugin.php.
  */
-
-// Don't display warnings for adminer, that are managed outside of Omeka.
-ini_set('display_errors', '0');
-
-// Once is required, because adminer load some files with the same url (favicon.ico, jush.js, functions.js, default.css).
-require_once __DIR__ . '/adminer-functions.phtml';
-require_once dirname(__DIR__, 4) . '/asset/vendor/adminer/adminer-mysql.phtml';
