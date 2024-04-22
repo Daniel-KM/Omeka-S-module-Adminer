@@ -100,9 +100,17 @@ class IndexController extends AbstractActionController
             'permanent' => '1',
         ];
 
+        // This token may avoid issue with auth.
+        // FIXME The token doesn't fix the first load.
+        $this->prepareSessionToken();
+        $token = $this->getToken();
+
         if ($login) {
             if ($isPosted || count($params) > 1) {
-                $_POST = [];
+                // Avoid issue in vendor/adminerevo/adminerevo/adminer/include/auth.inc.php.
+                $_POST = [
+                    'token' => $token,
+                ];
             } else {
                 if (!$loginIsFull && !$hasReadOnly) {
                     $this->messenger()->addError('Read only user is not configured.'); // @translate
@@ -114,6 +122,7 @@ class IndexController extends AbstractActionController
                 }
                 $_POST = [
                     'auth' => $authData,
+                    'token' => $token,
                 ];
                 $_GET = [
                     // Only the username is checked against post in adminer.
@@ -216,5 +225,45 @@ class IndexController extends AbstractActionController
             }
         }
         return $return;
+    }
+
+    /**
+     * Get of set the session token.
+     *
+     * @see vendor/adminerevo/adminerevo/adminer/include/auth.inc.php
+     */
+    protected function prepareSessionToken(): int
+    {
+        $token = empty($_SESSION['token']) ? null : (int) $_SESSION['token'];
+        if (!$token) {
+            // Defense against cross-site request forgery.
+            $token = rand(1, 1000000);
+            $_SESSION['token'] = $token;
+        }
+        return $token;
+    }
+
+    /**
+     * Generate BREACH resistant CSRF token.
+     *
+     * Adapted from adminer function get_token().
+     * @see vendor/adminerevo/adminerevo/adminer/include/functions.inc.php
+     */
+    protected function getToken(): string
+    {
+        $rand = rand(1, 1000000);
+        return ($rand ^ ($_SESSION['token'] ?? '')) . ":$rand";
+    }
+
+    /**
+     * Verify if supplied CSRF token is valid.
+     *
+     * Adapted from adminer function verify_token()..
+     * @see vendor/adminerevo/adminerevo/adminer/include/functions.inc.php
+     */
+    protected function verifyToken(): bool
+    {
+        [$token, $rand] = explode(':', $_POST['token'] ?? '');
+        return ($rand ^ ($_SESSION['token'] ?? '')) === $token;
     }
 }
