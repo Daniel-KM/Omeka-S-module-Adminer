@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b2dcc51034bdffb443e8829e81a89b74",
+    "content-hash": "da38c8881472f3fcc64bab95a9ca30bf",
     "packages": [
         {
             "name": "adminerevo/adminerevo",
             "version": "4.8.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/adminerevo/adminerevo",
+            "dist": {
+                "type": "tar",
+                "url": "https://github.com/adminerevo/adminerevo/archive/refs/tags/v4.8.4.tar.gz",
                 "reference": "v4.8.4"
             },
             "type": "library"
