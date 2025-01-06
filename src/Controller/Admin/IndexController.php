@@ -64,6 +64,11 @@ class IndexController extends AbstractActionController
 
     protected function adminer(string $type)
     {
+        /**
+         * Used in required files.
+         *
+         * @var array $adminerAuthData
+         */
         global $adminerAuthData;
 
         // Avoid an infinite loop. It is still needed when there is an issue
@@ -237,7 +242,7 @@ class IndexController extends AbstractActionController
         $token = empty($_SESSION['token']) ? null : (int) $_SESSION['token'];
         if (!$token) {
             // Defense against cross-site request forgery.
-            $token = rand(1, 1000000);
+            $token = random_int(1, 1000000);
             $_SESSION['token'] = $token;
         }
         return $token;
@@ -251,7 +256,7 @@ class IndexController extends AbstractActionController
      */
     protected function getToken(): string
     {
-        $rand = rand(1, 1000000);
+        $rand = random_int(1, 1000000);
         return ($rand ^ ($_SESSION['token'] ?? '')) . ":$rand";
     }
 

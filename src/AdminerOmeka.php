@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * @see https://www.adminer.org/en/extension
  * @see https://docs.adminerevo.org/#to-use-a-plugin
@@ -21,7 +21,8 @@ class AdminerOmeka
      * Key used for permanent login.
      * @todo To be unique but stable. See controller.
      */
-    public function permanentLogin($create = false) {
+    public function permanentLogin($create = false)
+    {
         $authData = $this->getAuthData();
         return $authData['adminer_key'] ?? null;
     }
@@ -29,7 +30,8 @@ class AdminerOmeka
     /**
      * Server, username and password for connecting to database.
      */
-    public function credentials() {
+    public function credentials()
+    {
         $authData = $this->getAuthData();
         if (empty($authData['server'])) {
             return null;
@@ -44,7 +46,8 @@ class AdminerOmeka
     /**
      * Database name, will be escaped by Adminer.
      */
-    public function database() {
+    public function database()
+    {
         $authData = $this->getAuthData();
         return $authData['db'] ?? null;
     }
@@ -52,7 +55,8 @@ class AdminerOmeka
     /**
      * Validate user submitted credentials.
      */
-    public function login($login, $password) {
+    public function login($login, $password)
+    {
         $authData = $this->getAuthData();
         return !empty($authData['username'])
             && !empty($authData['password'])
@@ -60,7 +64,8 @@ class AdminerOmeka
             && $password === $authData['password'];
     }
 
-    public function css() {
+    public function css()
+    {
         $return = [];
         if (array_key_exists($_SESSION['design'], listDesigns())) {
             $return[] = $_SESSION['design'];
@@ -75,7 +80,8 @@ class AdminerOmeka
         return $return;
     }
 
-    protected function getAuthData() {
+    protected function getAuthData()
+    {
         global $adminerAuthData;
         return $adminerAuthData;
     }
