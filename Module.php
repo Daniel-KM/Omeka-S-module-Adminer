@@ -56,7 +56,7 @@ class Module extends AbstractModule
         if (!file_exists($filename)) {
             $message = new \Omeka\Stdlib\Message(
                 $translate('The module requires the dependencies to be installed. See %1$sreadme%2$s.'), // @translate
-                '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer#installation" rel="noopener">', '</a>'
+                '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer#installation" target="_blank" rel="noopener">', '</a>'
             );
             $message->setEscapeHtml(false);
             $messenger->addError($message);
