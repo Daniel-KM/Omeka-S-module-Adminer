@@ -137,29 +137,26 @@ class IndexController extends AbstractActionController
             $isPosted = true;
         }
 
-        $adminerKey = $this->initAdminerKey();
-
         $adminerAuthData = $authData;
-        $adminerAuthData['adminer_key'] = $adminerKey;
 
-        // Include the AdminerPlugin directly instead of autoload.
-        include_once dirname(__DIR__, 2) . '/AdminerOmeka.php';
+        $filename = 'adminer.key';
+        $adminerAuthData['adminer_key'] = $this->initAdminerKey($filename);
 
         // Don't display warnings for adminer, that are managed outside of Omeka.
+        // TODO There is a double session issue:
+        // PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent.
         ini_set('display_errors', '0');
 
-        // Once is required, because adminer load some files with the same url (favicon.ico, jush.js, functions.js, default.css).
-        require_once dirname(__DIR__, 3) . '/view/adminer/admin/index/adminer-functions.phtml';
         require_once $type === 'editor'
             ? dirname(__DIR__, 3) . '/asset/vendor/adminer/editor-mysql.phtml'
             : dirname(__DIR__, 3) . '/asset/vendor/adminer/adminer-mysql.phtml';
 
-        // Either this simple layout, either view with terminal template, that
-        // requires an include.
-        $this->layout()->setTemplate('adminer/admin/index/layout');
+        // Remove error reporting, because adminer enable it.
+        // error_reporting(E_ALL & ~E_WARNING & ~E_DEPRECATED);
+        error_reporting(0);
 
-        // The view template is the called one.
-        return new ViewModel();
+        return (new ViewModel())
+            ->setTerminal(true);
     }
 
     protected function getDatabaseConfig(): array
@@ -178,9 +175,9 @@ class IndexController extends AbstractActionController
      * Adapted from Adminer functions password_file() and rand_string().
      * @see vendor/vrana/adminer/adminer/include/functions.inc.php
      */
-    protected function initAdminerKey(): ?string
+    protected function initAdminerKey(string $filename): ?string
     {
-        $filename = $this->getTempDir() . "/adminer.key";
+        $filename = $this->getTempDir() . '/' . $filename;
 
         $code = null;
 

@@ -1,0 +1,88 @@
+<?php
+/**
+ * @var \Laminas\View\Renderer\PhpRenderer $this
+ *
+ * @link https://www.adminer.org/plugins/#use
+ */
+
+// Support the plugin "Designs".
+function listDesigns()
+{
+    static $designs;
+    if (is_null($designs)) {
+        $designs = [];
+        foreach (glob(dirname(__DIR__, 4) . '/vendor/vrana/adminer/designs/**/*.css') as $filename) {
+            $name = basename(dirname($filename));
+            // Relative to the Omeka admin route.
+            $designs['../modules/Adminer/vendor/vrana/adminer/designs/' . $name . '/' . basename($filename)] = $name;
+        }
+    }
+    return $designs;
+}
+
+// Load only wanted files for the used plugins below.
+$list = [
+    // Specify enabled plugins here.
+    'dark-switcher',
+    'database-hide',
+    'designs',
+    // 'dump-alter',
+    // 'dump-json',
+    // 'dump-xml',
+    // 'dump-zip',
+    // 'edit-textarea',
+    'foreign-system',
+    // 'json-column',
+    'pretty-json-column',
+    'table-structure',
+    'tables-filter',
+    // 'version-noverify',
+
+    // Not default plugins.
+    // 'disable-tables',
+    // 'folder-import',
+    // 'search-autocomplete',
+    // 'sticky-columns',
+    // 'tree-view',
+
+    // Automatically loaded.
+    // 'omeka',
+];
+
+// Specific plugin.
+require_once dirname(__DIR__, 4) . '/src/AdminerOmeka.php';
+
+// foreach (glob(dirname(__DIR__, 4) . '/vendor/vrana/adminer/plugins/*.php') as $filename) {
+$baseDir = dirname(__DIR__, 4) . '/vendor/vrana/adminer/plugins';
+foreach ($list as $filename) {
+    require_once "$baseDir/$filename.php";
+}
+
+return [
+    // The omeka plugin manages auto-login, display of current database only and
+    // default css.
+    new AdminerOmeka(),
+
+    // Specify enabled plugins here.
+    new AdminerDarkSwitcher(),
+    new AdminerDatabaseHide(['information_schema']),
+    new AdminerDesigns(listDesigns()),
+    // new AdminerDumpAlter(),
+    // new AdminerDumpJson(),
+    // new AdminerDumpXml(),
+    // new AdminerDumpZip(),
+    // new AdminerEditTextarea(),
+    new AdminerForeignSystem(),
+    // new AdminerJsonColumn(),
+    new AdminerPrettyJsonColumn(),
+    new AdminerTableStructure(),
+    new AdminerTablesFilter(),
+    // new AdminerVersionNoverify(),
+
+    // Not default plugins.
+    // new AdminerDisableTables(),
+    // new AdminerFolderImport(),
+    // new AdminerSearchAutocomplete(),
+    // new AdminerStickyColumns(),
+    // new AdminerTreeView(),
+];
