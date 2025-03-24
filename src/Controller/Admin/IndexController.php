@@ -112,7 +112,7 @@ class IndexController extends AbstractActionController
 
         if ($login) {
             if ($isPosted || count($params) > 1) {
-                // Avoid issue in vendor/adminerevo/adminerevo/adminer/include/auth.inc.php.
+                // Avoid issue in vendor/vrana/adminer/adminer/include/auth.inc.php.
                 $_POST = [
                     'token' => $token,
                 ];
@@ -176,7 +176,7 @@ class IndexController extends AbstractActionController
      * Init the permanent adminer key.
      *
      * Adapted from Adminer functions password_file() and rand_string().
-     * @see vendor/adminerevo/adminerevo/adminer/include/functions.inc.php
+     * @see vendor/vrana/adminer/adminer/include/functions.inc.php
      */
     protected function initAdminerKey(): ?string
     {
@@ -210,7 +210,7 @@ class IndexController extends AbstractActionController
      * Get path of the temporary directory.
      *
      * Adapted from adminer function get_temp_dir()
-     * @see vendor/adminerevo/adminerevo/adminer/include/functions.inc.php
+     * @see vendor/vrana/adminer/adminer/include/functions.inc.php
      */
     protected function getTempDir(): string
     {
@@ -235,7 +235,7 @@ class IndexController extends AbstractActionController
     /**
      * Get of set the session token.
      *
-     * @see vendor/adminerevo/adminerevo/adminer/include/auth.inc.php
+     * @see vendor/vrana/adminer/adminer/include/auth.inc.php
      */
     protected function prepareSessionToken(): int
     {
@@ -252,7 +252,7 @@ class IndexController extends AbstractActionController
      * Generate BREACH resistant CSRF token.
      *
      * Adapted from adminer function get_token().
-     * @see vendor/adminerevo/adminerevo/adminer/include/functions.inc.php
+     * @see vendor/vrana/adminer/adminer/include/functions.inc.php
      */
     protected function getToken(): string
     {
@@ -264,7 +264,7 @@ class IndexController extends AbstractActionController
      * Verify if supplied CSRF token is valid.
      *
      * Adapted from adminer function verify_token()..
-     * @see vendor/adminerevo/adminerevo/adminer/include/functions.inc.php
+     * @see vendor/vrana/adminer/adminer/include/functions.inc.php
      */
     protected function verifyToken(): bool
     {
