@@ -31,6 +31,7 @@ class Module extends AbstractModule
         $services = $this->getServiceLocator();
         $acl = $services->get('Omeka\Acl');
 
+        // Only the global admin can manage database.
         $acl
             ->deny(
                 null,
@@ -189,8 +190,8 @@ class Module extends AbstractModule
 
         // Check if the user exists.
         $sql = <<<SQL
-SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = $username);
-SQL;
+            SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = $username);
+            SQL;
         try {
             $result = $connection->fetchOne($sql);
         } catch (\Exception $e) {
@@ -204,8 +205,8 @@ SQL;
         $hasUser = !empty($result);
         if ($hasUser) {
             $sql = <<<SQL
-SHOW GRANTS FOR $username@'$host';
-SQL;
+                SHOW GRANTS FOR $username@'$host';
+                SQL;
             try {
                 $result = $connection->fetchAllAssociative($sql);
             } catch (\Exception $e) {
@@ -227,8 +228,8 @@ SQL;
             }
         } else {
             $sql = <<<SQL
-CREATE USER $username@'$host' IDENTIFIED BY $password;
-SQL;
+                CREATE USER $username@'$host' IDENTIFIED BY $password;
+                SQL;
             try {
                 $connection->executeStatement($sql);
             } catch (\Exception $e) {
@@ -242,9 +243,9 @@ SQL;
 
         // Grant Select privilege to user.
         $sql = <<<SQL
-GRANT SELECT ON `$database`.* TO $username@'$host';
-GRANT SHOW VIEW `$database`.* TO $username@'$host';
-SQL;
+            GRANT SELECT ON `$database`.* TO $username@'$host';
+            GRANT SHOW VIEW `$database`.* TO $username@'$host';
+            SQL;
         try {
             $connection->executeStatement($sql);
             $messenger->addSuccess(new Message(
