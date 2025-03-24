@@ -22,13 +22,16 @@ class IndexController extends AbstractActionController
     {
         $databaseConfig = $this->getDatabaseConfig();
         $hasReadOnly = $databaseConfig['readonly_user_name'] !== '' && $databaseConfig['readonly_user_password'] !== '';
-        $hasFullAccess = $hasReadOnly
-            && $databaseConfig['full_user_name'] !== '' && $databaseConfig['full_user_password'] !== '';
+        $hasFullAccess = $databaseConfig['full_user_name'] !== '' && $databaseConfig['full_user_password'] !== '';
         $hasFakeReadOnly = $hasReadOnly && $hasFullAccess
             && $databaseConfig['readonly_user_name'] === $databaseConfig['full_user_name'];
         if ($hasFakeReadOnly) {
             $this->messenger()->addWarning(new Message(
                 'Warning: the read-only user is the same than the full-access user.' // @translate
+            ));
+        } elseif (!$hasReadOnly) {
+            $this->messenger()->addWarning(new Message(
+                'Warning: there is no read-only user. Use at your own risk!' // @translate
             ));
         }
 
@@ -87,8 +90,7 @@ class IndexController extends AbstractActionController
 
         $databaseConfig = $this->getDatabaseConfig();
         $hasReadOnly = $databaseConfig['readonly_user_name'] !== '' && $databaseConfig['readonly_user_password'] !== '';
-        $hasFullAccess = $hasReadOnly
-            && $databaseConfig['full_user_name'] !== '' && $databaseConfig['full_user_password'] !== '';
+        $hasFullAccess = $databaseConfig['full_user_name'] !== '' && $databaseConfig['full_user_password'] !== '';
         $params = $this->params()->fromQuery();
         $login = $params['login'] ?? null;
         // By default, on first load, use full login to avoid issue.
@@ -120,8 +122,7 @@ class IndexController extends AbstractActionController
                 if (!$loginIsFull && !$hasReadOnly) {
                     $this->messenger()->addError('Read only user is not configured.'); // @translate
                     return $this->redirect()->toRoute(null, ['action' => 'index'], true);
-                }
-                if ($loginIsFull && !$hasFullAccess) {
+                } elseif ($loginIsFull && !$hasFullAccess) {
                     $this->messenger()->addError('Full access user or read only user are not configured.'); // @translate
                     return $this->redirect()->toRoute(null, ['action' => 'index'], true);
                 }

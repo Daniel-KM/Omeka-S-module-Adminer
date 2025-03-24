@@ -24,10 +24,8 @@ echo $this->pageTitle($this->translate('Adminer database manager'));
 <p><?= $translate('In all cases, it’s always recommended to backup your files and your databases automatically and before risky and non-risky commands, and to check your archives regularly, so you can roll back if needed.') ?></p>
 <p><?= $escape($translate('To edit an element, use the key <control> + click.')) ?></p>
 <p>
-
-<?php
-if ($hasDependencies && ($hasReadOnly || $hasFullAccess)):
-    if (!$hasFakeReadOnly) {
+    <?php
+    if ($hasReadOnly && !$hasFakeReadOnly) {
         echo $hyperlink($translate('Read-only access (interface for editor)'), $url('admin/adminer-editor-mysql', [], ['query' => ['login' => 'readonly']]), ['target' => '_blank']);
         echo '<br/>';
         echo $hyperlink($translate('Read-only access'), $url('admin/adminer-mysql', [], ['query' => ['login' => 'readonly']]), ['target' => '_blank']);
@@ -40,8 +38,5 @@ if ($hasDependencies && ($hasReadOnly || $hasFullAccess)):
     else:
         echo $translate('Full-access user is not defined.');
     endif;
-else:
-    echo $translate('Read-only user is not defined.');
-endif;
-?>
+    ?>
 </p>

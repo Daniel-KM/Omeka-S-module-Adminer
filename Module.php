@@ -90,9 +90,11 @@ class Module extends AbstractModule
             'adminer_full_access' => $renderer->setting('adminer_full_access', false),
         ];
 
+        /** @var \Adminer\Form\ConfigForm $form */
         $form = $services->get('FormElementManager')->get(ConfigForm::class);
         $form->init();
         $form->setData($data);
+        $form->prepare();
 
         return '<p>'
             . $renderer->translate('A read only user is required to use the module.') // @translate
@@ -124,13 +126,13 @@ class Module extends AbstractModule
         $params = [
             'adminer_readonly_user' => (string) ($params['adminer_readonly_user'] ?? ''),
             'adminer_readonly_password' => (string) ($params['adminer_readonly_password'] ?? ''),
-            'adminer_full_access' => !empty($params['adminer_readonly_user']),
+            'adminer_full_access' => !empty($params['adminer_full_access']),
         ];
 
         $existingParams = [
             'adminer_readonly_user' => (string) $settings->get('adminer_readonly_user'),
             'adminer_readonly_password' => (string) $settings->get('adminer_readonly_password'),
-            'adminer_full_access' => (bool) $settings->get('adminer_readonly_password'),
+            'adminer_full_access' => (bool) $settings->get('adminer_full_access'),
         ];
 
         // Keep original password if empty.
