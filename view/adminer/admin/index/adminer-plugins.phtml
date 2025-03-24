@@ -24,7 +24,6 @@ function listDesigns()
 $list = [
     // Specify enabled plugins here.
     'dark-switcher',
-    'database-hide',
     'designs',
     // 'dump-alter',
     // 'dump-json',
@@ -32,6 +31,7 @@ $list = [
     // 'dump-zip',
     // 'edit-textarea',
     'foreign-system',
+    // 'frames',
     // 'json-column',
     'pretty-json-column',
     'table-structure',
@@ -65,7 +65,6 @@ return [
 
     // Specify enabled plugins here.
     new AdminerDarkSwitcher(),
-    new AdminerDatabaseHide(['information_schema']),
     new AdminerDesigns(listDesigns()),
     // new AdminerDumpAlter(),
     // new AdminerDumpJson(),
@@ -73,6 +72,7 @@ return [
     // new AdminerDumpZip(),
     // new AdminerEditTextarea(),
     new AdminerForeignSystem(),
+    // new AdminerFrames(),
     // new AdminerJsonColumn(),
     new AdminerPrettyJsonColumn(),
     new AdminerTableStructure(),

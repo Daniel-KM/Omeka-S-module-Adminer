@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 /**
+ * Manage auto-login, access to current database and default css.
+ *
  * @see https://www.adminer.org/en/extension
  * @see https://docs.adminerevo.org/#to-use-a-plugin
  */
@@ -50,6 +52,19 @@ class AdminerOmeka
     {
         $authData = $this->getAuthData();
         return $authData['db'] ?? null;
+    }
+
+    /**
+     * Show only current database in the interface (don't improve security).
+     *
+     * @see \AdminerDatabaseHide
+     *
+     * @return array
+     */
+    public function databases($flush = true)
+    {
+        $authData = $this->getAuthData();
+        return empty($authData['db']) ? [] : [$authData['db']];
     }
 
     /**
