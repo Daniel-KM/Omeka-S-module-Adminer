@@ -11,16 +11,25 @@ use Omeka\Stdlib\Message;
  * @var string $oldVersion
  *
  * @var \Omeka\Api\Manager $api
+ * @var \Omeka\View\Helper\Url $url
+ * @var \Laminas\Log\Logger $logger
  * @var \Omeka\Settings\Settings $settings
+ * @var \Laminas\I18n\View\Helper\Translate $translate
  * @var \Doctrine\DBAL\Connection $connection
+ * @var \Laminas\Mvc\I18n\Translator $translator
  * @var \Doctrine\ORM\EntityManager $entityManager
+ * @var \Omeka\Settings\SiteSettings $siteSettings
  * @var \Omeka\Mvc\Controller\Plugin\Messenger $messenger
  */
 $plugins = $services->get('ControllerPluginManager');
 $api = $plugins->get('api');
+$logger = $services->get('Omeka\Logger');
 $settings = $services->get('Omeka\Settings');
+$translate = $plugins->get('translate');
+$translator = $services->get('MvcTranslator');
 $connection = $services->get('Omeka\Connection');
 $messenger = $plugins->get('messenger');
+$siteSettings = $services->get('Omeka\Settings\Site');
 $entityManager = $services->get('Omeka\EntityManager');
 
 if (version_compare($oldVersion, '3.4.3-4.8.1', '<')) {
@@ -35,6 +44,13 @@ if (version_compare($oldVersion, '3.4.3-4.8.1', '<')) {
 
     $message = new Message(
         'The file database-adminer.ini has been removed. Read-only user credentials are now stored in database. Full access user parameters have been removed.' // @translate
+    );
+    $messenger->addSuccess($message);
+}
+
+if (version_compare($oldVersion, '3.4.6-5.1.0', '<')) {
+    $message = new Message(
+        'The libraries were updated. Check them if you customized them.' // @translate
     );
     $messenger->addSuccess($message);
 }
