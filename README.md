@@ -7,8 +7,7 @@ Adminer Sql (module for Omeka S)
 
 [Adminer Sql] is a module for [Omeka S] that allows to view and manage a MySQL
 database. It uses [Adminer], formerly phpMinAdmin, a one file full-featured
-database management tool written in PHP. In fact, the fork [AdminerEvo] is used,
-because [Adminer] was not updated to last version of php.
+database management tool written in PHP.
 
 It is highly recommended to create a read-only user to use it, because it’s very
 easy to break a database, even for people who know the Omeka code perfectly.
@@ -38,14 +37,29 @@ the module to `Adminer`, go to the root of the module, and run:
 composer install --no-dev
 ```
 
+* Prepare the zip version
+
+To compile the source, use command `git submodule update --init` in the src. To
+simplify install and compilation, [JsShrink], [Jush], and [PhpShrink] are
+prepared early via `tar czf /tmp/a/adminer-externals.tar.gz externals` and added
+directly in the directory vendor/vrana/adminer/externals if not included via
+composer. This process avoids to require git on the server.
+
+* Specific plugins and theme
+
+To install specific plugins, just add them in composer like other ones and run
+`composer update`. It is possible to copy them in asset/vendor/adminer-plugins/,
+but they may be removed automatically on new version.
+
 To change the default theme, you can set it in `composer.json` and run `composer update`
-or copy it inside directory asset/vendor/adminer/.
+too. It is possible to copy it inside directory asset/vendor/adminer/, but it
+may be removed automatically on new version.
 
 
 Usage
 -----
 
-Just fill the confirm and create a read only user.
+Just fill the config and create a read only user.
 
 If the omeka database user has the rights to create a user and to specify
 privileges, the read only user will be automatically created.
@@ -120,7 +134,7 @@ conditions as regards security.
 The fact that you are presently reading this means that you have had knowledge
 of the CeCILL license and that you accept its terms.
 
-* Library Adminer/AdminerEvo
+* Library Vrana/Adminer
 
 The library Adminer is released under [Apache] or [GPL v2].
 Adminer themes are released the same.
@@ -132,17 +146,19 @@ Copyright
 * Copyright Daniel Berthereau, 2019-2025 (see [Daniel-KM] on GitLab)
 
 Adminer:
-* Copyright 2007, Jakub Vrana
-* Copyright 2016, Aleksey M. (theme)
+* Copyright 2007-, Jakub Vrana
+* Copyright 2016-, Aleksey M. (theme)
 
 
 [Adminer Sql]: https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer
 [Adminer]: https://www.adminer.org
-[AdminerEvo]: https://adminerevo.org
 [Omeka S]: https://omeka.org/s
 [warning]: #Warning
 [`Adminer.zip`]: https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/releases
 [installing a module]: https://omeka.org/s/docs/user-manual/modules/#installing-modules
+[JsShrink]: https://github.com/vrana/JsShrink
+[Jush]: https://github.com/vrana/jush
+[PhpShrink]: https://github.com/vrana/PhpShrink
 [module issues]: https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
 [GNU/GPL]: https://www.gnu.org/licenses/gpl-3.0.html
