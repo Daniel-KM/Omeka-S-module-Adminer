@@ -6,18 +6,34 @@
  */
 
 // Support the plugin "Designs".
-function listDesigns()
-{
-    static $designs;
-    if (is_null($designs)) {
-        $designs = [];
-        foreach (glob(dirname(__DIR__, 4) . '/vendor/vrana/adminer/designs/**/*.css') as $filename) {
-            $name = basename(dirname($filename));
-            // Relative to the Omeka admin route.
-            $designs['../modules/Adminer/vendor/vrana/adminer/designs/' . $name . '/' . basename($filename)] = $name;
-        }
+
+// Don't allow all designs, only the most common ones.
+$designsPreselected = [
+    'brade',
+    'bueltge',
+    'esterka',
+    'flat',
+    'haeckel',
+    'hever',
+    'konya',
+    'lucas-sandery',
+    'nette',
+    'ng9',
+    'pappu687',
+    'pokorni',
+    'price',
+    'rmsoft',
+];
+$designs = [];
+// Relative to the Omeka admin route.
+$baseUrl = '../modules/Adminer/vendor/vrana/adminer/designs';
+foreach (glob(dirname(__DIR__, 4) . '/vendor/vrana/adminer/designs/**/*.css') as $filename) {
+    $name = basename(dirname($filename));
+    if (!in_array($name, $designsPreselected)) {
+        continue;
     }
-    return $designs;
+    $basename = basename($filename);
+    $designs["$baseUrl/$name/$basename"] = $name;
 }
 
 // Load only wanted files for the used plugins below.
@@ -61,11 +77,11 @@ foreach ($list as $filename) {
 return [
     // The omeka plugin manages auto-login, display of current database only and
     // default css.
-    new AdminerOmeka(),
+    new AdminerOmeka($designs),
 
     // Specify enabled plugins here.
     new AdminerDarkSwitcher(),
-    new AdminerDesigns(listDesigns()),
+    new AdminerDesigns($designs),
     // new AdminerDumpAlter(),
     // new AdminerDumpJson(),
     // new AdminerDumpXml(),

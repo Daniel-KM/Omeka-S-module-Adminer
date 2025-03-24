@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 /**
  * Manage auto-login, access to current database and default css.
  *
@@ -7,6 +8,16 @@
  */
 class AdminerOmeka
 {
+    /**
+     * @var array
+     */
+    protected $designs;
+
+    public function __construct(array $designs)
+    {
+        $this->designs = $designs;
+    }
+
     /**
      * Custom name in title and heading.
      *
@@ -82,7 +93,7 @@ class AdminerOmeka
     public function css()
     {
         $return = [];
-        if (array_key_exists($_SESSION['design'], listDesigns())) {
+        if (array_key_exists($_SESSION['design'], $this->designs)) {
             $return[] = $_SESSION['design'];
             return $return;
         }
@@ -92,6 +103,7 @@ class AdminerOmeka
             // Relative to the Omeka admin route.
             $return[] = '../modules/Adminer/asset/vendor/adminer/adminer.css?v=' . crc32(file_get_contents($filename));
         }
+
         return $return;
     }
 
