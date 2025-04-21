@@ -143,6 +143,15 @@ class IndexController extends AbstractActionController
         $filename = 'adminer.key';
         $adminerAuthData['adminer_key'] = $this->initAdminerKey($filename);
 
+        // The default cannot be "asset/vendor/adminer/adminer.css", because it
+        // is not in the list of designs.
+        if (!array_key_exists('design', $_SESSION)) {
+            $_SESSION['design'] = '../modules/Adminer/vendor/vrana/adminer/designs/hever/adminer.css';
+        }
+
+        // Fix strict type issue.
+        $_SESSION['translations'] ??= [];
+
         // Don't display warnings for adminer, that are managed outside of Omeka.
         // TODO There is a double session issue:
         // PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent.
