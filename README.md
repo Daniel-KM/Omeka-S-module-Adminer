@@ -1,13 +1,13 @@
-Adminer Sql (module for Omeka S)
-================================
+Adminer Database Manager (module for Omeka S)
+=============================================
 
 > __New versions of this module and support for Omeka S version 3.0 and above
 > are available on [GitLab], which seems to respect users and privacy better
 > than the previous repository.__
 
-[Adminer Sql] is a module for [Omeka S] that allows to view and manage a MySQL
-database. It uses [Adminer], formerly phpMinAdmin, a one file full-featured
-database management tool written in PHP.
+[Adminer Database Manager] is a module for [Omeka S] that allows to view and
+manage a MySQL database. It uses [Adminer], formerly phpMinAdmin, a one file
+full-featured database management tool written in PHP.
 
 It is highly recommended to create a read-only user to use it, because it’s very
 easy to break a database, even for people who know the Omeka code perfectly.
@@ -41,7 +41,7 @@ composer install --no-dev
 
 To compile the source, use command `git submodule update --init` in the src. To
 simplify install and compilation, [JsShrink], [Jush], and [PhpShrink] are
-prepared early via `tar czf /tmp/a/adminer-externals.tar.gz externals` and added
+prepared early via `tar czf /tmp/adminer-externals.tar.gz externals` and added
 directly in the directory vendor/vrana/adminer/externals if not included via
 composer. This process avoids to require git on the server.
 
@@ -82,10 +82,10 @@ TODO
 * [x] Remove the login page (login directly).
 * [x] Use composer package vrana/adminer (to minify and remove from vendor for security).
 * [x] Allow to use any adminer.css theme simply by putting it in a directory.
-* [ ] Remove access to column `password` of users and api credentials.
 * [x] Give the choice to use the simplified version "adminer editor" (finalize theme).
-- [ ] Fix the warning when changing theme on the first page. The issue is related to the load of the minified js.
+- [x] Fix the warning when changing theme on the first page. The issue is related to the load of the minified js.
       It is related to the auth process (with or without login form, that may reset token. See adminer/include/auth.inc.php).
+* [ ] Remove access to column `password` of users and api credentials.
 
 
 Warning
@@ -150,7 +150,7 @@ Adminer:
 * Copyright 2016-, Aleksey M. (theme)
 
 
-[Adminer Sql]: https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer
+[Adminer Database Manager]: https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer
 [Adminer]: https://www.adminer.org
 [Omeka S]: https://omeka.org/s
 [warning]: #Warning
