@@ -41,9 +41,9 @@ composer install --no-dev
 
 To compile the source, use command `git submodule update --init` in the src. To
 simplify install and compilation, [JsShrink], [Jush], and [PhpShrink] are
-prepared early via `tar czf /tmp/adminer-externals.tar.gz externals` and added
-directly in the directory vendor/vrana/adminer/externals if not included via
-composer. This process avoids to require git on the server.
+prepared early via `tar czf /tmp/adminer-externals.tar.gz externals` from the
+root of adminer, and added directly in the directory vendor/vrana/adminer/externals
+if not included via composer. This process avoids to require git on the server.
 
 * Specific plugins and theme
 
