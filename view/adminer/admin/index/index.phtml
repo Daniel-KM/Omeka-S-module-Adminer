@@ -35,8 +35,6 @@ echo $this->pageTitle($this->translate('Adminer database manager'));
         echo $hyperlink($translate('Full access (interface for editor)'), $url('admin/adminer-editor-mysql', [], ['query' => ['login' => 'full']]), ['target' => '_blank']);
         echo '<br/>';
         echo $hyperlink($translate('Full access'), $url('admin/adminer-mysql', [], ['query' => ['login' => 'full']]), ['target' => '_blank']);
-    else:
-        echo $translate('Full-access user is not defined.');
     endif;
     ?>
 </p>

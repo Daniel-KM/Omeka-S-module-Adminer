@@ -61,7 +61,7 @@ class Module extends AbstractModule
             );
             $message->setEscapeHtml(false);
             $messenger->addError($message);
-            throw new \Omeka\Module\Exception\ModuleCannotInstallException($translate('The module cannot be installed.')); // @ŧranslate
+            throw new \Omeka\Module\Exception\ModuleCannotInstallException((string) $message); // @ŧranslate
         }
     }
 
@@ -98,10 +98,9 @@ class Module extends AbstractModule
         $form->prepare();
 
         return '<p>'
-            . $renderer->translate('A read only user is required to use the module.') // @translate
+            . $renderer->translate('A read only user is recommended to use the module.') // @translate
             . ' ' . $renderer->translate('The password is not resent for security reasons.') // @translate
             . ' ' . $renderer->translate('This user can be created automatically if the Omeka database user has such a right.') // @translate
-            . ' ' . $renderer->translate('It is possible but not recommended to use the full-access user as the read-only user.') // @translate
             . '</p>'
             . $renderer->formCollection($form);
     }
@@ -159,6 +158,7 @@ class Module extends AbstractModule
             return true;
         }
 
+        // The success is not checked.
         $this->createReadOnlyUser();
         return true;
     }
@@ -187,6 +187,9 @@ class Module extends AbstractModule
         $usernameUnquoted = $settings->get('adminer_readonly_user');
         $username = $connection->quote($usernameUnquoted);
         $password = $connection->quote($settings->get('adminer_readonly_password'));
+        if (!$username || !$password) {
+            return false;
+        }
 
         // Check if the user exists.
         $sql = <<<SQL
@@ -234,8 +237,7 @@ class Module extends AbstractModule
                 $connection->executeStatement($sql);
             } catch (\Exception $e) {
                 $messenger->addError(new Message(
-                    'An error occurred during the creation of the read-only user "%s".', // @translate
-                    $usernameUnquoted
+                    'The database user does not have the right to create another user.' // @translate
                 ));
                 return false;
             }
@@ -254,8 +256,7 @@ class Module extends AbstractModule
             ));
         } catch (\Exception $e) {
             $messenger->addError(new Message(
-                'An error occurred during the creation of the read-only user "%s".', // @translate
-                $usernameUnquoted
+                'The database user does not have the right to set the rights of another user.' // @translate
             ));
             return false;
         }
@@ -264,8 +265,7 @@ class Module extends AbstractModule
             $connection->executeStatement('FLUSH PRIVILEGES;');
         } catch (\Exception $e) {
             $messenger->addError(new Message(
-                'An error occurred when flushing privileges for user "%s".', // @translate
-                $usernameUnquoted
+                'The database user does not have the right to flush privileges.' // @translate
             ));
             return false;
         }

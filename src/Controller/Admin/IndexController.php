@@ -34,6 +34,15 @@ class IndexController extends AbstractActionController
                 'Warning: there is no read-only user. Use at your own risk!' // @translate
             ));
         }
+        if (!$hasReadOnly && !$hasFullAccess) {
+            $message = new Message(
+                'Warning: no user are defined to access to the database. Check the %1$sconfig%2$s.', // @translate
+                sprintf('<a href="%s">', $this->url()->fromRoute('admin/default', ['controller' => 'module', 'action' => 'configure'], ['query' => ['id' => 'Adminer']])),
+                '</a>'
+            );
+            $message->setEscapeHtml(false);
+            $this->messenger()->addWarning($message);
+        }
 
         // Check for the presence of adminer to fix bad install/upgrade.
         $filename = dirname(__DIR__, 3) . '/asset/vendor/adminer/adminer-mysql.phtml';
