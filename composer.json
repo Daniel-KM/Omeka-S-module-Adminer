@@ -66,6 +66,10 @@
             "sed -i -e 's~basename = \"adminer-plugins\"~basename = __DIR__ . \"/adminer-plugins\"~' -e 's~include = include_once \"./$basename.php\"~include = include_once \"$basename.php\"~' vendor/vrana/adminer/adminer/include/plugins.inc.php",
             "sed -i -e 's~is_dir(\"adminer-plugins\") || file_exists(\"adminer-plugins.php\")~is_dir(__DIR__ . \"/adminer-plugins\") || file_exists(__DIR__ . \"/adminer-plugins.php\")~' vendor/vrana/adminer/adminer/include/bootstrap.inc.php",
 
+            "# Fix issue introduced in version 5.1.1 (#1085)",
+            "#sed -i -e \"s~LANG . ' . \\$translations_version . '~LANG . \\\"' . \\$translations_version . '\\\"~\" vendor/vrana/adminer/compile.php",
+            "sed -i -e \"s~crc32(\\$return);~chr(34) . crc32(\\$return) . chr(34);~\" vendor/vrana/adminer/compile.php",
+
             "@php -f 'vendor/vrana/adminer/compile.php' -- mysql",
             "mv $(ls adminer-*mysql.php) asset/vendor/adminer/adminer-mysql.phtml",
 
