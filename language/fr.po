@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-24 00:00+0000\n"
-"PO-Revision-Date: 2025-03-24 00:00+0000\n"
+"POT-Creation-Date: 2025-05-12 00:00+0000\n"
+"PO-Revision-Date: 2025-05-12 00:00+0000\n"
 "Last-Translator: Daniel Berthereau <Daniel.fr@Berthereau.net>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -17,21 +17,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: Module.php:59 src/Controller/Admin/IndexController.php:43
+#: Module.php:59 src/Controller/Admin/IndexController.php:52
 #, php-format
 msgid ""
 "The module requires the dependencies to be installed. See %1$sreadme%2$s."
 msgstr ""
 "Le module requiert l’installation de dépendances. Voir le %1$slisez-moi%2$s."
 
-#: Module.php:64
-msgid "The module cannot be installed."
-msgstr "Ce module ne peut pas être installé."
-
 #: Module.php:101
-msgid "A read only user is required to use the module."
+msgid "A read only user is recommended to use the module."
 msgstr ""
-"Un utilisateur ayant des droits de lecture seule est nécessaire pour "
+"Un utilisateur ayant des droits de lecture seule est recommandé pour "
 "utiliser ce module."
 
 #: Module.php:102
@@ -46,15 +42,7 @@ msgstr ""
 "L’utilisateur peut être créé automatiquement si l’utilisateur de la base "
 "Omeka en a le droit."
 
-#: Module.php:104
-msgid ""
-"It is possible but not recommended to use the full-access user as the read-"
-"only user."
-msgstr ""
-"Il est possible mais non recommandé d'utiliser l'utilisateur avec accès "
-"complet comme utilisateur à accès en lecture seule."
-
-#: src/Controller/Admin/IndexController.php:85
+#: src/Controller/Admin/IndexController.php:94
 msgid "The module requires the dependencies to be installed. See readme."
 msgstr "Le module requiert l’installation de dépendances. Voir le lisez-moi."
 
@@ -111,10 +99,6 @@ msgstr "Accès complet (interface pour éditeur)"
 msgid "Full access"
 msgstr "Accès complet"
 
-#: view/adminer/admin/index/index.phtml:39
-msgid "Full-access user is not defined."
-msgstr "L’utilisateur en accès complet n’est pas défini."
-
 #: data/scripts/upgrade.php:46
 msgid ""
 "The file database-adminer.ini has been removed. Read-only user credentials "
@@ -130,7 +114,7 @@ msgstr ""
 "Les bibliothèques ont été mises à jour. Vérifiez-les si vous les avez "
 "personnalisées."
 
-#: Module.php:199
+#: Module.php:202
 msgid ""
 "The Omeka database user has no rights to check or create a user. Add it "
 "manually yourself if needed."
@@ -138,7 +122,7 @@ msgstr ""
 "L’utilisateur de la base Omeka n’a pas le droit de vérifier ou de créer un "
 "utilisateur. Ajoutez le manuellement si besoin."
 
-#: Module.php:214
+#: Module.php:217
 msgid ""
 "The Omeka database user has no rights to check grants of a user. Add it "
 "manually yourself if needed."
@@ -146,24 +130,29 @@ msgstr ""
 "L’utilisateur de la base Omeka n’a pas le droit de gérer les privilèges d’un "
 "utilisateur. Ajoutez le manuellement si besoin."
 
-#: Module.php:237 Module.php:257
-#, php-format
-msgid "An error occurred during the creation of the read-only user \"%s\"."
+#: Module.php:240
+msgid "The database user does not have the right to create another user."
 msgstr ""
-"Une erreur est survenue durant la création de l’utilisateur en lecture seule "
-"« %s »."
+"L’ utilisateur de la base de données n’a pas les droits pour créer un autre "
+"utilisateur."
 
-#: Module.php:252
+#: Module.php:254
 #, php-format
 msgid "The read-only user \"%s\" has been created."
 msgstr "L’utilisateur en lecture seule « %s » a été créé."
 
-#: Module.php:267
-#, php-format
-msgid "An error occurred when flushing privileges for user \"%s\"."
+#: Module.php:259
+msgid ""
+"The database user does not have the right to set the rights of another user."
 msgstr ""
-"Une erreur est survenue lors de l’enregistrement des privilèges de "
-"l’utilisateur « %s »."
+"L’ utilisateur de la base de données n’a pas les droits pour définir les "
+"droits d’un autre utilisateur."
+
+#: Module.php:268
+msgid "The database user does not have the right to flush privileges."
+msgstr ""
+"L’ utilisateur de la base de données n’a pas les droits pour mettre à jour "
+"les privilèges."
 
 #: src/Form/ConfigForm.php:17
 msgid "Read only user name"
@@ -186,14 +175,23 @@ msgstr ""
 #: src/Controller/Admin/IndexController.php:34
 msgid "Warning: there is no read-only user. Use at your own risk!"
 msgstr ""
-"Attention : aucun utilisateur en lecture seul n’est défini. Utilisez à vos "
+"Attention : aucun utilisateur en lecture seule n’est défini. Utilisez à vos "
 "propre risques !"
 
-#: src/Controller/Admin/IndexController.php:123
+#: src/Controller/Admin/IndexController.php:39
+#, php-format
+msgid ""
+"Warning: no user are defined to access to the database. Check the "
+"%1$sconfig%2$s."
+msgstr ""
+"Attention : aucun utilisateur n’est défini pour accéder à la base de "
+"données. Vérifiez la %1$sconfiguration%2$s."
+
+#: src/Controller/Admin/IndexController.php:132
 msgid "Read only user is not configured."
 msgstr "L’utilisateur en lecture seule n’est pas configuré."
 
-#: src/Controller/Admin/IndexController.php:126
+#: src/Controller/Admin/IndexController.php:135
 msgid "Full access user or read only user are not configured."
 msgstr ""
 "Les utilisateurs en accès complet ou en lecture seule ne sont pas configurés."
@@ -201,6 +199,31 @@ msgstr ""
 #: config/module.config.php:24
 msgid "Database"
 msgstr "Base de données"
+
+#~ msgid "Full-access user is not defined."
+#~ msgstr "L’utilisateur en accès complet n’est pas défini."
+
+#, php-format
+#~ msgid "An error occurred during the creation of the read-only user \"%s\"."
+#~ msgstr ""
+#~ "Une erreur est survenue durant la création de l’utilisateur en lecture "
+#~ "seule « %s »."
+
+#, php-format
+#~ msgid "An error occurred when flushing privileges for user \"%s\"."
+#~ msgstr ""
+#~ "Une erreur est survenue lors de l’enregistrement des privilèges de "
+#~ "l’utilisateur « %s »."
+
+#~ msgid "The module cannot be installed."
+#~ msgstr "Ce module ne peut pas être installé."
+
+#~ msgid ""
+#~ "It is possible but not recommended to use the full-access user as the "
+#~ "read-only user."
+#~ msgstr ""
+#~ "Il est possible mais non recommandé d'utiliser l'utilisateur avec accès "
+#~ "complet comme utilisateur à accès en lecture seule."
 
 #~ msgid ""
 #~ "Besides, some designs are not adapted for the interface for editor. They "

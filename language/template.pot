@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-24 00:00+0000\n"
+"POT-Creation-Date: 2025-05-12 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,18 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: Module.php:59 src/Controller/Admin/IndexController.php:43
+#: Module.php:59 src/Controller/Admin/IndexController.php:52
 #, php-format
 msgid ""
 "The module requires the dependencies to be installed. See %1$sreadme%2$s."
 msgstr ""
 
-#: Module.php:64
-msgid "The module cannot be installed."
-msgstr ""
-
 #: Module.php:101
-msgid "A read only user is required to use the module."
+msgid "A read only user is recommended to use the module."
 msgstr ""
 
 #: Module.php:102
@@ -41,13 +37,7 @@ msgid ""
 "right."
 msgstr ""
 
-#: Module.php:104
-msgid ""
-"It is possible but not recommended to use the full-access user as the read-"
-"only user."
-msgstr ""
-
-#: src/Controller/Admin/IndexController.php:85
+#: src/Controller/Admin/IndexController.php:94
 msgid "The module requires the dependencies to be installed. See readme."
 msgstr ""
 
@@ -97,10 +87,6 @@ msgstr ""
 msgid "Full access"
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:39
-msgid "Full-access user is not defined."
-msgstr ""
-
 #: data/scripts/upgrade.php:46
 msgid ""
 "The file database-adminer.ini has been removed. Read-only user credentials "
@@ -111,31 +97,34 @@ msgstr ""
 msgid "The libraries were updated. Check them if you customized them."
 msgstr ""
 
-#: Module.php:199
+#: Module.php:202
 msgid ""
 "The Omeka database user has no rights to check or create a user. Add it "
 "manually yourself if needed."
 msgstr ""
 
-#: Module.php:214
+#: Module.php:217
 msgid ""
 "The Omeka database user has no rights to check grants of a user. Add it "
 "manually yourself if needed."
 msgstr ""
 
-#: Module.php:237 Module.php:257
-#, php-format
-msgid "An error occurred during the creation of the read-only user \"%s\"."
+#: Module.php:240
+msgid "The database user does not have the right to create another user."
 msgstr ""
 
-#: Module.php:252
+#: Module.php:254
 #, php-format
 msgid "The read-only user \"%s\" has been created."
 msgstr ""
 
-#: Module.php:267
-#, php-format
-msgid "An error occurred when flushing privileges for user \"%s\"."
+#: Module.php:259
+msgid ""
+"The database user does not have the right to set the rights of another user."
+msgstr ""
+
+#: Module.php:268
+msgid "The database user does not have the right to flush privileges."
 msgstr ""
 
 #: src/Form/ConfigForm.php:17
@@ -158,11 +147,18 @@ msgstr ""
 msgid "Warning: there is no read-only user. Use at your own risk!"
 msgstr ""
 
-#: src/Controller/Admin/IndexController.php:123
+#: src/Controller/Admin/IndexController.php:39
+#, php-format
+msgid ""
+"Warning: no user are defined to access to the database. Check the "
+"%1$sconfig%2$s."
+msgstr ""
+
+#: src/Controller/Admin/IndexController.php:132
 msgid "Read only user is not configured."
 msgstr ""
 
-#: src/Controller/Admin/IndexController.php:126
+#: src/Controller/Admin/IndexController.php:135
 msgid "Full access user or read only user are not configured."
 msgstr ""
 
