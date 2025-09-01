@@ -4,15 +4,15 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "36f4ed3efb9f592fb73785e2a629f01f",
+    "content-hash": "61211bfaaf7035ddb32ecd31ef689f98",
     "packages": [
         {
             "name": "vrana/adminer",
-            "version": "5.3.0",
+            "version": "5.4.1",
             "dist": {
                 "type": "tar",
-                "url": "https://github.com/vrana/adminer/archive/refs/tags/v5.2.1.tar.gz",
-                "reference": "v5.3.0"
+                "url": "https://github.com/vrana/adminer/archive/refs/tags/v5.4.1.tar.gz",
+                "reference": "v5.4.1"
             },
             "type": "library"
         },

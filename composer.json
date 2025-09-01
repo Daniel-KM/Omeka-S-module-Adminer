@@ -27,11 +27,11 @@
             "type": "package",
             "package": {
                 "name": "vrana/adminer",
-                "version": "5.3.0",
+                "version": "5.4.1",
                 "dist": {
                     "type": "tar",
-                    "url": "https://github.com/vrana/adminer/archive/refs/tags/v5.2.1.tar.gz",
-                    "reference": "v5.3.0"
+                    "url": "https://github.com/vrana/adminer/archive/refs/tags/v5.4.1.tar.gz",
+                    "reference": "v5.4.1"
                 }
             }
         },
@@ -48,7 +48,7 @@
         }
     ],
     "require": {
-        "vrana/adminer": "^5.3.0",
+        "vrana/adminer": "^5.4.1",
         "vrana/adminer-externals": "^5.1.0"
     },
     "scripts": {
