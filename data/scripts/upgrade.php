@@ -54,3 +54,14 @@ if (version_compare($oldVersion, '3.4.6-5.1.0', '<')) {
     );
     $messenger->addSuccess($message);
 }
+
+if (version_compare($oldVersion, '3.4.8-5.4.1', '<')) {
+    // Remove the option user reader only if the user/password is unavailable,
+    // that is the most common case.
+    $readonlyUser = $settings->get('adminer_readonly_user');
+    $readonlyPassword = $settings->get('adminer_readonly_password');
+    if (!$readonlyUser || !$readonlyPassword) {
+        $settings->delete('adminer_readonly_user');
+        $settings->delete('adminer_readonly_password');
+    }
+}
