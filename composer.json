@@ -51,6 +51,16 @@
         "vrana/adminer": "^5.4.1",
         "vrana/adminer-externals": "^5.1.0"
     },
+    "autoload": {
+        "psr-4": {
+            "Adminer\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AdminerTest\\": "tests/AdminerTest/"
+        }
+    },
     "scripts": {
         "post-install-cmd": "@build",
         "post-update-cmd": "@build",
@@ -86,5 +96,8 @@
 
             "echo 'Order allow,deny\n<FilesMatch \"\\.(css|js|gif|jpeg|jpg|png|webp)$\">\n    Order deny,allow\n</FilesMatch>' > asset/vendor/.htaccess"
         ]
+    },
+    "extra": {
+        "installer-name": "Adminer"
     }
 }
