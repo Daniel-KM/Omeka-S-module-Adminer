@@ -37,6 +37,13 @@ the module to `Adminer`, go to the root of the module, and run:
 composer install --no-dev
 ```
 
+The module includes a comprehensive test suite with unit and functional tests.
+Run them from the root of Omeka:
+
+```sh
+vendor/bin/phpunit -c modules/Adminer/phpunit.xml --testdox
+```
+
 * Prepare the zip version
 
 To compile the source, use command `git submodule update --init` in the src. To
