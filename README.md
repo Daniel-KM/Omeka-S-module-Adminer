@@ -150,7 +150,7 @@ Adminer themes are released the same.
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2019-2025 (see [Daniel-KM] on GitLab)
+* Copyright Daniel Berthereau, 2019-2026 (see [Daniel-KM] on GitLab)
 
 Adminer:
 * Copyright 2007-, Jakub Vrana
