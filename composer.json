@@ -81,6 +81,9 @@
 
             "cp vendor/vrana/adminer/designs/hever/adminer.css asset/vendor/adminer/adminer.css",
 
+            "# Fix issue in css for default editor of hever (table name are hidden).",
+            "echo '/* fix omeka */ body.editor #menu ul#tables a[href*=\"&select=\"] { overflow: initial; }' >> vendor/vrana/adminer/designs/hever/adminer.css",
+
             "echo 'Order allow,deny\n<FilesMatch \"\\.(css|js|gif|jpeg|jpg|png|webp)$\">\n    Order deny,allow\n</FilesMatch>' > asset/vendor/.htaccess"
         ]
     }
