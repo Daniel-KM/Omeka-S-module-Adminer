@@ -37,32 +37,30 @@ class AdminerOmeka
      * Key used for permanent login.
      * @todo To be unique but stable. See controller.
      */
-    public function permanentLogin($create = false)
+    public function permanentLogin(bool $create = false): string
     {
         $authData = $this->getAuthData();
-        return $authData['adminer_key'] ?? null;
+        return $authData['adminer_key'] ?? '';
     }
 
     /**
      * Server, username and password for connecting to database.
+     * @return array{string, string, string}
      */
-    public function credentials()
+    public function credentials(): array
     {
         $authData = $this->getAuthData();
-        if (empty($authData['server'])) {
-            return null;
-        }
         return [
-            $authData['server'] ?? null,
-            $authData['username'] ?? null,
-            $authData['password'] ?? null,
+            $authData['server'] ?? '',
+            $authData['username'] ?? '',
+            $authData['password'] ?? '',
         ];
     }
 
     /**
      * Database name, will be escaped by Adminer.
      */
-    public function database()
+    public function database(): ?string
     {
         $authData = $this->getAuthData();
         return $authData['db'] ?? null;
@@ -72,10 +70,8 @@ class AdminerOmeka
      * Show only current database in the interface (don't improve security).
      *
      * @see \AdminerDatabaseHide
-     *
-     * @return array
      */
-    public function databases($flush = true)
+    public function databases(bool $flush = true): array
     {
         $authData = $this->getAuthData();
         return empty($authData['db']) ? [] : [$authData['db']];
@@ -96,7 +92,7 @@ class AdminerOmeka
     /**
      * Validate user submitted credentials.
      */
-    public function login($login, $password)
+    public function login(string $login, string $password)
     {
         $authData = $this->getAuthData();
         return !empty($authData['username'])
@@ -105,18 +101,24 @@ class AdminerOmeka
             && $password === $authData['password'];
     }
 
-    public function css()
+    /**
+     * Get URLs of the CSS files.
+     * @return array key is URL, value is 'light', 'dark' or '' (both)
+     */
+    public function css(): array
     {
         $return = [];
         if (array_key_exists($_SESSION['design'], $this->designs)) {
-            $return[] = $_SESSION['design'];
+            $return[$_SESSION['design']] = '';
             return $return;
         }
 
         $filename = dirname(__DIR__, 4) . '/asset/vendor/adminer/adminer.css';
         if (file_exists($filename)) {
             // Relative to the Omeka admin route.
-            $return[] = '../modules/Adminer/asset/vendor/adminer/adminer.css?v=' . crc32(file_get_contents($filename));
+            $file = file_get_contents($filename);
+            $url = '../modules/Adminer/asset/vendor/adminer/adminer.css?v=' . crc32($file);
+            $return[$url] = preg_match('~prefers-color-scheme:\s*dark~', $file) ? '' : 'light';
         }
 
         return $return;
