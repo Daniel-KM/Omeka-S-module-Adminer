@@ -184,12 +184,13 @@ class Module extends AbstractModule
         $database = $connection->getDatabase();
 
         // Username and password are quoted for all queries below.
-        $usernameUnquoted = $settings->get('adminer_readonly_user');
-        $username = $connection->quote($usernameUnquoted);
-        $password = $connection->quote($settings->get('adminer_readonly_password'));
-        if (!$username || !$password) {
+        $usernameUnquoted = (string) $settings->get('adminer_readonly_user');
+        $passwordUnquoted = (string) $settings->get('adminer_readonly_password');
+        if ($usernameUnquoted === '' || $passwordUnquoted === '') {
             return false;
         }
+        $username = $connection->quote($usernameUnquoted);
+        $password = $connection->quote($passwordUnquoted);
 
         // Check if the user exists.
         $sql = <<<SQL
@@ -201,7 +202,7 @@ class Module extends AbstractModule
             $messenger->addError(
                 'The Omeka database user has no rights to check or create a user. Add it manually yourself if needed.' // @translate
             );
-            return true;
+            return false;
         }
 
         // Check grants of the user.
@@ -243,12 +244,15 @@ class Module extends AbstractModule
             }
         }
 
-        // Grant Select privilege to user.
-        $sql = <<<SQL
-            GRANT SELECT ON `$database`.* TO $username@'$host';
-            GRANT SHOW VIEW `$database`.* TO $username@'$host';
-            SQL;
+        // Grant Select and Show View privileges to user.
         try {
+            $sql = <<<SQL
+                GRANT SELECT ON `$database`.* TO $username@'$host';
+                SQL;
+            $connection->executeStatement($sql);
+            $sql = <<<SQL
+                GRANT SHOW VIEW ON `$database`.* TO $username@'$host';
+                SQL;
             $connection->executeStatement($sql);
             $messenger->addSuccess(new Message(
                 'The read-only user "%s" has been created.', // @translate

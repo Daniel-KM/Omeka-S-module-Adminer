@@ -184,7 +184,7 @@ class IndexController extends AbstractActionController
         $settings = $this->settings();
         $config = [
             'readonly_user_name' => (string) $settings->get('adminer_readonly_user', ''),
-            'readonly_user_password' => (string) $settings->get('adminer_readonly_user', ''),
+            'readonly_user_password' => (string) $settings->get('adminer_readonly_password', ''),
         ];
         return $config + $this->dbConfig;
     }
@@ -240,7 +240,7 @@ class IndexController extends AbstractActionController
                 // Temp directory can be disabled by open_basedir.
                 $filename = @tempnam('', '');
                 if (!$filename) {
-                    return false;
+                    return '/tmp';
                 }
                 $return = dirname($filename);
                 unlink($filename);
