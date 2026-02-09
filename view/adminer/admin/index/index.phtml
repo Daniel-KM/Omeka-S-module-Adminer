@@ -23,18 +23,20 @@ echo $this->pageTitle($this->translate('Adminer database manager'));
 <p><?= $translate('It is highly recommended to use a read-only user to access database, because it’s very easy to break a database, even for people who know the Omeka code and all the modules perfectly.') ?></p>
 <p><?= $translate('In all cases, it’s always recommended to backup your files and your databases automatically and before risky and non-risky commands, and to check your archives regularly, so you can roll back if needed.') ?></p>
 <p><?= $escape($translate('To edit an element, use the key <control> + click.')) ?></p>
+<?php if ($hasDependencies): ?>
 <p>
     <?php
     if ($hasReadOnly && !$hasFakeReadOnly) {
-        echo $hyperlink($translate('Read-only access (interface for editor)'), $url('admin/adminer-editor-mysql', [], ['query' => ['login' => 'readonly']]), ['target' => '_blank']);
-        echo '<br/>';
         echo $hyperlink($translate('Read-only access'), $url('admin/adminer-mysql', [], ['query' => ['login' => 'readonly']]), ['target' => '_blank']);
         echo '<br/>';
-    }
-    if ($hasFullAccess):
-        echo $hyperlink($translate('Full access (interface for editor)'), $url('admin/adminer-editor-mysql', [], ['query' => ['login' => 'full']]), ['target' => '_blank']);
+        echo $hyperlink($translate('Read-only access (interface for editor)'), $url('admin/adminer-editor-mysql', [], ['query' => ['login' => 'readonly']]), ['target' => '_blank']);
         echo '<br/>';
+    }
+    if ($hasFullAccess) {
         echo $hyperlink($translate('Full access'), $url('admin/adminer-mysql', [], ['query' => ['login' => 'full']]), ['target' => '_blank']);
-    endif;
+        echo '<br/>';
+        echo $hyperlink($translate('Full access (interface for editor)'), $url('admin/adminer-editor-mysql', [], ['query' => ['login' => 'full']]), ['target' => '_blank']);
+    }
     ?>
 </p>
+<?php endif; ?>
