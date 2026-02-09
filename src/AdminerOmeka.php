@@ -79,6 +79,18 @@ class AdminerOmeka
     }
 
     /**
+     * SSL connection options from database.ini driverOptions.
+     *
+     * @return array|null ["key" => filename, "cert" => filename, "ca" => filename, "verify" => bool]
+     */
+    public function connectSsl()
+    {
+        $authData = $this->getAuthData();
+        $ssl = $authData['ssl'] ?? [];
+        return $ssl ?: null;
+    }
+
+    /**
      * Validate user submitted credentials.
      */
     public function login($login, $password)

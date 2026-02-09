@@ -114,6 +114,7 @@ class IndexController extends AbstractActionController
             'username' => $username,
             'password' => $loginIsFull ? $databaseConfig['full_user_password'] : $databaseConfig['readonly_user_password'],
             'permanent' => '1',
+            'ssl' => $databaseConfig['ssl'] ?? [],
         ];
 
         // This token may avoid issue with auth.
