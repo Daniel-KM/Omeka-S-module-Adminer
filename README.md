@@ -18,15 +18,22 @@ automatically and regularly, and before risky and non-risky commands.
 Installation
 ------------
 
-The module uses an external library ([Adminer]) to access database, so use the
-release zip to install the module, or use and init the source.
-
 See general end user documentation for [installing a module].
+
+The module uses a pre-compiled version of [Adminer] to access the database. The
+compiled files are downloaded automatically via the Composer plugin
+[sempia/external-assets].
+
+* Via composer (recommended)
+
+When installed via composer (either directly or from the Omeka S root), the
+pre-compiled Adminer files are downloaded automatically into `asset/vendor/`
+during `composer install` or `composer update`.
 
 * From the zip
 
-Download the last release [`Adminer.zip`] from the list of releases (the master
-does not contain the dependency), and uncompress it in the `modules` directory.
+Download the last release [`Adminer.zip`] from the list of releases and
+uncompress it in the `modules` directory.
 
 * From the source and for development
 
@@ -44,23 +51,31 @@ Run them from the root of Omeka:
 vendor/bin/phpunit -c modules/Adminer/phpunit.xml --testdox
 ```
 
-* Prepare the zip version
+* Recompiling Adminer
 
-To compile the source, use command `git submodule update --init` in the src. To
-simplify install and compilation, [JsShrink], [Jush], and [PhpShrink] are
-prepared early via `tar czf /tmp/adminer-externals.tar.gz externals` from the
-root of adminer, and added directly in the directory vendor/vrana/adminer/externals
-if not included via composer. This process avoids to require git on the server.
+When upgrading to a new version of Adminer, the compiled files must be rebuilt
+and published as a release archive. A build script is provided:
+
+```sh
+cd modules/Adminer
+bash data/scripts/compile-adminer.sh --archive
+```
+
+The script fetches the latest Adminer version automatically, clones the
+[Adminer repository] with its submodules (JsShrink, jush, PhpShrink), patches
+the source for Omeka compatibility, compiles self-contained php files, and
+packages plugins, designs, and css theme into a distributable `tar.gz` in
+`build/`. A fixed version can be set instead by uncommenting `ADMINER_VERSION`
+at the top of the script. Upload the archive as a release asset and update the
+url in `composer.json` (`extra.external-assets`).
 
 * Specific plugins and theme
 
-To install specific plugins, just add them in composer like other ones and run
-`composer update`. It is possible to copy them in asset/vendor/adminer-plugins/,
-but they may be removed automatically on new version.
+To install specific plugins, copy them in `asset/vendor/adminer/adminer-plugins/`.
+Note that they may be removed if assets are re-downloaded.
 
-To change the default theme, you can set it in `composer.json` and run `composer update`
-too. It is possible to copy it inside directory asset/vendor/adminer/, but it
-may be removed automatically on new version.
+To change the default theme, copy a CSS file as `asset/vendor/adminer/adminer.css`.
+Note that it may be overwritten if assets are re-downloaded.
 
 
 Usage
@@ -87,7 +102,7 @@ TODO
 ----
 
 * [x] Remove the login page (login directly).
-* [x] Use composer package vrana/adminer (to minify and remove from vendor for security).
+* [x] Use composer package vrana/adminer (to minify and remove from vendor for security). Now uses pre-compiled archive via sempia/external-assets.
 * [x] Allow to use any adminer.css theme simply by putting it in a directory.
 * [x] Give the choice to use the simplified version "adminer editor" (finalize theme).
 - [x] Fix the warning when changing theme on the first page. The issue is related to the load of the minified js.
@@ -162,10 +177,9 @@ Adminer:
 [Omeka S]: https://omeka.org/s
 [warning]: #Warning
 [`Adminer.zip`]: https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/releases
+[Adminer repository]: https://github.com/vrana/adminer
 [installing a module]: https://omeka.org/s/docs/user-manual/modules/#installing-modules
-[JsShrink]: https://github.com/vrana/JsShrink
-[Jush]: https://github.com/vrana/jush
-[PhpShrink]: https://github.com/vrana/PhpShrink
+[sempia/external-assets]: https://packagist.org/packages/sempia/external-assets
 [module issues]: https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
 [GNU/GPL]: https://www.gnu.org/licenses/gpl-3.0.html
