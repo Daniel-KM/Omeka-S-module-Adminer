@@ -1,10 +1,10 @@
 {
     "name": "daniel-km/omeka-s-module-adminer",
-    "type": "library",
-    "description": "Access to Omeka database through Adminer, a one-file full-featured database management tool.",
+    "type": "omeka-s-module",
+    "description": "Module for Omeka S: Access to Omeka database through Adminer, a one-file full-featured database management tool.",
     "keywords": [
-        "Omeka-S",
-        "module",
+        "Omeka S",
+        "Omeka S module",
         "admin",
         "curation",
         "adminer",
@@ -15,12 +15,15 @@
     "authors": [
         {
             "name": "Daniel Berthereau",
-            "email": "Daniel.git@Berthereau.net"
+            "email": "Daniel.packagist@Berthereau.net"
         }
     ],
     "support": {
         "issues": "https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/issues",
         "forum": "https://forum.omeka.org/"
+    },
+    "_require (not set until Omeka S merges PR #2412)": {
+        "omeka/omeka-s": "^3.1 || ^4.0"
     },
     "require": {
         "sempia/external-assets": "^1.0"
@@ -45,6 +48,7 @@
         "installer-name": "Adminer",
         "external-assets": {
             "asset/vendor/": "https://github.com/Daniel-KM/Omeka-S-module-Adminer/releases/download/3.4.9-5.4.1/adminer-compiled-5.4.1.tar.gz"
-        }
+        },
+        "configurable": true
     }
 }
