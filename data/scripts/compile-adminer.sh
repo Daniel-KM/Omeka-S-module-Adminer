@@ -97,6 +97,12 @@ mv "$EDITOR_FILE" "${OUTPUT_DIR}/editor-mysql.phtml"
 echo '<?php return require dirname(__DIR__, 3) . "/view/adminer/admin/index/adminer-plugins.phtml";' \
     > "${OUTPUT_DIR}/adminer-plugins.php"
 
+# Copy plugin source files (needed at runtime by adminer-plugins.phtml).
+cp "${ADMINER_SRC}/plugins/"*.php "${OUTPUT_DIR}/adminer-plugins/"
+
+# Copy designs (CSS themes selectable at runtime).
+cp -r "${ADMINER_SRC}/designs" "${OUTPUT_DIR}/designs"
+
 # Theme CSS with editor fix.
 cp "${ADMINER_SRC}/designs/hever/adminer.css" "${OUTPUT_DIR}/adminer.css"
 echo '/* fix omeka */ body.editor #menu ul#tables a[href*="&select="] { overflow: initial; }' \
