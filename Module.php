@@ -61,7 +61,7 @@ class Module extends AbstractModule
             );
             $message->setEscapeHtml(false);
             $messenger->addError($message);
-            throw new \Omeka\Module\Exception\ModuleCannotInstallException((string) $message); // @ŧranslate
+            throw new \Omeka\Module\Exception\ModuleCannotInstallException((string) $message);
         }
     }
 
@@ -199,9 +199,9 @@ class Module extends AbstractModule
         try {
             $result = $connection->fetchOne($sql);
         } catch (\Exception $e) {
-            $messenger->addError(
+            $messenger->addError(new Message(
                 'The Omeka database user has no rights to check or create a user. Add it manually yourself if needed.' // @translate
-            );
+            ));
             return false;
         }
 
@@ -214,9 +214,9 @@ class Module extends AbstractModule
             try {
                 $result = $connection->fetchAllAssociative($sql);
             } catch (\Exception $e) {
-                $messenger->addError(
+                $messenger->addError(new Message(
                     'The Omeka database user has no rights to check grants of a user. Add it manually yourself if needed.' // @translate
-                );
+                ));
                 return false;
             }
 

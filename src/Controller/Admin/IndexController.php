@@ -215,7 +215,7 @@ class IndexController extends AbstractActionController
             if ($fp) {
                 chmod($filename, 0660);
                 // 32 hexadecimal characters string.
-                $code = md5(uniqid((string) mt_rand(), true));
+                $code = bin2hex(random_bytes(16));
                 fwrite($fp, $code);
                 fclose($fp);
             }
@@ -232,26 +232,11 @@ class IndexController extends AbstractActionController
      */
     protected function getTempDir(): string
     {
-        // session_save_path() may contain other storage path.
-        $return = ini_get('upload_tmp_dir');
-        if (!$return) {
-            if (function_exists('sys_get_temp_dir')) {
-                $return = sys_get_temp_dir();
-            } else {
-                // Temp directory can be disabled by open_basedir.
-                $filename = @tempnam('', '');
-                if (!$filename) {
-                    return '/tmp';
-                }
-                $return = dirname($filename);
-                unlink($filename);
-            }
-        }
-        return $return;
+        return ini_get('upload_tmp_dir') ?: sys_get_temp_dir();
     }
 
     /**
-     * Get of set the session token.
+     * Get or set the session token.
      *
      * @see vendor/vrana/adminer/adminer/include/auth.inc.php
      */
@@ -281,12 +266,14 @@ class IndexController extends AbstractActionController
     /**
      * Verify if supplied CSRF token is valid.
      *
-     * Adapted from adminer function verify_token()..
+     * Adapted from adminer function verify_token().
      * @see vendor/vrana/adminer/adminer/include/functions.inc.php
+     *
+     * @todo Currently unused. Remove or integrate into the auth flow.
      */
     protected function verifyToken(): bool
     {
-        [$token, $rand] = explode(':', $_POST['token'] ?? '');
-        return ($rand ^ ($_SESSION['token'] ?? '')) === $token;
+        [$token, $rand] = explode(':', $_POST['token'] ?? ':');
+        return ($rand ^ ($_SESSION['token'] ?? 0)) === (int) $token;
     }
 }
