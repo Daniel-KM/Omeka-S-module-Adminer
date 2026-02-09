@@ -4,35 +4,74 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "61211bfaaf7035ddb32ecd31ef689f98",
+    "content-hash": "fd0ffc88b08abac7890c88a3235b9baa",
     "packages": [
         {
-            "name": "vrana/adminer",
-            "version": "5.4.1",
-            "dist": {
-                "type": "tar",
-                "url": "https://github.com/vrana/adminer/archive/refs/tags/v5.4.1.tar.gz",
-                "reference": "v5.4.1"
+            "name": "sempia/external-assets",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.com/Sempia/composer-plugin-external-assets.git",
+                "reference": "3c101e7edb043daabfcc45871a3b048bf8a38e96"
             },
-            "type": "library"
-        },
-        {
-            "name": "vrana/adminer-externals",
-            "version": "5.1.0",
             "dist": {
-                "type": "tar",
-                "url": "https://github.com/Daniel-KM/Omeka-S-module-Adminer/releases/download/3.4.6-5.1.0/adminer-externals.tar.gz"
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/Sempia%2Fcomposer-plugin-external-assets/repository/archive.zip?sha=3c101e7edb043daabfcc45871a3b048bf8a38e96",
+                "reference": "3c101e7edb043daabfcc45871a3b048bf8a38e96",
+                "shasum": ""
             },
-            "type": "library"
+            "require": {
+                "composer-plugin-api": "^2.0",
+                "php": ">=7.2.5"
+            },
+            "require-dev": {
+                "composer/composer": "^2.0",
+                "phpunit/phpunit": "^8.5 || ^9.6"
+            },
+            "bin": [
+                "bin/external-assets"
+            ],
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Sempia\\ExternalAssets\\ExternalAssetsPlugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sempia\\ExternalAssets\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "CECILL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Berthereau",
+                    "email": "Daniel.fr@Berthereau.net"
+                }
+            ],
+            "description": "Composer plugin to download external assets (JS, CSS, fonts, images) for any PHP project",
+            "homepage": "https://gitlab.com/sempia/composer-plugin-external-assets",
+            "keywords": [
+                "assets",
+                "composer-plugin",
+                "download",
+                "external"
+            ],
+            "support": {
+                "issues": "https://gitlab.com/Sempia/composer-plugin-external-assets/-/issues",
+                "source": "https://gitlab.com/Sempia/composer-plugin-external-assets/-/tree/1.0.1"
+            },
+            "time": "2026-02-09T00:00:00+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform": {},
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }
