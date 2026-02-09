@@ -1,19 +1,7 @@
 {
     "name": "daniel-km/omeka-s-module-adminer",
-    "description": "Access to Omeka database through Adminer, a one-file full-featured database management tool.",
     "type": "library",
-    "license": "CECILL-2.1",
-    "authors": [
-        {
-            "name": "Daniel Berthereau",
-            "email": "Daniel.git@Berthereau.net"
-        }
-    ],
-    "homepage": "https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer",
-    "support": {
-        "issues": "https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/issues",
-        "forum": "https://forum.omeka.org/"
-    },
+    "description": "Access to Omeka database through Adminer, a one-file full-featured database management tool.",
     "keywords": [
         "Omeka-S",
         "module",
@@ -22,34 +10,20 @@
         "adminer",
         "mysql"
     ],
-    "repositories": [
+    "license": "CECILL-2.1",
+    "homepage": "https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer",
+    "authors": [
         {
-            "type": "package",
-            "package": {
-                "name": "vrana/adminer",
-                "version": "5.4.1",
-                "dist": {
-                    "type": "tar",
-                    "url": "https://github.com/vrana/adminer/archive/refs/tags/v5.4.1.tar.gz",
-                    "reference": "v5.4.1"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "vrana/adminer-externals",
-                "version": "5.1.0",
-                "dist": {
-                    "type": "tar",
-                    "url": "https://github.com/Daniel-KM/Omeka-S-module-Adminer/releases/download/3.4.6-5.1.0/adminer-externals.tar.gz"
-                }
-            }
+            "name": "Daniel Berthereau",
+            "email": "Daniel.git@Berthereau.net"
         }
     ],
+    "support": {
+        "issues": "https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/issues",
+        "forum": "https://forum.omeka.org/"
+    },
     "require": {
-        "vrana/adminer": "^5.4.1",
-        "vrana/adminer-externals": "^5.1.0"
+        "sempia/external-assets": "^1.0"
     },
     "autoload": {
         "psr-4": {
@@ -61,43 +35,16 @@
             "AdminerTest\\": "tests/AdminerTest/"
         }
     },
-    "scripts": {
-        "post-install-cmd": "@build",
-        "post-update-cmd": "@build",
-        "build": [
-            "mkdir -p asset/vendor/adminer",
-
-            "# Use a simple copy because git may not be installed to prepare submodules.",
-            "@composer install --working-dir=vendor/vrana/adminer",
-            "cp -r vendor/vrana/adminer-externals/* vendor/vrana/adminer/externals/",
-
-            "# Update some files before compilation to manage plugins and themes via original directory.",
-            "sed -i -e 's~error_reporting(24575)~error_reporting(0)~' vendor/vrana/adminer/adminer/include/errors.inc.php",
-            "sed -i -e 's~basename = \"adminer-plugins\"~basename = __DIR__ . \"/adminer-plugins\"~' -e 's~include = include_once \"./$basename.php\"~include = include_once \"$basename.php\"~' vendor/vrana/adminer/adminer/include/plugins.inc.php",
-            "sed -i -e 's~is_dir(\"adminer-plugins\") || file_exists(\"adminer-plugins.php\")~is_dir(__DIR__ . \"/adminer-plugins\") || file_exists(__DIR__ . \"/adminer-plugins.php\")~' vendor/vrana/adminer/adminer/include/bootstrap.inc.php",
-
-            "# Fix issue introduced in version 5.1.1 (#1085)",
-            "#sed -i -e \"s~LANG . ' . \\$translations_version . '~LANG . \\\"' . \\$translations_version . '\\\"~\" vendor/vrana/adminer/compile.php",
-            "sed -i -e \"s~crc32(\\$return);~chr(34) . crc32(\\$return) . chr(34);~\" vendor/vrana/adminer/compile.php",
-
-            "@php -f 'vendor/vrana/adminer/compile.php' -- mysql",
-            "mv $(ls adminer-*mysql.php) asset/vendor/adminer/adminer-mysql.phtml",
-
-            "@php -f 'vendor/vrana/adminer/compile.php' -- editor mysql",
-            "mv $(ls editor-*mysql.php) asset/vendor/adminer/editor-mysql.phtml",
-
-            "mkdir -p asset/vendor/adminer/adminer-plugins/",
-            "echo '<?php return require dirname(__DIR__, 3) . \"/view/adminer/admin/index/adminer-plugins.phtml\";' > asset/vendor/adminer/adminer-plugins.php",
-
-            "cp vendor/vrana/adminer/designs/hever/adminer.css asset/vendor/adminer/adminer.css",
-
-            "# Fix issue in css for default editor of hever (table name are hidden).",
-            "echo '/* fix omeka */ body.editor #menu ul#tables a[href*=\"&select=\"] { overflow: initial; }' >> vendor/vrana/adminer/designs/hever/adminer.css",
-
-            "echo 'Order allow,deny\n<FilesMatch \"\\.(css|js|gif|jpeg|jpg|png|webp)$\">\n    Order deny,allow\n</FilesMatch>' > asset/vendor/.htaccess"
-        ]
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true,
+            "sempia/external-assets": true
+        }
     },
     "extra": {
-        "installer-name": "Adminer"
+        "installer-name": "Adminer",
+        "external-assets": {
+            "asset/vendor/": "https://github.com/Daniel-KM/Omeka-S-module-Adminer/releases/download/3.4.9-5.4.1/adminer-compiled-5.4.1.tar.gz"
+        }
     }
 }
