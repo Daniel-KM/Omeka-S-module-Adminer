@@ -21,14 +21,17 @@ class AdminerOmeka
     /**
      * Custom name in title and heading.
      *
-     * @todo A long title does not work with some designs.
+     * @return string HTML code
      */
-    /*
-    public function name() {
-        // TODO Translate title "Adminer for Omeka.'
-        return 'Adminer for Omeka';
+    public function name(): string
+    {
+        $authData = $this->getAuthData();
+        $title = $authData['installation_title'] ?? '';
+        if ($title !== '') {
+            return '<span id="h1">' . htmlspecialchars($title) . '</span>';
+        }
+        return '<span id="h1">Omeka S</span>';
     }
-     */
 
     /**
      * Key used for permanent login.

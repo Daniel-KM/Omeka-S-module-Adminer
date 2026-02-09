@@ -152,6 +152,7 @@ class IndexController extends AbstractActionController
 
         $filename = 'adminer.key';
         $adminerAuthData['adminer_key'] = $this->initAdminerKey($filename);
+        $adminerAuthData['installation_title'] = (string) $this->settings()->get('installation_title', '');
 
         // The default cannot be "asset/vendor/adminer/adminer.css", because it
         // is not in the list of designs.
