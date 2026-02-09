@@ -156,7 +156,7 @@ class IndexController extends AbstractActionController
         // The default cannot be "asset/vendor/adminer/adminer.css", because it
         // is not in the list of designs.
         if (!array_key_exists('design', $_SESSION)) {
-            $_SESSION['design'] = '../modules/Adminer/vendor/vrana/adminer/designs/hever/adminer.css';
+            $_SESSION['design'] = '../modules/Adminer/asset/vendor/adminer/designs/hever/adminer.css';
         }
 
         // Fix strict type issue.

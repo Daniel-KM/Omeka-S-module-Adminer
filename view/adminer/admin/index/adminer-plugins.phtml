@@ -26,8 +26,8 @@ $designsPreselected = [
 ];
 $designs = [];
 // Relative to the Omeka admin route.
-$baseUrl = '../modules/Adminer/vendor/vrana/adminer/designs';
-foreach (glob(dirname(__DIR__, 4) . '/vendor/vrana/adminer/designs/**/*.css') as $filename) {
+$baseUrl = '../modules/Adminer/asset/vendor/adminer/designs';
+foreach (glob(dirname(__DIR__, 4) . '/asset/vendor/adminer/designs/**/*.css') as $filename) {
     $name = basename(dirname($filename));
     if (!in_array($name, $designsPreselected)) {
         continue;
@@ -68,8 +68,8 @@ $list = [
 // Specific plugin.
 require_once dirname(__DIR__, 4) . '/src/AdminerOmeka.php';
 
-// foreach (glob(dirname(__DIR__, 4) . '/vendor/vrana/adminer/plugins/*.php') as $filename) {
-$baseDir = dirname(__DIR__, 4) . '/vendor/vrana/adminer/plugins';
+// foreach (glob(dirname(__DIR__, 4) . '/asset/vendor/adminer/adminer-plugins/*.php') as $filename) {
+$baseDir = dirname(__DIR__, 4) . '/asset/vendor/adminer/adminer-plugins';
 foreach ($list as $filename) {
     require_once "$baseDir/$filename.php";
 }
