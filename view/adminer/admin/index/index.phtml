@@ -18,10 +18,10 @@ $this->htmlElement('body');
 echo $this->pageTitle($this->translate('Adminer database manager'));
 ?>
 
-<strong><?= $translate('WARNING') ?></strong>
-<p><?= $translate('Use it at your own risk.') ?></p>
-<p><?= $translate('It is highly recommended to use a read-only user to access database, because it’s very easy to break a database, even for people who know the Omeka code and all the modules perfectly.') ?></p>
-<p><?= $translate('In all cases, it’s always recommended to backup your files and your databases automatically and before risky and non-risky commands, and to check your archives regularly, so you can roll back if needed.') ?></p>
+<strong><?= $escape($translate('WARNING')) ?></strong>
+<p><?= $escape($translate('Use it at your own risk.')) ?></p>
+<p><?= $escape($translate('It is highly recommended to use a read-only user to access database, because it’s very easy to break a database, even for people who know the Omeka code and all the modules perfectly.')) ?></p>
+<p><?= $escape($translate('In all cases, it’s always recommended to backup your files and your databases automatically and before risky and non-risky commands, and to check your archives regularly, so you can roll back if needed.')) ?></p>
 <p><?= $escape($translate('To edit an element, use the key <control> + click.')) ?></p>
 <?php if ($hasDependencies): ?>
 <p>
