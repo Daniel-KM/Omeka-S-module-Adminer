@@ -65,8 +65,9 @@ $list = [
     // 'omeka',
 ];
 
-// Specific plugin.
+// Specific plugins.
 require_once dirname(__DIR__, 4) . '/src/AdminerOmeka.php';
+require_once dirname(__DIR__, 4) . '/src/AdminerCleanUrls.php';
 
 // foreach (glob(dirname(__DIR__, 4) . '/asset/vendor/adminer/adminer-plugins/*.php') as $filename) {
 $baseDir = dirname(__DIR__, 4) . '/asset/vendor/adminer/adminer-plugins';
@@ -78,6 +79,7 @@ return [
     // The omeka plugin manages auto-login, display of current database only and
     // default css.
     new AdminerOmeka($designs),
+    new AdminerCleanUrls(['login']),
 
     // Specify enabled plugins here.
     new AdminerDarkSwitcher(),
