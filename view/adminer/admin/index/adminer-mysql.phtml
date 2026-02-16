@@ -10,3 +10,10 @@
     bottom: 2.5em !important;
 }
 </style>
+<script>
+if (history.replaceState) {
+    var u = new URL(location.href);
+    ['server', 'username', 'db', 'login'].forEach(function(p) { u.searchParams.delete(p); });
+    if (u.href !== location.href) history.replaceState(null, '', u);
+}
+</script>
