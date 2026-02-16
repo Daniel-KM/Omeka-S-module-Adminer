@@ -103,10 +103,16 @@ cp "${ADMINER_SRC}/plugins/"*.php "${OUTPUT_DIR}/adminer-plugins/"
 # Copy designs (CSS themes selectable at runtime).
 cp -r "${ADMINER_SRC}/designs" "${OUTPUT_DIR}/designs"
 
-# Theme CSS with editor fix.
+# Theme CSS with editor fix (also handled in the editor view template).
 cp "${ADMINER_SRC}/designs/hever/adminer.css" "${OUTPUT_DIR}/adminer.css"
-echo '/* fix omeka */ body.editor #menu ul#tables a[href*="&select="] { overflow: initial; }' \
-    >> "${OUTPUT_DIR}/adminer.css"
+cat >> "${OUTPUT_DIR}/adminer.css" <<'CSSFIX'
+/* fix omeka editor: table links must show text, not icons only. */
+body.editor #menu a[href*="&select="],
+body.editor #tables a[href*="&select="],
+body.editor #tables a.select { overflow: initial !important; width: auto !important; height: auto !important; color: var(--inv-fg, inherit) !important; position: static !important; background-position-x: left !important; }
+body.editor #tables a.select::before { display: none !important; }
+body.editor #tables { overflow: visible !important; }
+CSSFIX
 
 # Security: deny direct access except static assets.
 cat > "${MODULE_DIR}/asset/vendor/.htaccess" <<'HTACCESS'

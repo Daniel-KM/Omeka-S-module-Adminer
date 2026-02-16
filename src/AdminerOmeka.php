@@ -124,6 +124,16 @@ class AdminerOmeka
         return $return;
     }
 
+    /**
+     * Print HTML into the <head>.
+     *
+     * @return null to let other plugins chain their head()
+     */
+    public function head(?bool $dark = null)
+    {
+        return null;
+    }
+
     protected function getAuthData()
     {
         global $adminerAuthData;

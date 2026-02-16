@@ -9,4 +9,24 @@
 #menu > big:first-child {
     bottom: 2.5em !important;
 }
+/* Fix editor: table links must show text, not icons only.
+   Designs hide select links (overflow:hidden, width:0, color:transparent)
+   to display them as icons; in editor they are the main navigation.
+   Affected: haeckel, hever, konya, lucas-sandery, pokorny, rmsoft. */
+body.editor #menu a[href*="&select="],
+body.editor #tables a[href*="&select="],
+body.editor #tables a.select {
+    overflow: initial !important;
+    width: auto !important;
+    height: auto !important;
+    color: var(--inv-fg, inherit) !important;
+    position: static !important;
+    background-position-x: left !important;
+}
+body.editor #tables a.select::before {
+    display: none !important;
+}
+body.editor #tables {
+    overflow: visible !important;
+}
 </style>
