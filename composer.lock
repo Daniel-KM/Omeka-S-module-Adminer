@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1835b0a84a15ad65e5d480d778b859c5",
+    "content-hash": "f73023cc5fa78109cb480df0c5151dc7",
     "packages": [
         {
             "name": "sempia/external-assets",

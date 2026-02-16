@@ -23,7 +23,7 @@ set -euo pipefail
 ADMINER_REPO="https://github.com/vrana/adminer.git"
 
 # Fetch the latest version tag from the repository, or use a fixed version.
-# ADMINER_VERSION="5.4.1"
+# ADMINER_VERSION="5.4.2"
 ADMINER_VERSION=$(git ls-remote --tags --sort=-v:refname "$ADMINER_REPO" 'v*' \
     | sed -n '1s|.*refs/tags/v||p')
 if [ -z "$ADMINER_VERSION" ]; then
@@ -64,9 +64,12 @@ sed -i -e 's~error_reporting(24575)~error_reporting(0)~' \
     "${ADMINER_SRC}/adminer/include/errors.inc.php"
 
 # Fix plugin/theme paths to use __DIR__ instead of relative paths.
+# Disable auto-loading of all plugins from the directory: our adminer-plugins.php
+# (via adminer-plugins.phtml) loads only the wanted plugins explicitly.
 sed -i \
     -e 's~basename = "adminer-plugins"~basename = __DIR__ . "/adminer-plugins"~' \
-    -e 's~include = include_once "./$basename.php"~include = include_once "$basename.php"~' \
+    -e 's~is_dir($basename)~false~' \
+    -e 's~return include_once "./$filename"~return include_once "$filename"~' \
     "${ADMINER_SRC}/adminer/include/plugins.inc.php"
 
 sed -i \
