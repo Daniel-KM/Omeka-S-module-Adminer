@@ -128,11 +128,13 @@ class IndexController extends AbstractActionController
         $token = $this->getToken();
 
         if ($login) {
+            // Preserve Adminer plugin POST data (e.g. design selection).
+            $pluginPost = array_diff_key($_POST, ['auth' => 1, 'token' => 1]);
             if ($isPosted || count($params) > 1) {
                 // Avoid issue in vendor/vrana/adminer/adminer/include/auth.inc.php.
                 $_POST = [
                     'token' => $token,
-                ];
+                ] + $pluginPost;
             } else {
                 if (!$loginIsFull && !$hasReadOnly) {
                     $this->messenger()->addError('Read only user is not configured.'); // @translate
@@ -144,7 +146,7 @@ class IndexController extends AbstractActionController
                 $_POST = [
                     'auth' => $authData,
                     'token' => $token,
-                ];
+                ] + $pluginPost;
                 $_GET = [
                     // Only the username is checked against post in adminer.
                     'username' => $authData['username'],
