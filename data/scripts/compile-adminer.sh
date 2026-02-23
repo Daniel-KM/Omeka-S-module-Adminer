@@ -106,12 +106,53 @@ cp "${ADMINER_SRC}/plugins/"*.php "${OUTPUT_DIR}/adminer-plugins/"
 # Copy designs (CSS themes selectable at runtime).
 cp -r "${ADMINER_SRC}/designs" "${OUTPUT_DIR}/designs"
 
-# Theme CSS with editor fix (also handled in the editor view template).
-cp "${ADMINER_SRC}/designs/hever/adminer.css" "${OUTPUT_DIR}/adminer.css"
+# Fix clean-URL CSS selectors in all designs.
+# AdminerCleanUrls strips connection params (server, username, db) from href
+# attributes via output buffering. The first remaining query param then starts
+# with "?" instead of "&", so CSS selectors like [href$="&sql="] no longer
+# match. This adds ?-prefixed variants alongside the original & selectors.
+php -r '
+foreach (array_slice($argv, 1) as $file) {
+    if (!is_file($file)) continue;
+    $css = file_get_contents($file);
+    $css = preg_replace_callback(
+        // Match each CSS rule: selectors { declarations }
+        "/^([^\n{]+)\{/m",
+        function ($m) {
+            $selectorGroup = $m[1];
+            if (strpos($selectorGroup, "[href") === false
+                || strpos($selectorGroup, "\"&") === false
+            ) {
+                return $m[0];
+            }
+            $selectors = preg_split("/\s*,\s*/", rtrim($selectorGroup));
+            $extra = [];
+            foreach ($selectors as $sel) {
+                if (preg_match("/\[href[\$*]=\"&/", $sel)) {
+                    $variant = preg_replace(
+                        "/(\[href[\$*]=\")&/", "\\1?", $sel
+                    );
+                    if ($variant !== $sel) $extra[] = $variant;
+                }
+            }
+            if ($extra) {
+                return $selectorGroup . ", "
+                    . implode(", ", $extra) . " {";
+            }
+            return $m[0];
+        },
+        $css
+    );
+    file_put_contents($file, $css);
+}
+' "${OUTPUT_DIR}/designs/"*/adminer.css
+
+# Theme CSS: copy hever (already patched above) as default, add editor fix.
+cp "${OUTPUT_DIR}/designs/hever/adminer.css" "${OUTPUT_DIR}/adminer.css"
 cat >> "${OUTPUT_DIR}/adminer.css" <<'CSSFIX'
 /* fix omeka editor: table links must show text, not icons only. */
-body.editor #menu a[href*="&select="],
-body.editor #tables a[href*="&select="],
+body.editor #menu a[href*="&select="], body.editor #menu a[href*="?select="],
+body.editor #tables a[href*="&select="], body.editor #tables a[href*="?select="],
 body.editor #tables a.select { overflow: initial !important; width: auto !important; height: auto !important; color: var(--inv-fg, inherit) !important; position: static !important; background-position-x: left !important; }
 body.editor #tables a.select::before { display: none !important; }
 body.editor #tables { overflow: visible !important; }
