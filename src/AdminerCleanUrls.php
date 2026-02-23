@@ -1,7 +1,9 @@
 <?php
 
-/** Hide connection parameters (server, username, db) from browser urls
- * Useful when Adminer is embedded and always connects to a fixed database.
+/**
+ * Hide connection parameters (server, username, db) from browser urls
+ *
+ * In Omeka, Adminer is embedded and always connects to a fixed database.
  * The host application must inject the parameters into $_GET before Adminer
  * loads so that internal routing still works.
  *
@@ -25,8 +27,22 @@ class AdminerCleanUrls extends Adminer\Plugin {
 		$server = urlencode(Adminer\SERVER);
 		$username = urlencode(isset($_GET["username"]) ? $_GET["username"] : '');
 		$db = urlencode(Adminer\DB);
-		// Strip connection params from all HTML output (links, forms, etc.).
-		// Both HTML-entity-encoded (&amp;) and raw (&) variants are handled.
+		// Ensure REQUEST_URI contains connection params so that Adminer
+		// functions relative_uri() and remove_from_uri() always produce urls
+		// with a "?" separator (avoid issue with sql form).
+		$connectionQuery = "$driver=$server&username=$username&db=$db";
+		if (strpos($_SERVER['REQUEST_URI'], $connectionQuery) === false) {
+			$qPos = strpos($_SERVER['REQUEST_URI'], '?');
+			if ($qPos === false) {
+				$_SERVER['REQUEST_URI'] .= '?' . $connectionQuery;
+			} else {
+				$_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], 0, $qPos + 1)
+					. $connectionQuery . '&'
+					. substr($_SERVER['REQUEST_URI'], $qPos + 1);
+			}
+		}
+		// Strip connection params from all html output (links, forms, etc.).
+		// Both html-entity-encoded (&amp;) and raw (&) variants are handled.
 		$search = array(
 			"$driver=$server&amp;username=$username&amp;db=$db&amp;" => '',
 			"$driver=$server&amp;username=$username&amp;db=$db" => '',
