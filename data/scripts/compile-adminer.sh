@@ -103,6 +103,13 @@ echo '<?php return require dirname(__DIR__, 3) . "/view/adminer/admin/index/admi
 # Copy plugin source files (needed at runtime by adminer-plugins.phtml).
 cp "${ADMINER_SRC}/plugins/"*.php "${OUTPUT_DIR}/adminer-plugins/"
 
+# Fix AdminerDesigns: load design CSS in both light and dark modes. Default
+# logic tags non "-dark" names as "light" which makes the browser skip the
+# stylesheet (and its icon data URIs) under prefers-color-scheme: dark.
+sed -i \
+    -e 's|(preg_match(.~-dark~., $_SESSION\["design"\]) ? "dark" : "light")|""|' \
+    "${OUTPUT_DIR}/adminer-plugins/designs.php"
+
 # Copy designs (CSS themes selectable at runtime).
 cp -r "${ADMINER_SRC}/designs" "${OUTPUT_DIR}/designs"
 
