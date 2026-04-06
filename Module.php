@@ -61,7 +61,7 @@ class Module extends AbstractModule
             );
             $message->setEscapeHtml(false);
             $messenger->addError($message);
-            throw new \Omeka\Module\Exception\ModuleCannotInstallException((string) $message);
+            throw new \Omeka\Module\Exception\ModuleCannotInstallException();
         }
     }
 
