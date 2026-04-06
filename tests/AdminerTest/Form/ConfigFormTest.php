@@ -3,8 +3,8 @@
 namespace AdminerTest\Form;
 
 use Adminer\Form\ConfigForm;
-use CommonTest\AbstractHttpControllerTestCase;
 use AdminerTest\AdminerTestTrait;
+use CommonTest\AbstractHttpControllerTestCase;
 
 /**
  * Tests for the Adminer ConfigForm.

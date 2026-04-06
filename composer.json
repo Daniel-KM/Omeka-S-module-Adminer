@@ -40,7 +40,6 @@
     },
     "config": {
         "allow-plugins": {
-            "composer/installers": true,
             "sempia/external-assets": true
         }
     },

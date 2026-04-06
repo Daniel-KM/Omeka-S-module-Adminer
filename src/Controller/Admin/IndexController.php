@@ -79,7 +79,7 @@ class IndexController extends AbstractActionController
         /**
          * Used in required files.
          *
-         * @var array $adminerAuthData
+         * @var array
          */
         global $adminerAuthData;
 

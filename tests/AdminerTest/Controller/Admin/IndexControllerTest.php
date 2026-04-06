@@ -3,8 +3,8 @@
 namespace AdminerTest\Controller\Admin;
 
 use Adminer\Controller\Admin\IndexController;
-use CommonTest\AbstractHttpControllerTestCase;
 use AdminerTest\AdminerTestTrait;
+use CommonTest\AbstractHttpControllerTestCase;
 
 /**
  * Tests for the Adminer admin controller.
