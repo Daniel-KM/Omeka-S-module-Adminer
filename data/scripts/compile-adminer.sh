@@ -174,7 +174,7 @@ if [ "$CREATE_ARCHIVE" = true ]; then
     ARCHIVE="${MODULE_DIR}/build/adminer-assets-${ADMINER_VERSION}.tar.gz"
     tar -czf "$ARCHIVE" \
         -C "${MODULE_DIR}/asset/vendor" \
-        .htaccess adminer/
+        adminer/
     echo "==> Archive created: ${ARCHIVE}"
     echo "    Size: $(du -h "$ARCHIVE" | cut -f1)"
 fi
