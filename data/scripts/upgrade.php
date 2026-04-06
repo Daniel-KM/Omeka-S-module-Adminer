@@ -76,7 +76,7 @@ if ($readonlyUser || $readonlyPassword) {
                 $readonlyPassword
             );
             $pdo = null;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $removeReadonly = true;
         }
     }

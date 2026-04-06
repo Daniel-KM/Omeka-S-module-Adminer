@@ -198,7 +198,7 @@ class Module extends AbstractModule
             SQL;
         try {
             $result = $connection->fetchOne($sql);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $messenger->addError(new Message(
                 'The Omeka database user has no rights to check or create a user. Add it manually yourself if needed.' // @translate
             ));
@@ -213,7 +213,7 @@ class Module extends AbstractModule
                 SQL;
             try {
                 $result = $connection->fetchAllAssociative($sql);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $messenger->addError(new Message(
                     'The Omeka database user has no rights to check grants of a user. Add it manually yourself if needed.' // @translate
                 ));
@@ -236,7 +236,7 @@ class Module extends AbstractModule
                 SQL;
             try {
                 $connection->executeStatement($sql);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $messenger->addError(new Message(
                     'The database user does not have the right to create another user.' // @translate
                 ));
@@ -258,7 +258,7 @@ class Module extends AbstractModule
                 'The read-only user "%s" has been created.', // @translate
                 $usernameUnquoted
             ));
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $messenger->addError(new Message(
                 'The database user does not have the right to set the rights of another user.' // @translate
             ));
@@ -267,7 +267,7 @@ class Module extends AbstractModule
 
         try {
             $connection->executeStatement('FLUSH PRIVILEGES;');
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $messenger->addError(new Message(
                 'The database user does not have the right to flush privileges.' // @translate
             ));
