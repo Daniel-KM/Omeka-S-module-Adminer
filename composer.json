@@ -22,11 +22,11 @@
         "issues": "https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/issues",
         "forum": "https://forum.omeka.org/"
     },
-    "_require (not set until Omeka S merges PR #2412)": {
+    "_require (not set until Omeka S merges PR #2432)": {
         "omeka/omeka-s": "^3.1 || ^4.0"
     },
     "require": {
-        "sempia/external-assets": "^1.0"
+        "sempia/external-assets": "^1.1"
     },
     "autoload": {
         "psr-4": {
