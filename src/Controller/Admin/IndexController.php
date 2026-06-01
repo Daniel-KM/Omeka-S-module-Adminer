@@ -37,7 +37,7 @@ class IndexController extends AbstractActionController
         if (!$hasReadOnly && !$hasFullAccess) {
             $message = new Message(
                 'Warning: no user are defined to access to the database. Check the %1$sconfig%2$s.', // @translate
-                sprintf('<a href="%s">', $this->url()->fromRoute('admin/default', ['controller' => 'module', 'action' => 'configure'], ['query' => ['id' => 'Adminer']])),
+                sprintf('<a href="%s">', htmlspecialchars($this->url()->fromRoute('admin/default', ['controller' => 'module', 'action' => 'configure'], ['query' => ['id' => 'Adminer']]))),
                 '</a>'
             );
             $message->setEscapeHtml(false);
