@@ -1,0 +1,6 @@
+/* Admin Adminer */
+
+header nav .adminer::before,
+.adminer .subhead::before {
+    content: ""; /* fas fa-database */
+}

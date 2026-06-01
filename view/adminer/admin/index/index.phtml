@@ -10,13 +10,17 @@
 $plugins = $this->getHelperPluginManager();
 $url = $plugins->get('url');
 $escape = $plugins->get('escapeHtml');
+$assetUrl = $plugins->get('assetUrl');
 $translate = $plugins->get('translate');
 $hyperlink = $plugins->get('hyperlink');
 
-$this->htmlElement('body');
+$this->headLink()
+    ->appendStylesheet($assetUrl('css/adminer.css', 'Adminer'));
 
-echo $this->pageTitle($this->translate('Adminer database manager'));
+$this->htmlElement('body')->appendAttribute('class', 'adminer');
 ?>
+
+<?= $this->pageTitle($translate('Database manager'), 1, $translate('Adminer')) ?>
 
 <strong><?= $escape($translate('WARNING')) ?></strong>
 <p><?= $escape($translate('Use it at your own risk.')) ?></p>
