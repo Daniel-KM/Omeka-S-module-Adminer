@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-12 00:00+0000\n"
+"POT-Creation-Date: 2026-07-06 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,50 +41,54 @@ msgstr ""
 msgid "The module requires the dependencies to be installed. See readme."
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:18
-msgid "Adminer database manager"
-msgstr ""
-
-#: view/adminer/admin/index/index.phtml:21
-msgid "WARNING"
-msgstr ""
-
-#: view/adminer/admin/index/index.phtml:22
-msgid "Use it at your own risk."
+#: view/adminer/admin/index/index.phtml:23
+msgid "Database manager"
 msgstr ""
 
 #: view/adminer/admin/index/index.phtml:23
+msgid "Adminer"
+msgstr ""
+
+#: view/adminer/admin/index/index.phtml:25
+msgid "WARNING"
+msgstr ""
+
+#: view/adminer/admin/index/index.phtml:26
+msgid "Use it at your own risk."
+msgstr ""
+
+#: view/adminer/admin/index/index.phtml:27
 msgid ""
 "It is highly recommended to use a read-only user to access database, because "
 "it’s very easy to break a database, even for people who know the Omeka code "
 "and all the modules perfectly."
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:24
+#: view/adminer/admin/index/index.phtml:28
 msgid ""
 "In all cases, it’s always recommended to backup your files and your "
 "databases automatically and before risky and non-risky commands, and to "
 "check your archives regularly, so you can roll back if needed."
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:25
+#: view/adminer/admin/index/index.phtml:29
 msgid "To edit an element, use the key <control> + click."
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:29
-msgid "Read-only access (interface for editor)"
-msgstr ""
-
-#: view/adminer/admin/index/index.phtml:31
+#: view/adminer/admin/index/index.phtml:34
 msgid "Read-only access"
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:35
-msgid "Full access (interface for editor)"
+#: view/adminer/admin/index/index.phtml:36
+msgid "Read-only access (interface for editor)"
 msgstr ""
 
-#: view/adminer/admin/index/index.phtml:37
+#: view/adminer/admin/index/index.phtml:40
 msgid "Full access"
+msgstr ""
+
+#: view/adminer/admin/index/index.phtml:42
+msgid "Full access (interface for editor)"
 msgstr ""
 
 #: data/scripts/upgrade.php:46
@@ -97,33 +101,39 @@ msgstr ""
 msgid "The libraries were updated. Check them if you customized them."
 msgstr ""
 
-#: Module.php:202
+#: data/scripts/upgrade.php:87
+msgid ""
+"The read-only user credentials have been removed because they were not "
+"working."
+msgstr ""
+
+#: Module.php:203
 msgid ""
 "The Omeka database user has no rights to check or create a user. Add it "
 "manually yourself if needed."
 msgstr ""
 
-#: Module.php:217
+#: Module.php:218
 msgid ""
 "The Omeka database user has no rights to check grants of a user. Add it "
 "manually yourself if needed."
 msgstr ""
 
-#: Module.php:240
+#: Module.php:241
 msgid "The database user does not have the right to create another user."
 msgstr ""
 
-#: Module.php:254
+#: Module.php:258
 #, php-format
 msgid "The read-only user \"%s\" has been created."
 msgstr ""
 
-#: Module.php:259
+#: Module.php:263
 msgid ""
 "The database user does not have the right to set the rights of another user."
 msgstr ""
 
-#: Module.php:268
+#: Module.php:272
 msgid "The database user does not have the right to flush privileges."
 msgstr ""
 
@@ -154,11 +164,11 @@ msgid ""
 "%1$sconfig%2$s."
 msgstr ""
 
-#: src/Controller/Admin/IndexController.php:132
+#: src/Controller/Admin/IndexController.php:140
 msgid "Read only user is not configured."
 msgstr ""
 
-#: src/Controller/Admin/IndexController.php:135
+#: src/Controller/Admin/IndexController.php:143
 msgid "Full access user or read only user are not configured."
 msgstr ""
 

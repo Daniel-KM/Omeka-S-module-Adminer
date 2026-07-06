@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-12 00:00+0000\n"
-"PO-Revision-Date: 2025-05-12 00:00+0000\n"
+"POT-Creation-Date: 2026-07-06 00:00+0000\n"
+"PO-Revision-Date: 2026-07-06 00:00+0000\n"
 "Last-Translator: Daniel Berthereau <Daniel.fr@Berthereau.net>\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.6\n"
 
 #: Module.php:59 src/Controller/Admin/IndexController.php:52
 #, php-format
@@ -46,19 +46,23 @@ msgstr ""
 msgid "The module requires the dependencies to be installed. See readme."
 msgstr "Le module requiert l’installation de dépendances. Voir le lisez-moi."
 
-#: view/adminer/admin/index/index.phtml:18
-msgid "Adminer database manager"
-msgstr "Adminer - Gestionnaire de base de données"
+#: view/adminer/admin/index/index.phtml:23
+msgid "Database manager"
+msgstr "Gestion de la base de données"
 
-#: view/adminer/admin/index/index.phtml:21
+#: view/adminer/admin/index/index.phtml:23
+msgid "Adminer"
+msgstr "Adminer"
+
+#: view/adminer/admin/index/index.phtml:25
 msgid "WARNING"
 msgstr "ATTENTION"
 
-#: view/adminer/admin/index/index.phtml:22
+#: view/adminer/admin/index/index.phtml:26
 msgid "Use it at your own risk."
 msgstr "Utilisez à vos propres risques."
 
-#: view/adminer/admin/index/index.phtml:23
+#: view/adminer/admin/index/index.phtml:27
 msgid ""
 "It is highly recommended to use a read-only user to access database, because "
 "it’s very easy to break a database, even for people who know the Omeka code "
@@ -68,7 +72,7 @@ msgstr ""
 "accéder à la base de données, car il est facile de la casser, même pour ceux "
 "qui connaissent parfaitement Omeka et tous les modules."
 
-#: view/adminer/admin/index/index.phtml:24
+#: view/adminer/admin/index/index.phtml:28
 msgid ""
 "In all cases, it’s always recommended to backup your files and your "
 "databases automatically and before risky and non-risky commands, and to "
@@ -79,25 +83,25 @@ msgstr ""
 "ou non, et de vérifier vos archives régulièrement afin de revenir en arrière "
 "si besoin."
 
-#: view/adminer/admin/index/index.phtml:25
+#: view/adminer/admin/index/index.phtml:29
 msgid "To edit an element, use the key <control> + click."
 msgstr "Pour éditer un élément, utiliser la touche <contrôle> + clic."
 
-#: view/adminer/admin/index/index.phtml:29
-msgid "Read-only access (interface for editor)"
-msgstr "Accès en lecture seule (interface pour éditeur)"
-
-#: view/adminer/admin/index/index.phtml:31
+#: view/adminer/admin/index/index.phtml:34
 msgid "Read-only access"
 msgstr "Accès en lecture seule"
 
-#: view/adminer/admin/index/index.phtml:35
-msgid "Full access (interface for editor)"
-msgstr "Accès complet (interface pour éditeur)"
+#: view/adminer/admin/index/index.phtml:36
+msgid "Read-only access (interface for editor)"
+msgstr "Accès en lecture seule (interface pour éditeur)"
 
-#: view/adminer/admin/index/index.phtml:37
+#: view/adminer/admin/index/index.phtml:40
 msgid "Full access"
 msgstr "Accès complet"
+
+#: view/adminer/admin/index/index.phtml:42
+msgid "Full access (interface for editor)"
+msgstr "Accès complet (interface pour éditeur)"
 
 #: data/scripts/upgrade.php:46
 msgid ""
@@ -114,7 +118,14 @@ msgstr ""
 "Les bibliothèques ont été mises à jour. Vérifiez-les si vous les avez "
 "personnalisées."
 
-#: Module.php:202
+#: data/scripts/upgrade.php:87
+msgid ""
+"The read-only user credentials have been removed because they were not "
+"working."
+msgstr ""
+"L’utilisateur en lecture seule a été supprimé car il ne fonctionnait pas."
+
+#: Module.php:203
 msgid ""
 "The Omeka database user has no rights to check or create a user. Add it "
 "manually yourself if needed."
@@ -122,7 +133,7 @@ msgstr ""
 "L’utilisateur de la base Omeka n’a pas le droit de vérifier ou de créer un "
 "utilisateur. Ajoutez le manuellement si besoin."
 
-#: Module.php:217
+#: Module.php:218
 msgid ""
 "The Omeka database user has no rights to check grants of a user. Add it "
 "manually yourself if needed."
@@ -130,25 +141,25 @@ msgstr ""
 "L’utilisateur de la base Omeka n’a pas le droit de gérer les privilèges d’un "
 "utilisateur. Ajoutez le manuellement si besoin."
 
-#: Module.php:240
+#: Module.php:241
 msgid "The database user does not have the right to create another user."
 msgstr ""
 "L’ utilisateur de la base de données n’a pas les droits pour créer un autre "
 "utilisateur."
 
-#: Module.php:254
+#: Module.php:258
 #, php-format
 msgid "The read-only user \"%s\" has been created."
 msgstr "L’utilisateur en lecture seule « %s » a été créé."
 
-#: Module.php:259
+#: Module.php:263
 msgid ""
 "The database user does not have the right to set the rights of another user."
 msgstr ""
 "L’ utilisateur de la base de données n’a pas les droits pour définir les "
 "droits d’un autre utilisateur."
 
-#: Module.php:268
+#: Module.php:272
 msgid "The database user does not have the right to flush privileges."
 msgstr ""
 "L’ utilisateur de la base de données n’a pas les droits pour mettre à jour "
@@ -187,11 +198,11 @@ msgstr ""
 "Attention : aucun utilisateur n’est défini pour accéder à la base de "
 "données. Vérifiez la %1$sconfiguration%2$s."
 
-#: src/Controller/Admin/IndexController.php:132
+#: src/Controller/Admin/IndexController.php:140
 msgid "Read only user is not configured."
 msgstr "L’utilisateur en lecture seule n’est pas configuré."
 
-#: src/Controller/Admin/IndexController.php:135
+#: src/Controller/Admin/IndexController.php:143
 msgid "Full access user or read only user are not configured."
 msgstr ""
 "Les utilisateurs en accès complet ou en lecture seule ne sont pas configurés."
@@ -261,6 +272,3 @@ msgstr "Base de données"
 
 #~ msgid "Full access user password"
 #~ msgstr "Mot de passe de l’utilisateur avec accès complet"
-
-#~ msgid "Adminer"
-#~ msgstr "Adminer"
