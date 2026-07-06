@@ -23,7 +23,7 @@ set -euo pipefail
 ADMINER_REPO="https://github.com/vrana/adminer.git"
 
 # Fetch the latest version tag from the repository, or use a fixed version.
-# ADMINER_VERSION="5.4.2"
+# ADMINER_VERSION="5.4.3"
 ADMINER_VERSION=$(git ls-remote --tags --sort=-v:refname "$ADMINER_REPO" 'v*' \
     | sed -n '1s|.*refs/tags/v||p')
 if [ -z "$ADMINER_VERSION" ]; then
