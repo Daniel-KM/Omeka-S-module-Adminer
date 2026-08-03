@@ -58,6 +58,11 @@ class IndexControllerFactory implements FactoryInterface
             $server .= ':' . $port;
         }
 
+        // The locale of the current user, already resolved by Omeka from the
+        // user setting, else the global one.
+        // @see \Omeka\Mvc\MvcListeners::bootstrapLocale()
+        $locale = (string) $services->get('MvcTranslator')->getDelegatedTranslator()->getLocale();
+
         return new IndexController(
             [
                 'server' => $server,
@@ -65,7 +70,8 @@ class IndexControllerFactory implements FactoryInterface
                 'full_user_name' => $dbUserName,
                 'full_user_password' => $dbUserPassword,
                 'ssl' => $sslConfig,
-            ]
+            ],
+            $locale
         );
     }
 }

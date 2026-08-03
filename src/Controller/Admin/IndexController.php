@@ -13,9 +13,15 @@ class IndexController extends AbstractActionController
      */
     protected $dbConfig;
 
-    public function __construct(array $dbConfig)
+    /**
+     * @var string
+     */
+    protected $locale;
+
+    public function __construct(array $dbConfig, string $locale = '')
     {
         $this->dbConfig = $dbConfig;
+        $this->locale = $locale;
     }
 
     public function indexAction()
@@ -130,6 +136,8 @@ class IndexController extends AbstractActionController
         // @see Adminer get_password() and get_session().
         $this->authenticate($adminerAuthData);
 
+        $this->prepareLocale();
+
         // The default cannot be "asset/vendor/adminer/adminer.css", because it
         // is not in the list of designs.
         if (!array_key_exists('design', $_SESSION)) {
@@ -187,6 +195,35 @@ class IndexController extends AbstractActionController
             'username' => $username,
             'db' => $authData['db'],
         ];
+    }
+
+    /**
+     * Use the locale of the current Omeka user as the language of Adminer.
+     *
+     * Adminer displays a language selector on each page, so its own choice is
+     * kept: the Omeka locale is only pushed when it changes.
+     *
+     * Adminer checks the cookie first, then the session, and it skips any
+     * unknown language, so the region variant is set as the cookie and the
+     * plain language as the session: "pt_BR" uses "pt-br", but "fr_FR", that
+     * has no region variant in Adminer, falls back to "fr". This avoids
+     * duplicating the list of the languages of Adminer.
+     *
+     * @see vendor/vrana/adminer/adminer/include/lang.inc.php
+     */
+    protected function prepareLocale(): void
+    {
+        if ($this->locale === ''
+            || ($_SESSION['adminer_omeka_locale'] ?? null) === $this->locale
+        ) {
+            return;
+        }
+
+        $_SESSION['adminer_omeka_locale'] = $this->locale;
+
+        $language = strtolower(strtr($this->locale, ['_' => '-']));
+        $_COOKIE['adminer_lang'] = $language;
+        $_SESSION['lang'] = strtok($language, '-');
     }
 
     protected function getDatabaseConfig(): array

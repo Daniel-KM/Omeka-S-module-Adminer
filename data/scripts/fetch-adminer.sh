@@ -57,6 +57,8 @@ fetch() {
 
 BASE_URL="${ADMINER_RELEASES}/v${ADMINER_VERSION}"
 
+# The files without the "-en" suffix are the multilingual ones: the language is
+# set by the module from the locale of the current Omeka user.
 echo "==> Downloading Adminer ${ADMINER_VERSION}..."
 fetch "${BASE_URL}/adminer-${ADMINER_VERSION}-mysql.php" "${WORK_DIR}/adminer.php"
 fetch "${BASE_URL}/editor-${ADMINER_VERSION}.php" "${WORK_DIR}/editor.php"
