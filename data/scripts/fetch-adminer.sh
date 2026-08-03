@@ -1,32 +1,34 @@
 #!/usr/bin/env bash
 #
-# Compile Adminer for the Omeka S Adminer module.
+# Fetch Adminer for the Omeka S Adminer module.
 #
-# This script downloads Adminer source, patches it for Omeka compatibility,
-# compiles it into self-contained PHP files, and packages the result into an
-# archive suitable for distribution via sempia/external-assets.
+# The upstream release ships the compiled single-file Adminer and Editor, so
+# nothing is built here: the files are downloaded as is, and only the plugins
+# and the designs are taken from the source archive, because they are not part
+# of the compiled files.
 #
 # Usage:
 #   cd modules/Adminer
-#   bash data/scripts/compile-adminer.sh [--archive]
+#   bash data/scripts/fetch-adminer.sh [--archive]
 #
 # Options:
 #   --archive   Create a distributable tar.gz in build/
 #
-# Requirements: git, php, composer, sed, tar
+# Requirements: curl, php, tar, unzip
 #
 # @copyright Daniel Berthereau, 2026
 
-
 set -euo pipefail
 
-ADMINER_REPO="https://github.com/vrana/adminer.git"
+ADMINER_RELEASES="https://github.com/vrana/adminer/releases/download"
 
-# Fetch the latest version tag from the repository, or use a fixed version.
-ADMINER_VERSION="5.5.1"
-ADMINER_VERSION=${ADMINER_VERSION:-$(git ls-remote --tags --sort=-v:refname "$ADMINER_REPO" 'v*' | sed -n '1s|.*refs/tags/v||p')}
+# Use a fixed version, or fetch the latest release tag when it is empty.
+ADMINER_VERSION="6.0.0"
+ADMINER_VERSION=${ADMINER_VERSION:-$(curl -sfL \
+    https://api.github.com/repos/vrana/adminer/releases/latest \
+    | sed -n 's/.*"tag_name": *"v\([^"]*\)".*/\1/p')}
 if [ -z "$ADMINER_VERSION" ]; then
-    echo "Error: could not determine latest Adminer version." >&2
+    echo "Error: could not determine the Adminer version." >&2
     exit 1
 fi
 
@@ -48,69 +50,36 @@ cleanup() {
 }
 trap cleanup EXIT
 
-echo "==> Cloning Adminer ${ADMINER_VERSION} with externals..."
-git clone --depth=1 --recurse-submodules --branch="v${ADMINER_VERSION}" \
-    "$ADMINER_REPO" "${WORK_DIR}/adminer" --quiet
-ADMINER_SRC="${WORK_DIR}/adminer"
+fetch() {
+    curl -sfL --retry 3 -o "$2" "$1" \
+        || { echo "Error: cannot download $1" >&2; exit 1; }
+}
 
-echo "==> Installing Adminer composer dependencies..."
-composer install --working-dir="$ADMINER_SRC" --quiet --no-interaction
+BASE_URL="${ADMINER_RELEASES}/v${ADMINER_VERSION}"
 
-echo "==> Patching source for Omeka compatibility..."
+echo "==> Downloading Adminer ${ADMINER_VERSION}..."
+fetch "${BASE_URL}/adminer-${ADMINER_VERSION}-mysql.php" "${WORK_DIR}/adminer.php"
+fetch "${BASE_URL}/editor-${ADMINER_VERSION}.php" "${WORK_DIR}/editor.php"
+fetch "${BASE_URL}/adminer-${ADMINER_VERSION}.zip" "${WORK_DIR}/source.zip"
 
-# Suppress error reporting in compiled output.
-sed -i -e 's~error_reporting(24575)~error_reporting(0)~' \
-    "${ADMINER_SRC}/adminer/include/errors.inc.php"
-
-# Fix plugin/theme paths to use __DIR__ instead of relative paths.
-# Disable auto-loading of all plugins from the directory: our adminer-plugins.php
-# (via adminer-plugins.phtml) loads only the wanted plugins explicitly.
-sed -i \
-    -e 's~basename = "adminer-plugins"~basename = __DIR__ . "/adminer-plugins"~' \
-    -e 's~is_dir($basename)~false~' \
-    -e 's~return include_once "./$filename"~return include_once "$filename"~' \
-    "${ADMINER_SRC}/adminer/include/plugins.inc.php"
-
-sed -i \
-    -e 's~is_dir("adminer-plugins") || file_exists("adminer-plugins.php")~is_dir(__DIR__ . "/adminer-plugins") || file_exists(__DIR__ . "/adminer-plugins.php")~' \
-    "${ADMINER_SRC}/adminer/include/bootstrap.inc.php"
-
-# Fix compile.php issue with translations version (#1085).
-sed -i \
-    -e 's~crc32($return);~chr(34) . crc32($return) . chr(34);~' \
-    "${ADMINER_SRC}/compile.php"
-
-echo "==> Compiling adminer-mysql..."
-php -f "${ADMINER_SRC}/compile.php" -- mysql
-ADMINER_FILE="adminer-${ADMINER_VERSION}-mysql.php"
-
-echo "==> Compiling editor-mysql..."
-php -f "${ADMINER_SRC}/compile.php" -- editor mysql
-EDITOR_FILE="editor-${ADMINER_VERSION}-mysql.php"
+echo "==> Extracting plugins and designs..."
+unzip -q "${WORK_DIR}/source.zip" -d "${WORK_DIR}/source"
+SOURCE_DIR="${WORK_DIR}/source/adminer-${ADMINER_VERSION}"
 
 echo "==> Assembling output..."
 rm -rf "$OUTPUT_DIR"
 mkdir -p "${OUTPUT_DIR}/adminer-plugins"
 
-mv "$ADMINER_FILE" "${OUTPUT_DIR}/adminer-mysql.phtml"
-mv "$EDITOR_FILE" "${OUTPUT_DIR}/editor-mysql.phtml"
+# The compiled files are renamed as templates, so the web server does not run
+# them directly: they are included by the Omeka controller.
+cp "${WORK_DIR}/adminer.php" "${OUTPUT_DIR}/adminer-mysql.phtml"
+cp "${WORK_DIR}/editor.php" "${OUTPUT_DIR}/editor-mysql.phtml"
 
-# Plugin bridge: delegates to the module's view template.
-echo '<?php return require dirname(__DIR__, 3) . "/view/adminer/admin/index/adminer-plugins.phtml";' \
-    > "${OUTPUT_DIR}/adminer-plugins.php"
+# Plugin source files, loaded explicitly by adminer-plugins.phtml.
+cp "${SOURCE_DIR}/plugins/"*.php "${OUTPUT_DIR}/adminer-plugins/"
 
-# Copy plugin source files (needed at runtime by adminer-plugins.phtml).
-cp "${ADMINER_SRC}/plugins/"*.php "${OUTPUT_DIR}/adminer-plugins/"
-
-# Fix AdminerDesigns: load design CSS in both light and dark modes. Default
-# logic tags non "-dark" names as "light" which makes the browser skip the
-# stylesheet (and its icon data URIs) under prefers-color-scheme: dark.
-sed -i \
-    -e 's|(preg_match(.~-dark~., $_SESSION\["design"\]) ? "dark" : "light")|""|' \
-    "${OUTPUT_DIR}/adminer-plugins/designs.php"
-
-# Copy designs (CSS themes selectable at runtime).
-cp -r "${ADMINER_SRC}/designs" "${OUTPUT_DIR}/designs"
+# Designs (CSS themes selectable at runtime).
+cp -r "${SOURCE_DIR}/designs" "${OUTPUT_DIR}/designs"
 
 # Fix clean-URL CSS selectors in all designs.
 # AdminerCleanUrls strips connection params (server, username, db) from href
@@ -172,7 +141,7 @@ Order allow,deny
 </FilesMatch>
 HTACCESS
 
-echo "==> Compiled files:"
+echo "==> Fetched files:"
 ls -lh "${OUTPUT_DIR}/"
 
 if [ "$CREATE_ARCHIVE" = true ]; then
