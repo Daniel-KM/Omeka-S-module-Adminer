@@ -94,10 +94,13 @@ class AdminerOmeka
     /**
      * Get URLs of the CSS files.
      *
-     * The value is always "" (light and dark), because most designs have no
-     * dark variant: restricting them to light would make the browser skip the
-     * stylesheet, so the icons set as background images would not be displayed
-     * under prefers-color-scheme: dark.
+     * A design without a dark variant must be declared as "light", like the
+     * plugin Designs does: Adminer then skips its own dark.css and keeps the
+     * whole interface light, instead of painting a light design over a dark
+     * base. Declaring it as "" (both) is what made the icons of the designs
+     * look broken under prefers-color-scheme: dark.
+     *
+     * @see vendor/vrana/adminer/adminer/include/design.inc.php
      *
      * @return array key is URL, value is 'light', 'dark' or '' (both)
      */
@@ -105,15 +108,16 @@ class AdminerOmeka
     {
         $return = [];
         if (array_key_exists($_SESSION['design'], $this->designs)) {
-            $return[$_SESSION['design']] = '';
+            $return[$_SESSION['design']] = preg_match('~-dark~', $_SESSION['design']) ? 'dark' : 'light';
             return $return;
         }
 
         $filename = dirname(__DIR__, 4) . '/asset/vendor/adminer/adminer.css';
         if (file_exists($filename)) {
             // Relative to the Omeka admin route.
-            $url = '../modules/Adminer/asset/vendor/adminer/adminer.css?v=' . crc32(file_get_contents($filename));
-            $return[$url] = '';
+            $file = file_get_contents($filename);
+            $url = '../modules/Adminer/asset/vendor/adminer/adminer.css?v=' . crc32($file);
+            $return[$url] = preg_match('~prefers-color-scheme:\s*dark~', $file) ? '' : 'light';
         }
 
         return $return;
