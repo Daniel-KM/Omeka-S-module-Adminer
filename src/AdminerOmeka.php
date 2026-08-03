@@ -34,16 +34,6 @@ class AdminerOmeka
     }
 
     /**
-     * Key used for permanent login.
-     * @todo To be unique but stable. See controller.
-     */
-    public function permanentLogin(bool $create = false): string
-    {
-        $authData = $this->getAuthData();
-        return $authData['adminer_key'] ?? '';
-    }
-
-    /**
      * Server, username and password for connecting to database.
      * @return array{string, string, string}
      */
@@ -103,6 +93,12 @@ class AdminerOmeka
 
     /**
      * Get URLs of the CSS files.
+     *
+     * The value is always "" (light and dark), because most designs have no
+     * dark variant: restricting them to light would make the browser skip the
+     * stylesheet, so the icons set as background images would not be displayed
+     * under prefers-color-scheme: dark.
+     *
      * @return array key is URL, value is 'light', 'dark' or '' (both)
      */
     public function css(): array
@@ -116,9 +112,8 @@ class AdminerOmeka
         $filename = dirname(__DIR__, 4) . '/asset/vendor/adminer/adminer.css';
         if (file_exists($filename)) {
             // Relative to the Omeka admin route.
-            $file = file_get_contents($filename);
-            $url = '../modules/Adminer/asset/vendor/adminer/adminer.css?v=' . crc32($file);
-            $return[$url] = preg_match('~prefers-color-scheme:\s*dark~', $file) ? '' : 'light';
+            $url = '../modules/Adminer/asset/vendor/adminer/adminer.css?v=' . crc32(file_get_contents($filename));
+            $return[$url] = '';
         }
 
         return $return;
