@@ -83,57 +83,21 @@ cp "${SOURCE_DIR}/plugins/"*.php "${OUTPUT_DIR}/adminer-plugins/"
 # Designs (CSS themes selectable at runtime).
 cp -r "${SOURCE_DIR}/designs" "${OUTPUT_DIR}/designs"
 
-# Fix clean-URL CSS selectors in all designs.
-# AdminerCleanUrls strips connection params (server, username, db) from href
-# attributes via output buffering. The first remaining query param then starts
-# with "?" instead of "&", so CSS selectors like [href$="&sql="] no longer
-# match. This adds ?-prefixed variants alongside the original & selectors.
-php -r '
-foreach (array_slice($argv, 1) as $file) {
-    if (!is_file($file)) continue;
-    $css = file_get_contents($file);
-    $css = preg_replace_callback(
-        // Match each CSS rule: selectors { declarations }
-        "/^([^\n{]+)\{/m",
-        function ($m) {
-            $selectorGroup = $m[1];
-            if (strpos($selectorGroup, "[href") === false
-                || strpos($selectorGroup, "\"&") === false
-            ) {
-                return $m[0];
-            }
-            $selectors = preg_split("/\s*,\s*/", rtrim($selectorGroup));
-            $extra = [];
-            foreach ($selectors as $sel) {
-                if (preg_match("/\[href[\$*]=\"&/", $sel)) {
-                    $variant = preg_replace(
-                        "/(\[href[\$*]=\")&/", "\\1?", $sel
-                    );
-                    if ($variant !== $sel) $extra[] = $variant;
-                }
-            }
-            if ($extra) {
-                return $selectorGroup . ", "
-                    . implode(", ", $extra) . " {";
-            }
-            return $m[0];
-        },
-        $css
-    );
-    file_put_contents($file, $css);
-}
-' "${OUTPUT_DIR}/designs/"*/adminer.css
+# Patches submitted upstream, to drop once merged. They fix the links that the
+# designs display as an icon without any text: the table names of the menu of
+# the editor, and the icon of the link to edit a row in select.
+# Applied before the clean urls below, so the added selectors are patched too.
+# @link https://github.com/vrana/adminer/pull/1319
+for PATCH in "${MODULE_DIR}/data/patches/"*.patch; do
+    patch -p1 -s -d "$OUTPUT_DIR" < "$PATCH"
+done
 
-# Theme CSS: copy hever (already patched above) as default, add editor fix.
+# Add the selectors required by the clean urls to all the designs.
+php "${MODULE_DIR}/data/scripts/clean-urls-designs.php" \
+    "${OUTPUT_DIR}/designs/"*/adminer.css
+
+# Theme CSS: copy hever (already patched above) as the default one.
 cp "${OUTPUT_DIR}/designs/hever/adminer.css" "${OUTPUT_DIR}/adminer.css"
-cat >> "${OUTPUT_DIR}/adminer.css" <<'CSSFIX'
-/* fix omeka editor: table links must show text, not icons only. */
-body.editor #menu a[href*="&select="], body.editor #menu a[href*="?select="],
-body.editor #tables a[href*="&select="], body.editor #tables a[href*="?select="],
-body.editor #tables a.select { overflow: initial !important; width: auto !important; height: auto !important; color: var(--inv-fg, inherit) !important; position: static !important; background-position-x: left !important; }
-body.editor #tables a.select::before { display: none !important; }
-body.editor #tables { overflow: visible !important; }
-CSSFIX
 
 # Security: deny direct access except static assets.
 cat > "${MODULE_DIR}/asset/vendor/.htaccess" <<'HTACCESS'
