@@ -48,28 +48,15 @@ $list = [
     // 'edit-textarea',
     'foreign-system',
     // 'frames',
-    // 'json-column',
-    'pretty-json-column',
     'table-structure',
     'tables-filter',
     // 'version-noverify',
-
-    // Not default plugins.
-    // 'disable-tables',
-    // 'folder-import',
-    // 'search-autocomplete',
-    // 'sticky-columns',
-    // 'tree-view',
-
-    // Automatically loaded.
-    // 'omeka',
 ];
 
 // Specific plugins.
 require_once dirname(__DIR__, 4) . '/src/AdminerOmeka.php';
 require_once dirname(__DIR__, 4) . '/src/AdminerCleanUrls.php';
 
-// foreach (glob(dirname(__DIR__, 4) . '/asset/vendor/adminer/adminer-plugins/*.php') as $filename) {
 $baseDir = dirname(__DIR__, 4) . '/asset/vendor/adminer/adminer-plugins';
 foreach ($list as $filename) {
     require_once "$baseDir/$filename.php";
@@ -91,16 +78,7 @@ return [
     // new AdminerEditTextarea(),
     new AdminerForeignSystem(),
     // new AdminerFrames(),
-    // new AdminerJsonColumn(),
-    new AdminerPrettyJsonColumn(),
     new AdminerTableStructure(),
     new AdminerTablesFilter(),
     // new AdminerVersionNoverify(),
-
-    // Not default plugins.
-    // new AdminerDisableTables(),
-    // new AdminerFolderImport(),
-    // new AdminerSearchAutocomplete(),
-    // new AdminerStickyColumns(),
-    // new AdminerTreeView(),
 ];
