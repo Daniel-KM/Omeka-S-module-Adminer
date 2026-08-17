@@ -46,7 +46,7 @@
     "extra": {
         "installer-name": "Adminer",
         "external-assets": {
-            "asset/vendor/adminer/": "https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/releases/3.4.17-p6.0.0/downloads/adminer-assets-6.0.0.tar.gz"
+            "asset/vendor/adminer/": "https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/releases/3.4.18-p6.0.1/downloads/adminer-assets-6.0.1.tar.gz"
         },
         "configurable": true
     }
