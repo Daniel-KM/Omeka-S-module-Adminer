@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-06 00:00+0000\n"
-"PO-Revision-Date: 2026-07-06 00:00+0000\n"
+"POT-Creation-Date: 2026-08-17 00:00+0000\n"
+"PO-Revision-Date: 2026-08-17 00:00+0000\n"
 "Last-Translator: Daniel Berthereau <Daniel.fr@Berthereau.net>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.6\n"
 
-#: Module.php:59 src/Controller/Admin/IndexController.php:52
+#: Module.php:59 src/Controller/Admin/IndexController.php:58
 #, php-format
 msgid ""
 "The module requires the dependencies to be installed. See %1$sreadme%2$s."
@@ -42,7 +42,7 @@ msgstr ""
 "L’utilisateur peut être créé automatiquement si l’utilisateur de la base "
 "Omeka en a le droit."
 
-#: src/Controller/Admin/IndexController.php:94
+#: src/Controller/Admin/IndexController.php:96
 msgid "The module requires the dependencies to be installed. See readme."
 msgstr "Le module requiert l’installation de dépendances. Voir le lisez-moi."
 
@@ -177,19 +177,19 @@ msgstr "Mot de passe de l’utilisateur en lecture seule"
 msgid "Allow full access via omeka credentials (not recommended)"
 msgstr "Autoriser l’accès complet via les droits omeka (non recommandé)"
 
-#: src/Controller/Admin/IndexController.php:30
+#: src/Controller/Admin/IndexController.php:36
 msgid "Warning: the read-only user is the same than the full-access user."
 msgstr ""
 "Attention : l'utilisateur en lecture seule est le même que celui en accès "
 "complet."
 
-#: src/Controller/Admin/IndexController.php:34
+#: src/Controller/Admin/IndexController.php:40
 msgid "Warning: there is no read-only user. Use at your own risk!"
 msgstr ""
 "Attention : aucun utilisateur en lecture seule n’est défini. Utilisez à vos "
 "propre risques !"
 
-#: src/Controller/Admin/IndexController.php:39
+#: src/Controller/Admin/IndexController.php:45
 #, php-format
 msgid ""
 "Warning: no user are defined to access to the database. Check the "
@@ -198,14 +198,14 @@ msgstr ""
 "Attention : aucun utilisateur n’est défini pour accéder à la base de "
 "données. Vérifiez la %1$sconfiguration%2$s."
 
-#: src/Controller/Admin/IndexController.php:140
-msgid "Read only user is not configured."
-msgstr "L’utilisateur en lecture seule n’est pas configuré."
-
-#: src/Controller/Admin/IndexController.php:143
+#: src/Controller/Admin/IndexController.php:114
 msgid "Full access user or read only user are not configured."
 msgstr ""
 "Les utilisateurs en accès complet ou en lecture seule ne sont pas configurés."
+
+#: src/Controller/Admin/IndexController.php:117
+msgid "Read only user is not configured."
+msgstr "L’utilisateur en lecture seule n’est pas configuré."
 
 #: config/module.config.php:24
 msgid "Database"

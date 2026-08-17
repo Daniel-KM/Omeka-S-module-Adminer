@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-06 00:00+0000\n"
+"POT-Creation-Date: 2026-08-17 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: Module.php:59 src/Controller/Admin/IndexController.php:52
+#: Module.php:59 src/Controller/Admin/IndexController.php:58
 #, php-format
 msgid ""
 "The module requires the dependencies to be installed. See %1$sreadme%2$s."
@@ -37,7 +37,7 @@ msgid ""
 "right."
 msgstr ""
 
-#: src/Controller/Admin/IndexController.php:94
+#: src/Controller/Admin/IndexController.php:96
 msgid "The module requires the dependencies to be installed. See readme."
 msgstr ""
 
@@ -149,27 +149,27 @@ msgstr ""
 msgid "Allow full access via omeka credentials (not recommended)"
 msgstr ""
 
-#: src/Controller/Admin/IndexController.php:30
+#: src/Controller/Admin/IndexController.php:36
 msgid "Warning: the read-only user is the same than the full-access user."
 msgstr ""
 
-#: src/Controller/Admin/IndexController.php:34
+#: src/Controller/Admin/IndexController.php:40
 msgid "Warning: there is no read-only user. Use at your own risk!"
 msgstr ""
 
-#: src/Controller/Admin/IndexController.php:39
+#: src/Controller/Admin/IndexController.php:45
 #, php-format
 msgid ""
 "Warning: no user are defined to access to the database. Check the "
 "%1$sconfig%2$s."
 msgstr ""
 
-#: src/Controller/Admin/IndexController.php:140
-msgid "Read only user is not configured."
+#: src/Controller/Admin/IndexController.php:114
+msgid "Full access user or read only user are not configured."
 msgstr ""
 
-#: src/Controller/Admin/IndexController.php:143
-msgid "Full access user or read only user are not configured."
+#: src/Controller/Admin/IndexController.php:117
+msgid "Read only user is not configured."
 msgstr ""
 
 #: config/module.config.php:24
