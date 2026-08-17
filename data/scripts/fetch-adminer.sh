@@ -23,7 +23,7 @@ set -euo pipefail
 ADMINER_RELEASES="https://github.com/vrana/adminer/releases/download"
 
 # Use a fixed version, or fetch the latest release tag when it is empty.
-ADMINER_VERSION="6.0.0"
+ADMINER_VERSION="6.0.1"
 ADMINER_VERSION=${ADMINER_VERSION:-$(curl -sfL \
     https://api.github.com/repos/vrana/adminer/releases/latest \
     | sed -n 's/.*"tag_name": *"v\([^"]*\)".*/\1/p')}
@@ -83,11 +83,8 @@ cp "${SOURCE_DIR}/plugins/"*.php "${OUTPUT_DIR}/adminer-plugins/"
 # Designs (CSS themes selectable at runtime).
 cp -r "${SOURCE_DIR}/designs" "${OUTPUT_DIR}/designs"
 
-# Patches submitted upstream, to drop once merged. They fix the links that the
-# designs display as an icon without any text: the table names of the menu of
-# the editor, and the icon of the link to edit a row in select.
-# Applied before the clean urls below, so the added selectors are patched too.
-# @link https://github.com/vrana/adminer/pull/1319
+
+# Patches submitted upstream, if any.
 for PATCH in "${MODULE_DIR}/data/patches/"*.patch; do
     patch -p1 -s -d "$OUTPUT_DIR" < "$PATCH"
 done
@@ -96,7 +93,7 @@ done
 php "${MODULE_DIR}/data/scripts/clean-urls-designs.php" \
     "${OUTPUT_DIR}/designs/"*/adminer.css
 
-# Theme CSS: copy hever (already patched above) as the default one.
+# Theme CSS: copy hever as the default one.
 cp "${OUTPUT_DIR}/designs/hever/adminer.css" "${OUTPUT_DIR}/adminer.css"
 
 # Security: deny direct access except static assets.
