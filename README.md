@@ -65,12 +65,12 @@ Adminer is no more compiled: the script downloads the official released
 single-file Adminer and Editor from the [Adminer releases] and adds the plugins
 and the designs from the source archive.
 
-For now, the only files changed are the css of the designs: they get the patches
-of `data/patches/`, then the selectors required by the clean urls. Everything is
-packaged into a distributable `tar.gz` in `build/`. The version is set with
-`ADMINER_VERSION` at the top of the script; when it is empty, the last release
-is used. Upload the archive as a release asset and update the url in
-`composer.json` (`extra.external-assets`).
+For now, the only files changed are the css of the designs, that get the
+selectors required by the clean urls. Everything is packaged into a
+distributable `tar.gz` in `build/`. The version is set with `ADMINER_VERSION` at
+the top of the script; when it is empty, the last release is used. Upload the
+archive as a release asset and update the url in `composer.json`
+(`extra.external-assets`).
 
 * Specific plugins and theme
 
