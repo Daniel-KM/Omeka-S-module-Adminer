@@ -23,7 +23,7 @@ set -euo pipefail
 ADMINER_RELEASES="https://github.com/vrana/adminer/releases/download"
 
 # Use a fixed version, or fetch the latest release tag when it is empty.
-ADMINER_VERSION="6.0.1"
+ADMINER_VERSION="6.1.1"
 ADMINER_VERSION=${ADMINER_VERSION:-$(curl -sfL \
     https://api.github.com/repos/vrana/adminer/releases/latest \
     | sed -n 's/.*"tag_name": *"v\([^"]*\)".*/\1/p')}
@@ -86,6 +86,7 @@ cp -r "${SOURCE_DIR}/designs" "${OUTPUT_DIR}/designs"
 
 # Patches submitted upstream, if any.
 for PATCH in "${MODULE_DIR}/data/patches/"*.patch; do
+    [ -f "$PATCH" ] || continue
     patch -p1 -s -d "$OUTPUT_DIR" < "$PATCH"
 done
 
