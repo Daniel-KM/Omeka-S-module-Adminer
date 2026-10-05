@@ -112,7 +112,7 @@ class AdminerOmeka
             return $return;
         }
 
-        $filename = dirname(__DIR__, 4) . '/asset/vendor/adminer/adminer.css';
+        $filename = dirname(__DIR__) . '/asset/vendor/adminer/adminer.css';
         if (file_exists($filename)) {
             // Relative to the Omeka admin route.
             $file = file_get_contents($filename);
