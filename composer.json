@@ -19,7 +19,7 @@
         }
     ],
     "support": {
-        "issues": "https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/issues",
+        "issues": "https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/work_items",
         "forum": "https://forum.omeka.org/"
     },
     "_require (not set until Omeka S merges PR #2432)": {
@@ -46,7 +46,7 @@
     "extra": {
         "installer-name": "Adminer",
         "external-assets": {
-            "asset/vendor/adminer/": "https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/releases/3.4.18-p6.1.1/downloads/adminer-assets-6.1.1.tar.gz"
+            "asset/vendor/adminer/": "https://gitlab.com/Daniel-KM/Omeka-S-module-Adminer/-/releases/3.4.18-p6.1.2/downloads/adminer-assets-6.1.2.tar.gz"
         },
         "configurable": true
     }

@@ -23,7 +23,7 @@ set -euo pipefail
 ADMINER_RELEASES="https://github.com/vrana/adminer/releases/download"
 
 # Use a fixed version, or fetch the latest release tag when it is empty.
-ADMINER_VERSION="6.1.1"
+ADMINER_VERSION="6.1.2"
 ADMINER_VERSION=${ADMINER_VERSION:-$(curl -sfL \
     https://api.github.com/repos/vrana/adminer/releases/latest \
     | sed -n 's/.*"tag_name": *"v\([^"]*\)".*/\1/p')}
