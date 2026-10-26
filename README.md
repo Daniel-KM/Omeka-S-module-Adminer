@@ -172,6 +172,7 @@ Copyright
 * Copyright Daniel Berthereau, 2019-2026 (see [Daniel-KM] on GitLab)
 
 Adminer:
+
 * Copyright 2007-, Jakub Vrana
 * Copyright 2016-, Aleksey M. (theme)
 
